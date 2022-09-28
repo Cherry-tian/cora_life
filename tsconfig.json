@@ -5,6 +5,17 @@
     "removeComments": false,
     "preserveConstEnums": true,
     "moduleResolution": "node",
+    "paths": {
+      "@/const": [
+        "./src/const/const.js"
+      ],
+      "@/pages/*": [
+        "./src/pages/*"
+      ],
+      "@/api/*": [
+        "./src/api/*"
+      ]
+    },
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
@@ -22,6 +33,9 @@
       "node_modules/@types"
     ]
   },
-  "include": ["./src", "./types"],
+  "include": [
+    "./src",
+    "./types"
+  ],
   "compileOnSave": false
 }
