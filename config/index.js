@@ -1,3 +1,4 @@
+const path = require('path');
 const config = {
   projectName: 'yiLife',
   date: '2022-9-27',
@@ -13,6 +14,11 @@ const config = {
   plugins: ['@tarojs/plugin-html'],
   sass: {
     data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
+  },
+  alias: {
+    '@/const': path.resolve(__dirname, '..', 'src/const/const.js'),
+    '@/pages': path.resolve(__dirname, '..', 'src/pages'),
+    '@/api': path.resolve(__dirname, '..', 'src/api')
   },
   defineConstants: {
   },
