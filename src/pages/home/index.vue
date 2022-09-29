@@ -11,7 +11,7 @@
 import { onMounted, reactive } from 'vue';
 import Taro from '@tarojs/taro';
 import { getCategoryList } from '@/api/index.js'
-import { CateGroy } from '../../types/index'
+import { CateGroy } from './type'
 import { styleConfig } from '@/const'
 // 定义 tab 栏分类的数据
 const state = reactive<{ categoryList: CateGroy[], tab1value: string }>({
