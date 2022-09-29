@@ -27,13 +27,13 @@ const tabSwitch = (item: any, index: number) => {
 <style lang="scss">
 .footer-wrapper {
   position: fixed;
-  bottom: 20px;
+  bottom: 0;
   width: 100%;
   z-index: 999;
 
   .footer {
     padding-top: 10px;
-    border-bottom: 0;
+    padding-bottom: 31px;
   }
 }
 </style>
