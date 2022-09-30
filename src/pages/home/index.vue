@@ -1,49 +1,131 @@
 <template>
-  <nut-tabs v-model="state.currentPage" title-scroll title-gutter="8" type="smile" :color=styleConfig.themeColor
-    background="#fff">
-    <nut-tabpane v-for="item in state.categoryList" :title="item.name" :key="item.id">
-      <view class="feed">
-        <FeedCard />
-        <FeedCard />
-        <FeedCard />
+  <nut-tabs 
+  v-model="state.currentCategroyId" 
+  title-scroll 
+  title-gutter="8" 
+  type="smile" 
+  :color=styleConfig.themeColor
+  background="#fff"
+  >
+    <nut-tabpane 
+    v-for="item in state.categoryList" 
+    :title="item.name" 
+    :key="item.id">
+      <view 
+      class="feed" 
+      v-if="state.categoryNewList.length > 0"
+      >
+        <FeedCard 
+        v-for="item in state.categoryNewList" 
+        :key="item.user_new.id" 
+        :itemInfo="item.user_new" 
+        />
+        <view class="feed-bottom-text">没有更多了</view>
       </view>
+      <!-- 引入 loading 组件 -->
+      <FeedLoading v-else/>
     </nut-tabpane>
   </nut-tabs>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import Taro from '@tarojs/taro';
-import { getCategoryList } from '@/api/index.js'
-import { CateGroy } from './type'
+import { getCategoryList, getCategoryNewList } from '@/api/index.js'
+import { CateGroy, CategoryNewList } from './type'
 import { styleConfig } from '@/const'
 import FeedCard from './components/feedCard.vue';
-// 定义 tab 栏分类的数据
-const state = reactive<{ categoryList: CateGroy[], currentPage: string }>({
-  categoryList: [],
-  currentPage: '0'
-})
-// 用 Taro.request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
-onMounted(async () => {
-  try {
-    const res = await Taro.request({
-      url: getCategoryList
-    })
-    state.categoryList = res.data.data.list
-    // console.log(state.categoryList);
+import FeedLoading from './components/feedLoading.vue';
+import { useStore } from 'vuex';
+const store = useStore()
 
-  } catch (error) {
-    // 获取失败，则调用 Taro.showToast() 提示用户
+// 定义 tab 栏分类的数据
+const state = reactive<{ categoryList: CateGroy[], currentCategroyId: number, categoryNewList: CategoryNewList[], hasMore: boolean, nextCursor: number }>({
+  categoryList: [],
+  currentCategroyId: 0,
+  categoryNewList: [],
+  hasMore: false, //当前页面是否有更多新闻
+  nextCursor: 0 //下次请求的游标
+})
+
+const categoryNew = reactive(new Map()) 
+//1. 用 Taro.request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
+// 3. 初次进入页面获取新闻内容数据 可将两次请求结果同时处理，promise.all()
+onMounted(() => {
+  const requestTask = [Taro.request({
+    url: getCategoryList,
+  }), Taro.request({
+    url: getCategoryNewListUrl({ category_id: state.currentCategroyId })
+  })]
+  // 等待所有 Promise 请求结果返回，再继续执行 同时改变 homePageLoding 状态
+  Promise.all(requestTask).then(([res1, res2]) => {
+    state.categoryList = res1.data.data.list
+    store.commit('changeHomePageLoading', false)
+
+    state.categoryNewList = res2.data.data.list
+    console.log('map1', categoryNew)
+    categoryNew.set(state.currentCategroyId, state.categoryNewList)
+    console.log('map2', categoryNew)
+    state.hasMore = res2.data.data.has_More
+    state.nextCursor = res2.data.data.next_cursor
+  }).catch((error) => {
+    // 任何一个请求失败，就会报错获取失败，则调用 Taro.showToast() 提示用户
     Taro.showToast({
-      title: '获取分类失败',
+      title: error.message,
       icon: 'error'
     })
-  }
+  })
 })
+
+// 2. 用 watch() 方法监视 state.currentPage 变化，如果页面双向绑定发生变化，则发起获取分类下内容列表的请求，保存相应数据到 state 中
+watch(
+  // 监视对象，如果不是 proxy 对象则用回调函数的写法
+  () => state.currentCategroyId,
+  // 回调函数 用async函数进行异步请求 url中包含必须传递的参数
+
+  async (currentCategroyId) => {
+    // 判断 map 对象中是否有该 ID 对应的值，如果没有则发起请求
+    console.log('map', categoryNew)
+    console.log('categoryNew.has(currentCategroyId)', categoryNew.has(currentCategroyId))
+    console.log('currentCategroyId', currentCategroyId)
+    if (!categoryNew.has(currentCategroyId)) {
+      // 针对每个 categroy 发起请求前清空当前数据
+    state.categoryNewList =[]
+    const res = await Taro.request({
+      url: getCategoryNewListUrl({ category_id: currentCategroyId })
+    })
+    // console.log(res);
+    state.categoryNewList = res.data.data.list
+    categoryNew.set(state.currentCategroyId, state.categoryNewList)
+    state.hasMore = res.data.data.has_More
+    state.nextCursor = res.data.data.next_cursor
+    } else {
+      state.categoryNewList = categoryNew.get(currentCategroyId)
+    }  
+  }
+)
+// 2.1 定义获取内容列表的 URL （将需要传递的查询参数进行拼接处理）函数参数的解构赋值，可以设置默认值
+const getCategoryNewListUrl = ({
+  category_id = 1,
+  cursor = 0,
+  count = 5,
+  uid = 23333
+}): string => {
+  return `${getCategoryNewList}?category_id=${category_id}&cursor=${cursor}&count=${count}&uid=${uid}`
+}
 </script>
 <style lang="scss">
 .feed {
   margin-top: -20px;
+  margin-bottom: 60px;
+
+  .feed-bottom-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 25px;
+    color: $noteFontColor;
+    text-align: center;
+  }
 }
 </style>
  

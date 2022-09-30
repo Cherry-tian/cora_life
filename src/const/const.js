@@ -6,6 +6,7 @@ const config = {
     themeColor: "#4382e2", // 腾讯主色
     fontColor: "#222",
     backgroundColor: "#FFFFFF",
+    activeIconColor: "#fa2c19"
   }
 }
 

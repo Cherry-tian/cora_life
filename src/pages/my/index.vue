@@ -1,1 +1,5 @@
-<template>这是我的</template>
+<template>
+  <view>
+    这是我的
+  </view>
+</template>

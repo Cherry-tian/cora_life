@@ -1,6 +1,8 @@
 <template>
-  <!-- 内容区域 -->
-  <view class="content">
+  <!-- loading 区域 页面加载中显示该内容-->
+  <Loading v-show="store.state.homePageLoading" />
+  <!-- 内容区域 页面加载结束显示该部分内容（在各页面中根据返回结果改变 loading 状态）-->
+  <view class="content" v-show="!store.state.homePageLoading">
     <home v-if="pageIndex == 0" />
     <news v-if="pageIndex == 1" />
     <publish v-if="pageIndex == 2" />
@@ -21,11 +23,15 @@ import NutTabbar from './components/nut-tabbar.vue'
 import Message from '../message/index.vue';
 import My from '../my/index.vue';
 import { ref } from 'vue';
+import Loading from './components/loading.vue';
+import { useStore } from 'vuex';
 
-// 定义根据 index 改变页面的方法
+const store = useStore()
+// 定义根据 index 改变页面的方法 同时触发页面加载
 const pageIndex = ref(0)
 const changePage = (index: number) => {
   pageIndex.value = index
+  store.commit('changeHomePageLoading', true)
 }
 
 </script>
