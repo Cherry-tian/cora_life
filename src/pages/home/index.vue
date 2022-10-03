@@ -31,8 +31,10 @@
 <script setup lang="ts">
 import { onMounted, reactive, watch } from 'vue';
 import Taro from '@tarojs/taro';
-import { getCategoryList, getCategoryNewList } from '@/api/index.js'
-import { CateGroy, CategoryNewList } from './type'
+import { getCategoryList } from '@/api/index.js'
+import utils from '@/utils/utils';
+import { CateGroy } from './type'
+import {CategoryNewList} from '@/types/common'
 import { styleConfig, newestCategoryID } from '@/const'
 import FeedCard from './components/feedCard.vue';
 import FeedLoading from './components/feedLoading.vue';
@@ -60,7 +62,7 @@ onMounted(() => {
     url: getCategoryList,
   }), Taro.request({
     // 页面第一次打开时，默认先请求「最新」tab下的数据
-    url: getCategoryNewListUrl({ category_id: newestCategoryID })
+    url: utils.getCategoryNewListUrl({ category_id: newestCategoryID })
   })]
   // 等待所有 Promise 请求结果返回，再继续执行 同时改变 homePageLoding 状态
   Promise.all(requestTask).then(([res1, res2]) => {
@@ -91,7 +93,7 @@ watch(
       // 针对每个 categroy 发起请求前清空当前数据
     state.categoryNewList =[]
     const res = await Taro.request({
-      url: getCategoryNewListUrl({ category_id: getCurrentCategroyIdByTabIndex(tabIndex) })
+      url: utils.getCategoryNewListUrl({ category_id: getCurrentCategroyIdByTabIndex(tabIndex) })
     })
     state.categoryNewList = res.data.data.list
     categoryNew.set(state.tabIndex, state.categoryNewList)
@@ -103,14 +105,14 @@ watch(
   }
 )
 // 2.1 定义获取内容列表的 URL （将需要传递的查询参数进行拼接处理）函数参数的解构赋值，可以设置默认值
-const getCategoryNewListUrl = ({
-  category_id = 1,
-  cursor = 0,
-  count = 5,
-  uid = 23333
-}): string => {
-  return `${getCategoryNewList}?category_id=${category_id}&cursor=${cursor}&count=${count}&uid=${uid}`
-}
+// const getCategoryNewListUrl = ({
+//   category_id = 1,
+//   cursor = 0,
+//   count = 5,
+//   uid = 23333
+// }): string => {
+//   return `${getCategoryNewList}?category_id=${category_id}&cursor=${cursor}&count=${count}&uid=${uid}`
+// }
 </script>
 <style lang="scss">
 .feed {
