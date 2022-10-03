@@ -14,11 +14,13 @@ const config = {
   plugins: ['@tarojs/plugin-html'],
   sass: {
     data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
+    resource: path.resolve(__dirname, '..', 'src/const/const.scss')
   },
   alias: {
     '@/const': path.resolve(__dirname, '..', 'src/const/const.js'),
     '@/pages': path.resolve(__dirname, '..', 'src/pages'),
-    '@/api': path.resolve(__dirname, '..', 'src/api')
+    '@/api': path.resolve(__dirname, '..', 'src/api'),
+    '@/assets': path.resolve(__dirname, '..', 'assets')
   },
   defineConstants: {
   },
