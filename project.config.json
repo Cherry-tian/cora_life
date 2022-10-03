@@ -1,8 +1,6 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "yiLife",
   "description": "我的项目",
-  "appid": "wx8d0df0b0a2cdeb76",
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -14,18 +12,23 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "coverView": false,
+    "showShadowRootInWxmlPanel": false,
+    "packNpmRelationList": [],
+    "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.26.1",
   "srcMiniprogramRoot": "dist/",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "libVersion": "2.26.1",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wx8d0df0b0a2cdeb76"
 }
