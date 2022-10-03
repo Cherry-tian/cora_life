@@ -1,9 +1,9 @@
 <template>
-<view class="news-card">
-<CardUser :authorInfo="itemInfo.author" :createTime="itemInfo.create_time"/>
-<CardContent :contentText="itemInfo.desrciprtion" :contentTitle="itemInfo.title"/>
-<CardFooter :interaction="itemInfo.interaction" :newId="itemInfo.id"/>
-</view>
+  <view class="news-card">
+    <CardUser :authorInfo="itemInfo.author" :createTime="itemInfo.create_time"/>
+    <CardContent :contentText="itemInfo.desrciprtion" :contentTitle="itemInfo.title"/>
+    <CardFooter :interaction="itemInfo.interaction" :newId="itemInfo.id"/>
+  </view>
 </template>
 <script setup lang="ts">
 import CardUser from './cardUser.vue';
