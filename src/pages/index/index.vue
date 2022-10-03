@@ -31,7 +31,7 @@ const store = useStore()
 const pageIndex = ref(0)
 const changePage = (index: number) => {
   pageIndex.value = index
-  store.commit('changeHomePageLoading', true)
+  // store.commit('changeHomePageLoading', true)
 }
 
 </script>
