@@ -51,17 +51,16 @@ const state = reactive<{ categoryList: CateGroy[], tabIndex: string, categoryNew
 const categoryNew = reactive(new Map()) 
 const getCurrentCategroyIdByTabIndex = (tabIndex: string): number =>  {
   let index = Number(tabIndex)
-  // 「最新」tab 的 category_id 固定为 1 
-  // 当 state.categoryList.length 不存在，即页面第一次打开时，默认先请求「最新」tab下的数据
-  return state.categoryList.length ? state.categoryList[index].id : newestCategoryID
+  return state.categoryList[index].id 
 }
-//1. 用 Taro.request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
+// 1. 用 Taro.request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
 // 3. 初次进入页面获取新闻内容数据 可将两次请求结果同时处理，promise.all()
 onMounted(() => {
   const requestTask = [Taro.request({
     url: getCategoryList,
   }), Taro.request({
-    url: getCategoryNewListUrl({ category_id: getCurrentCategroyIdByTabIndex(state.tabIndex) })
+    // 页面第一次打开时，默认先请求「最新」tab下的数据
+    url: getCategoryNewListUrl({ category_id: newestCategoryID })
   })]
   // 等待所有 Promise 请求结果返回，再继续执行 同时改变 homePageLoding 状态
   Promise.all(requestTask).then(([res1, res2]) => {
