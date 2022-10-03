@@ -20,7 +20,9 @@ const config = {
     '@/const': path.resolve(__dirname, '..', 'src/const/const.js'),
     '@/pages': path.resolve(__dirname, '..', 'src/pages'),
     '@/api': path.resolve(__dirname, '..', 'src/api'),
-    '@/assets': path.resolve(__dirname, '..', 'assets')
+    '@/assets': path.resolve(__dirname, '..', 'assets'),
+    '@/types': path.resolve(__dirname, '..', 'src/types'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils')
   },
   defineConstants: {
   },

@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import CardContent from "./cardContent.vue";
 import CardUser from "./cardUser.vue";
-import CardFooter from "./cardFooter.vue";
+import CardFooter from "../../commonComponents/cardFooter.vue";
 import { defineProps } from 'vue';
 defineProps(['itemInfo'])
 </script>

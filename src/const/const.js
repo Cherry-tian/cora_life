@@ -9,6 +9,7 @@ const config = {
     activeIconColor: "#fa2c19"
   },
   newestCategoryID: 1, // 「最新」这个tab的 category_id
+  newsCategoryId: 1 // 新闻页面的 category_id
 }
 
 module.exports = config

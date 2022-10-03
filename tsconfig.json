@@ -17,6 +17,12 @@
       ],
       "@/assets/*": [
         "./assets/*"
+      ],
+      "@/types/*": [
+        "./src/types/*"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
       ]
     },
     "experimentalDecorators": true,
