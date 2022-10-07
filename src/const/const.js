@@ -9,7 +9,9 @@ const config = {
     activeIconColor: "#fa2c19"
   },
   newestCategoryID: 1, // 「最新」这个tab的 category_id
-  newsCategoryId: 1 // 新闻页面的 category_id
+  newsCategoryId: 1, // 新闻页面的 category_id
+  followRelation: 1, // 登录用户关注了内容发布用户
+  coFollowRelation: 3 // 登录用户和内容发布用户互关
 }
 
 module.exports = config

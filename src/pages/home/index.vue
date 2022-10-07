@@ -3,7 +3,6 @@
   v-model="state.tabIndex" 
   title-scroll 
   title-gutter="8" 
-  type="smile" 
   :color=styleConfig.themeColor
   background="#fff"
   >

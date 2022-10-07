@@ -16,6 +16,7 @@ interface Interaction {
 }
 interface User_new {
   id: number;
+  is_official: boolean;
   desrciprtion: string;
   create_time: number;
   title: string;
