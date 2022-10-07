@@ -5,13 +5,13 @@
       <view class="like-avatar-wrapper">
         <nut-avatar size="normal" 
         class="avatar" 
-        icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
+        :icon="likeInfo.user.avatar_url">
         </nut-avatar>
       </view>
       <view>
-        <text class="like-user-name">耶耶</text>
-        <text class="like-author">作者</text>
-        <text class="like-publish-time"> {{timeStr}}</text>
+        <text class="like-user-name">{{ likeInfo.user.name }}</text>
+        <text class="like-author" v-if="likeInfo.user.is_author">作者</text>
+        <text class="like-publish-time"> {{ publishTimeStr(likeInfo.create_time) }}</text>
       </view>  
     </view>
     <!-- 点赞图标 -->
@@ -21,13 +21,19 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
 import utils from '@/utils/utils';
 
-
-const timeStr = ref('')
-// 调用特定形式显示时间的公共方法
-timeStr.value = utils.publishTimeStr(1664941092067)
+defineProps({
+  likeInfo: {
+    type: Object,
+    required: true
+  }
+})
+// 引入用特定形式显示时间的公共方法
+const publishTimeStr = computed(() => {
+  return utils.publishTimeStr
+})
 </script>
 <style lang="scss">
 .like-detail-wrapper {

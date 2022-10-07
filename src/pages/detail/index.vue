@@ -2,7 +2,11 @@
   <view class="detail-page-wrapper">
     <!-- 卡片部分 -->
     <view class="detail-page">
-      <CardUser :authorInfo="state.newsInfo.author" :createTime="state.newsInfo.create_time"/>
+      <CardUser 
+      :authorInfo="state.newsInfo.author" 
+      :createTime="state.newsInfo.create_time"
+      :showFollowBtn = 'true'
+      />
       <CardContent 
       :contentText="state.newsInfo.desrciprtion" 
       :imgList="state.newsInfo.image_url_list"
@@ -10,11 +14,11 @@
       :contentTitle="state.newsInfo.title"  />
     </view>
     <!-- 交互部分 -->
-    <Interaction />
+    <Interaction :newsInfo="state.newsInfo" />
     <!-- 占位符 -->
     <view class="place-holder"></view>
     <!-- 底部 -->
-    <DetailFooter />
+    <DetailFooter :newsId="state.newsInfo.id" :interaction="state.newsInfo.interaction" />
   </view>
 </template>
 <script setup lang="ts">

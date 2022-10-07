@@ -5,29 +5,36 @@
       <view class="forward-avatar-wrapper">
         <nut-avatar size="normal" 
         class="avatar" 
-        icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
+        :icon="forwardInfo.user.avatar_url">
         </nut-avatar>
       </view>
       <view>
-        <text class="forward-user-name">jacle</text>
-        <text class="forward-publish-time"> {{timeStr}}</text>
+        <text class="forward-user-name">{{forwardInfo.user.name}}</text>
+        <text class="forward-author" v-if="forwardInfo.user.is_author">作者</text>
+        <text class="forward-publish-time"> {{publishTimeStr(forwardInfo.create_time)}}</text>
       </view>
     </view>
     <!-- 转发内容 -->
     <view class="forward-content">
-      在这里转发可爱耶耶 @小卡
+      {{ `${forwardInfo.content.length > 0 ?  forwardInfo.content : '转发动态'}`}}
     </view>
   </view>
   
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
 import utils from '@/utils/utils';
 
-
-const timeStr = ref('')
-// 调用特定形式显示时间的公共方法
-timeStr.value = utils.publishTimeStr(1664941092067)
+defineProps({
+  forwardInfo: {
+    type: Object,
+    required: true
+  }
+})
+// 引入用特定形式显示时间的公共方法
+const publishTimeStr = computed(() => {
+  return utils.publishTimeStr
+})
 </script>
 <style lang="scss">
 .forward-detail-wrapper {
@@ -57,6 +64,17 @@ timeStr.value = utils.publishTimeStr(1664941092067)
       font-style: normal;
       font-weight: 500;
       font-size: 13px;
+    }
+
+    .forward-author {
+      margin-right: 5px;
+      padding: 0 2px;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 12px;
+      color: white;
+      background-color: rgb(225, 72, 72);
+      border-radius: 2px;
     }
 
     .forward-publish-time {

@@ -1,218 +1,102 @@
 <template>
-  <!--1. 短评论 -->
-  <view class="comment-detail-wrapper">
+  <!-- 评论 -->
+  <view class="comment-detail-wrapper" 
+    v-for="item in state.commentList" 
+    :key="item.comment_id"
+  >
     <!-- 评论头部信息 -->
-    <view class="comment-detail">
-      <view class="comment-avatar-wrapper">
-        <nut-avatar size="normal" 
-        class="avatar" 
-        icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
-        </nut-avatar>
-      </view>
-      <view>
-        <text class="comment-user-name">耶耶</text>
-        <text class="comment-author">作者</text>
-        <text class="comment-publish-time"> {{timeStr}}</text>
-      </view>
-    </view>
+    <comment-user
+      :isCommentAuthor= "item.user.is_comment_author"
+      :userInfo="item.user" 
+      :createTime="item.create_time"
+      :commentId = "item.comment_id" />
     <!-- 评论内容 -->
-    <view class="comment-content">
-      <view class="comment-word">
-        在这里评论大胖崽 @Tina
-      </view>
-      <view class="comment-like">
-        <nut-icon name="fabulous" size="12px" /> 3
-      </view>
-    </view>
-  </view>
-  <!--2. 长评论 -->
-  <view class="comment-detail-wrapper">
-    <!-- 评论头部信息 -->
-    <view class="comment-detail">
-      <view class="comment-avatar-wrapper">
-        <nut-avatar size="normal" 
-        class="avatar" 
-        icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
-        </nut-avatar>
-      </view>
-      <view>
-        <text class="comment-user-name">耶耶</text>
-        <text class="comment-author">作者</text>
-        <text class="comment-publish-time"> {{timeStr}}</text>
-      </view>
-    </view>
-    <!-- 评论内容 -->
-    <view class="comment-content">
-      <view class="comment-word">
-        我的理解是，耶耶作为雪橇犬，不能天天卖萌，应该发挥应有的家庭作用：比如，在拆家时给它惩罚，自己学会洗澡和捡屎，不能抗拒狗粮只吃肉肉等等。
-      </view>
-      <view class="comment-like">
-        <nut-icon name="fabulous" size="12px" /> 300
-      </view>
-    </view>
-  </view>
-  <!-- 3. 回复评论 -->
-  <view class="comment-detail-wrapper">
-    <!-- 评论头部信息 -->
-    <view class="comment-detail">
-      <view class="comment-avatar-wrapper">
-        <nut-avatar size="normal" 
-        class="avatar" 
-        icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
-        </nut-avatar>
-      </view>
-      <view>
-        <text class="comment-user-name">耶耶</text>
-        <text class="comment-author">作者</text>
-        <text class="comment-publish-time"> {{timeStr}}</text>
-      </view>
-    </view>
-    <!-- 评论内容 -->
-    <view class="comment-content">
-      <view class="comment-word">
-        大家来评评理
-      </view>
-      <view class="comment-like">
-        <nut-icon name="fabulous" size="12px" /> 3
-      </view>
-    </view>
-    <!--3.1 一级回复评论部分 -->
-    <view class="comment-reply-wrapper">
-    <!-- 回复评论头部信息 -->
-      <view class="comment-detail">
-        <view class="comment-avatar-wrapper">
-          <nut-avatar size="normal" 
-          class="avatar" 
-          icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
-          </nut-avatar>
-        </view>
-        <view>
-          <text class="comment-user-name">Tina</text>
-          <!-- <text class="comment-author">作者</text> -->
-          <text class="comment-publish-time"> {{timeStr}}</text>
-        </view>
-      </view>
-      <!-- 评论内容 -->
-      <view class="comment-content">
-        <view class="comment-word">
-          十分同意！！
-        </view>
-        <view class="comment-like">
-          <nut-icon name="fabulous" size="12px" /> 3
-        </view>
-      </view>
-    </view>
-    <!--3.2 二级回复评论部分 -->
-    <view class="comment-reply-wrapper">
-    <!-- 回复评论头部信息 -->
-      <view class="comment-detail">
-        <view class="comment-avatar-wrapper">
-          <nut-avatar size="normal" 
-          class="avatar" 
-          icon="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202107%2F23%2F20210723125859_f6b2f.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667533928&t=af6ec21843f4c1971e7039c445927e92">
-          </nut-avatar>
-        </view>
-        <view>
-          <text class="comment-user-name">耶耶</text>
-          <text class="comment-author">作者</text>
-          <text class="comment-publish-time"> {{timeStr}}</text>
-        </view>
-      </view>
-      <!-- 评论内容 -->
-      <view class="comment-content">
-        <view class="comment-word">
-          回复Tina: 但是耶耶真的好可爱，真滴忍心让崽宝儿干这么多活儿吗，小朋友还是要劳逸结合呜呜呜。
-        </view>
-        <view class="comment-like">
-          <nut-icon name="fabulous" size="12px" /> 3
-        </view>
-      </view>
+    <comment-content 
+      :content="item.content" 
+      :stats="item.stats" 
+      :commentId="item.comment_id"
+      :userInfo="item.user"
+    />
+    <!-- 回复评论部分 -->
+    <view 
+      class="comment-reply-wrapper" 
+      v-for="reply in item.reply.reply_list" 
+      :key="reply.comment_id">
+      <!-- 回复头部 -->
+      <comment-user 
+        :isCommentAuthor="reply.user.is_comment_author"
+        :userInfo="reply.user" 
+        :createTime="reply.create_time"
+        :commentId = "reply.comment_id" />
+        <!-- 回复内容 -->
+      <comment-reply-content 
+        :content="reply.content" 
+        :stats="reply.stats" 
+        :commentId="reply.comment_id"
+        :replyToUser="reply.reply_to_user"
+        :userInfo="reply.user"
+      />
     </view>
   </view>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import utils from '@/utils/utils';
+import { onMounted, reactive } from 'vue';
+import Taro from '@tarojs/taro';
+import { commentList } from '@/api/index.js';
+import { CommentList } from '../../types';
 
-
-const timeStr = ref('')
-// 调用特定形式显示时间的公共方法
-timeStr.value = utils.publishTimeStr(1664941092067)
+import CommentUser from './comment/commentUser.vue';
+import CommentContent from './comment/commentContent.vue';
+import CommentReplyContent from './comment/commentReplyContent.vue';
+const props = defineProps({
+  newsInfo: {
+    type: Object,
+    required: true
+  },
+  changeCommentLoading: {
+    type: Function,
+    required: true
+  }
+})
+const state = reactive<{commentList: CommentList[], hasMore: boolean, nextCursor: number}>({
+  commentList: [],
+  hasMore: false, //当前页面是否还有内容
+  nextCursor: 0, // 下次请求的游标
+})
+//1. 获取并展示评论栏基础信息。页面初次展示在评论栏，故评论栏在页面初次渲染则获取所有评论信息 onmounted 生命周期函数
+onMounted(() => {
+  Taro.request({
+    url: getCommentListUrl({ new_id: props.newsInfo.id })
+  }).then((res) => {
+    // 调用改变 loading 值的方法
+    props.changeCommentLoading()
+    state.commentList = res.data.data.list
+    state.hasMore = res.data.data.has_more
+    state.nextCursor = res.data.data.next_cursor   
+  }).catch(() => {
+    Taro.showToast({
+        title: '载入远程数据出错',
+        icon: 'error'
+      })
+  })
+})
+// 1.1 定义获取评论内容的 url 函数
+const getCommentListUrl = ({
+  new_id,
+  cursor = 0,
+  count = 5, //默认一次获取 5 条
+  uid = 0 //TODO: 用户 uid 
+}): string => {
+  return `${commentList}?new_id=${new_id}&cursor=${cursor}&count=${count}&uid=${uid}`
+}
 </script>
 <style lang="scss">
 .comment-detail-wrapper {
   padding: 5px 0;
   border-bottom: 1px solid rgb(237, 237, 237);
-  .comment-detail {
-    height: 45px;
-    display: flex;
-    align-items: center;
-
-    .comment-avatar-wrapper {
-      width: 35px;
-      display: flex;
-      justify-content: center;
-      margin-right: 5px;
-
-      .avatar {
-        width: 30px;
-        height: 30px;
-      }
-
-    }
-
-    .comment-user-name {
-      margin-right: 5px;
-      font-family: 'PingFang SC';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 13px;
-    }
-
-    .comment-author {
-      margin-right: 5px;
-      padding: 0 2px;
-      font-weight: 400;
-      font-size: 10px;
-      line-height: 12px;
-      color: white;
-      background-color: rgb(225, 72, 72);
-      border-radius: 2px;
-    }
-    .comment-publish-time {
-      font-weight: 400;
-      font-size: 11px;
-      line-height: 12px;
-      /* 灰阶/Color_grey_4 */
-      color: $noteFontColor;
-    }
-
-  }
-
-  .comment-content {
-    padding-left: 35px;
-    position: relative;
-    
-    .comment-word {  
-      margin-right: 35px;
-      font-family: $fontFamilyText;
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 24px;
-      color: #3d3d3d;
-      // color: #454545;
-      text-align: left
-    } 
-
-    .comment-like {
-      position: absolute;
-      right: 0;
-      top: 0;
-      font-size: 12px;
-    }
-  }
   .comment-reply-wrapper {
     padding-left: 35px;
   }
 }
 </style>
+
