@@ -23,7 +23,9 @@ const unFollowUserPath = "/api/relation/unfollow" // 取消关注用户
 const followUserPath = "/api/relation/follow" // 关注用户
 const commentLikePath = "/api/comment/like" // 点赞评论
 const cancelCommentLikePath = "/api/comment/cancel_like" // 取消点赞评论
-const deleteCommentPath = " /api/comment/delete " // 删除评论
+const deleteCommentPath = "/api/comment/delete" // 删除评论
+const getPublishCategoryListPath = "/api/feed/publish_category_list" // 获取发布页分类列表
+const publishPath = "/api/feed/publish" // 内容/新闻发布
 
 const getCategoryList = getPathPrefix() + getCategoryListPath // 获取分类列表
 const getCategoryNewList = getPathPrefix() + getCategoryNewListPath // 获取分类下新闻列表
@@ -39,7 +41,8 @@ const followUser = getPathPrefix() + followUserPath // 关注用户
 const commentLike = getPathPrefix() + commentLikePath // 点赞评论
 const cancelCommentLike = getPathPrefix() + cancelCommentLikePath // 取消点赞评论
 const deleteComment = getPathPrefix() + deleteCommentPath // 删除评论
-
+const getPublishCategoryList = getPathPrefix() + getPublishCategoryListPath // 获取发布页分类列表
+const publish = getPathPrefix() + publishPath // 内容/新闻发布
 
 module.exports = {
     getCategoryList,
@@ -55,5 +58,7 @@ module.exports = {
     followUser,
     commentLike,
     cancelCommentLike,
-    deleteComment
+    deleteComment,
+    getPublishCategoryList,
+    publish
 }
