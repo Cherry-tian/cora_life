@@ -60,9 +60,7 @@ interface PubCategoryList {
   id: number,
   name: string
 }
-
 const store = useStore()
-store.commit('changeHomePageLoading', false)
 const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number}>({
   title: '',
   content: '',
@@ -85,6 +83,7 @@ onMounted(() => {
       uid: 0 // TODO: 获取当前发布内容用户的 uid 并传入
     }
   }).then((res) => {
+    store.commit('changeHomePageLoading', false)
     state.pubCategoryList = res.data.data.list
   }).catch(() => {
     Taro.showToast({

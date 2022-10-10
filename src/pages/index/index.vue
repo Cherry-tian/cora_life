@@ -7,7 +7,8 @@
     <news v-if="pageIndex == 1" />
     <publish v-if="pageIndex == 2" />
     <message v-if="pageIndex == 3" />
-    <My v-if="pageIndex == 4" />
+    <!-- <My v-if="pageIndex == 4" /> -->
+    <Login v-if="pageIndex == 4" />
   </view>
   <!-- 底部 tab 栏切换区域 -->
   <nut-tabbar :changePage="changePage" />
@@ -25,6 +26,7 @@ import My from '../my/index.vue';
 import { ref } from 'vue';
 import Loading from './components/loading.vue';
 import { useStore } from 'vuex';
+import Login from '../login/index.vue';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载
