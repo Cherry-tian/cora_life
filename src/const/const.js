@@ -6,7 +6,8 @@ const config = {
     themeColor: "#4382e2", // 腾讯主色
     fontColor: "#222",
     backgroundColor: "#FFFFFF",
-    activeIconColor: "#fa2c19"
+    activeIconColor: "#fa2c19",
+    wechatColor: 'rgb(0, 198, 70)', // 微信绿
   },
   // 将需要与后端协商明确的分类 id 维护在 const 中以便后期查询更改
   newestCategoryID: 1, // 「最新」这个tab的 category_id
