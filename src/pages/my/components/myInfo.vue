@@ -52,7 +52,7 @@ const props = defineProps({
 const handleClick = () => {
   store.commit('changeUserInfo', props.userInfo)
   Taro.navigateTo({
-    url: '../../pages/myInfo/index'
+    url: '/pages/myInfo/index'
   })
 }
 </script>
