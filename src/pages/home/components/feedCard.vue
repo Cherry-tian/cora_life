@@ -7,12 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import CardContent from "./cardContent.vue";
 import CardUser from "@/pages/commonComponents/cardUser.vue";
 import CardFooter from "../../commonComponents/cardFooter.vue";
 import { defineProps } from 'vue';
 import Taro from '@tarojs/taro';
 import { useStore } from "vuex";
+import CardContent from "@/pages/commonComponents/cardContent.vue";
 const props = defineProps(['itemInfo'])
 const store = useStore()
 const handleClickContent = () => {
