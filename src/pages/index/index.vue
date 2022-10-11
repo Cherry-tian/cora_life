@@ -7,8 +7,8 @@
     <news v-if="pageIndex == 1" />
     <publish v-if="pageIndex == 2" />
     <message v-if="pageIndex == 3" />
-    <!-- <My v-if="pageIndex == 4" /> -->
-    <Login v-if="pageIndex == 4" />
+    <My v-if="pageIndex == 4" />
+    <!-- <Login v-if="pageIndex == 4" /> -->
   </view>
   <!-- 底部 tab 栏切换区域 -->
   <nut-tabbar :changePage="changePage" />

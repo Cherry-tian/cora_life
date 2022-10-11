@@ -26,7 +26,10 @@ const cancelCommentLikePath = "/api/comment/cancel_like" // 取消点赞评论
 const deleteCommentPath = "/api/comment/delete" // 删除评论
 const getPublishCategoryListPath = "/api/feed/publish_category_list" // 获取发布页分类列表
 const publishPath = "/api/feed/publish" // 内容/新闻发布
-const loginPath = "api/user/login" // 用户登录
+const loginPath = "/api/user/login" // 用户登录
+const getUserInfoPath = "/api/user/info" // 获取用户信息
+const getMegNewsPath = "/api/feed/mget_news" // 批量获取新闻
+const editUserInfoPath = "/api/user/edit_ifno" // 修改用户资料
 
 const getCategoryList = getPathPrefix() + getCategoryListPath // 获取分类列表
 const getCategoryNewList = getPathPrefix() + getCategoryNewListPath // 获取分类下新闻列表
@@ -45,6 +48,9 @@ const deleteComment = getPathPrefix() + deleteCommentPath // 删除评论
 const getPublishCategoryList = getPathPrefix() + getPublishCategoryListPath // 获取发布页分类列表
 const publish = getPathPrefix() + publishPath // 内容/新闻发布
 const login = getPathPrefix() + loginPath // 用户登录
+const getUserInfo = getPathPrefix() + getUserInfoPath // 获取用户信息
+const getMegNews = getPathPrefix() + getMegNewsPath // 批量获取新闻
+const editUserInfo = getPathPrefix() + editUserInfoPath // 修改用户资料
 
 module.exports = {
     getCategoryList,
@@ -63,5 +69,8 @@ module.exports = {
     deleteComment,
     getPublishCategoryList,
     publish,
-    login
+    login,
+    getUserInfo,
+    getMegNews,
+    editUserInfo
 }

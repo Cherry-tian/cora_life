@@ -8,6 +8,8 @@ export default defineAppConfig({
     // 'pages/message/index',
     // 'pages/my/index',
     // 'pages/publish/index'
+    'pages/myInfo/index'
+
   ],
   window: {
     backgroundTextStyle: 'light',

@@ -4,5 +4,8 @@ export default {
   },
   changeNewsInfo(state: any, newsInfo: any): void {
     state.newsInfo = newsInfo
+  },
+  changeUserInfo(state: any, userInfo: any): void {
+    state.userInfo = userInfo
   }
 }

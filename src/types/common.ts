@@ -14,7 +14,7 @@ interface Interaction {
   forward_count: number,
   is_forwarded: boolean
 }
-interface User_new {
+export interface User_new {
   id: number;
   is_official: boolean;
   desrciprtion: string;
