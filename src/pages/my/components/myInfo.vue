@@ -38,16 +38,22 @@
   </view>
 </template>
 <script setup lang="ts">
+import { useStore } from 'vuex';
+import Taro from '@tarojs/taro'
 
-defineProps({
+const store = useStore()
+const props = defineProps({
   userInfo: {
     type: Object,
     required: true
   }
 })
-// 点击跳转到编辑资料页面按钮
+// 点击跳转到编辑资料页面按钮 改变 store 中 userInfo 的值
 const handleClick = () => {
-  
+  store.commit('changeUserInfo', props.userInfo)
+  Taro.navigateTo({
+    url: '../../pages/myInfo/index'
+  })
 }
 </script>
 <style lang="scss">
