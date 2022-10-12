@@ -3,8 +3,9 @@
     <view class="my-info">
       <view class="my-avatar-wrapper">
         <nut-avatar size="75" 
-        class="avatar" 
-        :icon="userInfo.avatar_url">
+          class="avatar" 
+          :icon="userInfo.avatar_url"
+        >
         </nut-avatar>
       </view>
       <view class="my-user-name">{{userInfo.name}}</view>
@@ -14,9 +15,20 @@
         plain
         @tap="handleClick"
         shape="square"
+        v-if="isSelf"
       >
         编辑资料
       </nut-button>
+      <FollowedBtn
+        v-else
+        class="my-follow-button"
+        :isFollowed="state.isFollowed"
+        :isLoading="state.isLoading"
+        :changeIsFollowed="changeIsFollowed"
+        :changeIsLoading="changeIsLoading"
+        :uid="props.userInfo.uid"
+      />
+      <!-- <button>fix编译bug</button> -->
     </view>
     <view class="my-intro">
       {{userInfo.description}}
@@ -40,14 +52,28 @@
 <script setup lang="ts">
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro'
+import { reactive, watch } from 'vue';
+import { followRelation, coFollowRelation } from '@/const';
+import FollowedBtn from '@/pages/commonComponents/followedBtn.vue';
 
 const store = useStore()
 const props = defineProps({
   userInfo: {
     type: Object,
     required: true
-  }
+  },
+  isSelf: Boolean
 })
+const state = reactive({
+  isLoading: false,
+  isFollowed: false,
+})
+const changeIsFollowed = (b) => {
+  state.isFollowed = b
+}
+const changeIsLoading = (b) => {
+  state.isLoading = b
+}
 // 点击跳转到编辑资料页面按钮 改变 store 中 userInfo 的值
 const handleClick = () => {
   store.commit('changeUserInfo', props.userInfo)
@@ -55,6 +81,16 @@ const handleClick = () => {
     url: '/pages/myInfo/index'
   })
 }
+watch(
+  () => props.userInfo,
+  (newUserInfo) => {
+    if (newUserInfo.relation_info.relation_type == followRelation || 
+      newUserInfo.relation_info.relation_type == coFollowRelation
+    ) {
+      state.isFollowed = true
+    }
+  }
+)
 </script>
 <style lang="scss">
 .my-info-wrapper {
@@ -67,6 +103,11 @@ const handleClick = () => {
       font-size: 22px;
     }
     .my-edit-button {
+      margin-left: auto;
+      justify-content: flex-end;
+      height: 26px;
+    }
+    .my-follow-button {
       margin-left: auto;
       justify-content: flex-end;
       height: 26px;
@@ -86,10 +127,10 @@ const handleClick = () => {
     .my-like, .my-subscribe, .my-fans {
       padding-right: 15px;
       .my-interaction-num {
-      color: black;
-      font-weight: 600;
-      font-size: 16px;
-    }
+        color: black;
+        font-weight: 600;
+        font-size: 16px;
+      }
     }
    
   }

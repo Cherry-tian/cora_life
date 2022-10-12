@@ -2,9 +2,12 @@
   <!-- 评论头部信息 -->
   <view class="comment-detail">
       <view class="comment-avatar-wrapper">
-        <nut-avatar size="normal" 
-        class="avatar" 
-        :icon="userInfo.avatar_url">
+        <nut-avatar
+          size="normal" 
+          class="avatar" 
+          :icon="userInfo.avatar_url"
+          @tap="() => utils.jumpToUserPage(userInfo.uid)"
+        >
         </nut-avatar>
       </view>
       <view>

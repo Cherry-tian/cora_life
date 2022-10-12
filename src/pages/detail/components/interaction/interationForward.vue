@@ -3,9 +3,12 @@
     <!-- 转发头部信息 -->
     <view class="forward-detail">
       <view class="forward-avatar-wrapper">
-        <nut-avatar size="normal" 
-        class="avatar" 
-        :icon="forwardInfo.user.avatar_url">
+        <nut-avatar
+          size="normal" 
+          class="avatar" 
+          :icon="forwardInfo.user.avatar_url"
+          @tap="() => utils.jumpToUserPage(forwardInfo.user.uid)"
+        >
         </nut-avatar>
       </view>
       <view>
