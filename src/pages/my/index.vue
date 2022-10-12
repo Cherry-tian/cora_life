@@ -1,6 +1,6 @@
 <template>
   <view class="my-page">
-    <MyInfo :userInfo="state.userInfo" />
+    <MyInfo :userInfo="state.userInfo" :isSelf='true'/>
     <MyTabs :userInfo="state.userInfo" />
   </view>
 </template>
@@ -21,7 +21,6 @@ onMounted(() => {
     data: {
       // TODO: 输入当前使用者的 id 
       uid: 0,
-      curr_uid: 0
     }
   }).then((res) => {
     state.userInfo = res.data.data
