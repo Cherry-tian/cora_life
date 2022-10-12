@@ -33,7 +33,7 @@ const store = useStore()
 const pageIndex = ref(0)
 const changePage = (index: number) => {
   pageIndex.value = index
-  // store.commit('changeHomePageLoading', true) // TODO jacle
+  store.commit('changeHomePageLoading', true)
 }
 
 </script>
