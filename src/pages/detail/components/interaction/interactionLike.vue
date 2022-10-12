@@ -4,8 +4,10 @@
     <view class="like-detail">
       <view class="like-avatar-wrapper">
         <nut-avatar size="normal" 
-        class="avatar" 
-        :icon="likeInfo.user.avatar_url">
+          class="avatar" 
+          :icon="likeInfo.user.avatar_url"
+          @tap="() => utils.jumpToUserPage(likeInfo.user.uid)"
+        >
         </nut-avatar>
       </view>
       <view>

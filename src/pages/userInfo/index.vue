@@ -1,6 +1,6 @@
 <template>
-  <view class="my-page">
-    <MyInfo :userInfo="state.userInfo" :isSelf='true'/>
+  <view class="user-info">
+    <MyInfo :userInfo="state.userInfo" :isSelf='state.isSelf'/>
     <MyTabs :userInfo="state.userInfo" />
   </view>
 </template>
@@ -12,30 +12,38 @@ import Taro from '@tarojs/taro';
 import { getUserInfo } from '@/api/index.js';
 
 const state = reactive({
-  userInfo: {}
+  userInfo: {},
+  isSelf: false, // 访问 用户页的人 是否为该用户本人
 })
-// 1. 发起获取 my 页面信息的请求
-onMounted(() => {
+
+onMounted(async () => {
+  // 从路由获取参数uid, 再调接口获取用户信息
+  const uid = getUidFromRouterParams()
+  await fetchUserInfo(uid)
+  state.isSelf = false // TODO 判断
+})
+
+const getUidFromRouterParams = (): number => {
+  const routerParams = Taro.getCurrentInstance().router.params
+  return Number(routerParams.uid)
+}
+
+const fetchUserInfo = async (uid: number) => {
   Taro.request({
     url: getUserInfo,
     data: {
-      // TODO: 输入当前使用者的 id 
-      uid: 0,
+      uid,
     }
   }).then((res) => {
     state.userInfo = res.data.data
-    
   }).catch(error => {
     console.log("error", error)
     Taro.showToast({
       title: '载入远程数据错误'
     })
   })
-})
+}
 // 2. TODO： 判断用户sessionID 是否过期，跳转到登录页面
 </script>
 <style>
-.my-page {
-  padding-bottom: 90px;
-}
 </style>

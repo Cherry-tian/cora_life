@@ -13,7 +13,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
-import MyTabCard from './myTabCard.vue';
+import MyTabCard from '@/pages/commonComponents/myTabCard.vue';
 import { getMegNews } from '@/api/index.js';
 import Taro from '@tarojs/taro';
 import { User_new } from '@/types/common';
@@ -108,6 +108,5 @@ const changeTabRequest = (userInfo, tabIndex: string) => {
 <style>
 .my-tab-tabpane {
   padding-top: 0;
-  padding-bottom: 90px;
 }
 </style>
