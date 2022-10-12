@@ -4,7 +4,8 @@
       <view class="my-avatar-wrapper">
         <nut-avatar size="75" 
           class="avatar" 
-          :icon="userInfo.avatar_url">
+          :icon="userInfo.avatar_url"
+        >
         </nut-avatar>
       </view>
       <view class="my-user-name">{{userInfo.name}}</view>
@@ -83,14 +84,10 @@ const handleClick = () => {
 watch(
   () => props.userInfo,
   (newUserInfo) => {
-    console.log('newUserInfo',newUserInfo)
     if (newUserInfo.relation_info.relation_type == followRelation || 
       newUserInfo.relation_info.relation_type == coFollowRelation
     ) {
-      console.log('state.isFollowed',state.isFollowed)
       state.isFollowed = true
-      console.log('state.isFollowed',state.isFollowed)
-
     }
   }
 )
