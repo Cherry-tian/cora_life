@@ -1,6 +1,6 @@
 <template>
   <view class="card-user">
-    <view class="avatar-wrapper" @tap="utils.jumpToUserPage">
+    <view class="avatar-wrapper" @tap="() => utils.jumpToUserPage(authorInfo.uid)">
       <nut-avatar size="normal" 
       class="avatar" 
       :icon="authorInfo.avatar_url">

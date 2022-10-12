@@ -3,8 +3,8 @@
     <view class="my-info">
       <view class="my-avatar-wrapper">
         <nut-avatar size="75" 
-        class="avatar" 
-        :icon="userInfo.avatar_url">
+          class="avatar" 
+          :icon="userInfo.avatar_url">
         </nut-avatar>
       </view>
       <view class="my-user-name">{{userInfo.name}}</view>
