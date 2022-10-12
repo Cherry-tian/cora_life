@@ -8,8 +8,8 @@ export default defineAppConfig({
     // 'pages/message/index',
     // 'pages/my/index',
     // 'pages/publish/index'
-    'pages/myInfo/index'
-
+    'pages/myInfo/index',
+    'pages/userInfo/index', // 用户信息页，复用个人主页
   ],
   window: {
     backgroundTextStyle: 'light',

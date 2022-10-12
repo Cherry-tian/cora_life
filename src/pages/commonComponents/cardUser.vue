@@ -1,5 +1,5 @@
 <template>
-  <view class="card-user">
+  <view class="card-user" @tap="handleClickUser">
     <view class="avatar-wrapper">
       <nut-avatar size="normal" 
       class="avatar" 
@@ -98,6 +98,13 @@ const handleFllowbtnClick = () => {
       })
     })
   }
+}
+const handleClickUser = () => {
+  console.log(3)
+  console.log('props.authorInfo.uid',props.authorInfo.uid)
+  Taro.navigateTo({
+    url: `/pages/userInfo/index?uid=${props.authorInfo.uid}`
+  })
 }
 const timeStr = ref('')
 // 调用特定形式显示时间的公共方法,包裹在 onmounted 生命周期函数中

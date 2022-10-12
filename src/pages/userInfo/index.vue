@@ -1,5 +1,5 @@
 <template>
-  <view class="my-page">
+  <view class="user-info">
     <MyInfo :userInfo="state.userInfo" />
     <MyTabs :userInfo="state.userInfo" />
   </view>
@@ -14,14 +14,17 @@ import { getUserInfo } from '@/api/index.js';
 const state = reactive({
   userInfo: {}
 })
-// 1. 发起获取 my 页面信息的请求
-onMounted(() => {
+
+onMounted(async () => {
+  // 从路由获取参数uid
+  await fetchUserInfo(1) // TODO
+})
+
+const fetchUserInfo = async (uid: number) => {
   Taro.request({
     url: getUserInfo,
     data: {
-      // TODO: 输入当前使用者的 id 
-      uid: 0,
-      curr_uid: 0
+      uid,
     }
   }).then((res) => {
     state.userInfo = res.data.data
@@ -32,11 +35,8 @@ onMounted(() => {
       title: '载入远程数据错误'
     })
   })
-})
+}
 // 2. TODO： 判断用户sessionID 是否过期，跳转到登录页面
 </script>
 <style>
-.my-page {
-  padding-bottom: 90px;
-}
 </style>

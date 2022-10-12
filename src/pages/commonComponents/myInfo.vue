@@ -17,6 +17,7 @@
       >
         编辑资料
       </nut-button>
+      <!-- <button>fix编译bug</button> -->
     </view>
     <view class="my-intro">
       {{userInfo.description}}
@@ -86,10 +87,10 @@ const handleClick = () => {
     .my-like, .my-subscribe, .my-fans {
       padding-right: 15px;
       .my-interaction-num {
-      color: black;
-      font-weight: 600;
-      font-size: 16px;
-    }
+        color: black;
+        font-weight: 600;
+        font-size: 16px;
+      }
     }
    
   }
