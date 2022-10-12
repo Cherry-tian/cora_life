@@ -30,6 +30,10 @@ const loginPath = "/api/user/login" // 用户登录
 const getUserInfoPath = "/api/user/info" // 获取用户信息
 const getMegNewsPath = "/api/feed/mget_news" // 批量获取新闻
 const editUserInfoPath = "/api/user/edit_ifno" // 修改用户资料
+const getOfficialMsgListPath = "/api/feed/official_message_list" // 获取消息页官方信息列表
+const getCommentMsgListPath = "/api/feed/message/comment_list" // 获取消息页评论信息列表
+const getInteractionMsgListPath = "/api/message/interaction/detail" // 获取消息页赞和收藏互动列表
+const getUserFansListPath = "/api/feed/message/fans_list" // 获取用户粉丝列表，包含粉丝和互关
 
 const getCategoryList = getPathPrefix() + getCategoryListPath // 获取分类列表
 const getCategoryNewList = getPathPrefix() + getCategoryNewListPath // 获取分类下新闻列表
@@ -51,6 +55,10 @@ const login = getPathPrefix() + loginPath // 用户登录
 const getUserInfo = getPathPrefix() + getUserInfoPath // 获取用户信息
 const getMegNews = getPathPrefix() + getMegNewsPath // 批量获取新闻
 const editUserInfo = getPathPrefix() + editUserInfoPath // 修改用户资料
+const getOfficialMsgList = getPathPrefix() + getOfficialMsgListPath // 获取消息页官方信息列表
+const getCommentMsgList = getPathPrefix() + getCommentMsgListPath // 获取消息页评论信息列表
+const getInteractionMsgList = getPathPrefix() + getInteractionMsgListPath // 获取消息页赞和收藏互动列表
+const getUserFansList = getPathPrefix() + getUserFansListPath // 获取用户粉丝列表，包含粉丝和互关
 
 module.exports = {
     getCategoryList,
@@ -72,5 +80,9 @@ module.exports = {
     login,
     getUserInfo,
     getMegNews,
-    editUserInfo
+    editUserInfo,
+    getOfficialMsgList,
+    getCommentMsgList,
+    getInteractionMsgList,
+    getUserFansList
 }

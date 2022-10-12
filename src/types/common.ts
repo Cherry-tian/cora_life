@@ -15,14 +15,14 @@ interface Interaction {
   is_forwarded: boolean
 }
 export interface User_new {
-  id: number;
-  is_official: boolean;
-  desrciprtion: string;
-  create_time: number;
-  title: string;
-  author: Author;
-  image_url_list: string[];
-  interaction: Interaction
+  id?: number;
+  is_official?: boolean;
+  desrciprtion?: string;
+  create_time?: number;
+  title?: string;
+  author?: Author;
+  image_url_list?: string[];
+  interaction?: Interaction
 }
 export interface CategoryNewList {
   item_type: string;
