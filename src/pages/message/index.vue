@@ -25,10 +25,10 @@ import Taro from '@tarojs/taro';
 import { useStore } from 'vuex';
 import OfficialCard from './components/officialCard.vue';
 import CommentCard from './components/CommentCard.vue';
-import FansCard from './components/FansCard.vue';
 import LikeCard from './components/LikeCard.vue';
 import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList} from '@/api/index.js';
 import Loading from './components/loading.vue';
+import FansCard from '../commonComponents/FansCard.vue';
  
 const store = useStore()
 
