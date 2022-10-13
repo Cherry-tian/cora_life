@@ -38,11 +38,11 @@
         <text class="my-interaction-num">{{userInfo.relation_info.statistics.liked_count}}</text>
         获赞
       </view>
-      <view class="my-subscribe">
+      <view class="my-subscribe" @tap="handleClickFollow">
         <text class="my-interaction-num">{{userInfo.relation_info.statistics.following_count}}</text>
         关注
       </view>
-      <view class="my-fans">
+      <view class="my-fans" @tap="handleClickFans">
         <text class="my-interaction-num">{{userInfo.relation_info.statistics.follower_count}}</text>
         粉丝
       </view>
@@ -91,6 +91,18 @@ watch(
     }
   }
 )
+// 点击 关注 跳转到关注页
+const handleClickFollow = () => {
+  Taro.navigateTo({
+    url: '/pages/follow/index'
+  })
+}
+// 点击 粉丝 跳转到粉丝页
+const handleClickFans = () => {
+  Taro.navigateTo({
+    url: '/pages/fans/index'
+  })
+}
 </script>
 <style lang="scss">
 .my-info-wrapper {

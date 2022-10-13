@@ -1,0 +1,43 @@
+<template>
+  <view class="fans-page">
+    <FansCard v-for="item in state.fansList" :key="item.follow_uid" :itemInfo="item"/>
+  </view>
+ 
+</template>
+<script setup lang="ts">
+import { onMounted, reactive } from 'vue';
+import FansCard from '../commonComponents/FansCard.vue';
+import Taro from '@tarojs/taro';
+import { getUserFansList } from '@/api/index.js';
+const state = reactive({
+  fansList: [],
+  fansNextCursor: 0,
+  fansIsLoading: true,
+  fansHasMore: false
+})
+onMounted(() => {
+  Taro.request({
+    url: getUserFansList,
+    data: {
+      cursor: state.fansNextCursor, //起始游标
+      count: 10, // 请求数量
+      uid: 123 //TODO：用户 ID
+    }
+  }).then((res) => {
+    state.fansList = res.data.data.list
+    state.fansIsLoading = false
+    state.fansHasMore = res.data.data.has_more
+    state.fansNextCursor = res.data.data.next_cursor
+  }).catch(() => {
+    Taro.showToast({
+      title: '载入远程数据出错',
+      icon: 'error'
+    })
+  })
+})
+</script>
+<style lang="scss">
+.fans-page {
+  padding: 0 15px 90px;
+}
+</style>

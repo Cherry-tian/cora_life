@@ -22,7 +22,7 @@
         :color="state.isFollowed? '' : '#ff5900'"
         :loading="state.isLoading"
         @tap="handleClickFollow"
-        >
+      >
         {{ `${ state.isFollowed? '互相关注' : '关注'}` }}
       </nut-button>
       <nut-button 
