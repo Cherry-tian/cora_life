@@ -26,11 +26,10 @@ import My from '../my/index.vue';
 import { ref } from 'vue';
 import Loading from './components/loading.vue';
 import { useStore } from 'vuex';
-import Login from '../login/index.vue';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载
-const pageIndex = ref(0)
+const pageIndex = ref(3) // TODO 恢复
 const changePage = (index: number) => {
   pageIndex.value = index
   store.commit('changeHomePageLoading', true)

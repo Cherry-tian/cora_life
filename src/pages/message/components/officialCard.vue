@@ -26,7 +26,6 @@ defineProps({
 .official-wrapper {
   border-bottom: 1px solid #ebebeb;
   display: flex;
-  justify-content: center;
   padding: 10px 0;
   .official-avatar {
     width: 30px;
