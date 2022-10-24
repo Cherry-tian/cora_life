@@ -1,4 +1,4 @@
-import { getCategoryNewList } from '@/api/index.js';
+import { getCategoryNewList, getSelfUID } from '@/api/index.js';
 import Taro from '@tarojs/taro';
 
 //1. 定义获取内容列表的 URL （将需要传递的查询参数进行拼接处理）函数参数的解构赋值，可以设置默认值
@@ -52,8 +52,27 @@ const jumpToUserPage = (uid) => {
   })
 }
 
+// 获取用户自己的uid
+const getUID = async () => {
+  const uid =  await Taro.request({
+    url: getSelfUID,
+    header: { // TODO remove jwt
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+    }
+  }).then((res) => {
+    return res.data.uid
+  }).catch(() => {
+    Taro.showToast({
+      title: '载入远程数据出错',
+      icon: 'error'
+    })
+  })
+  return uid
+}
+
 export default {
   getCategoryNewListUrl,
   jumpToUserPage,
-  publishTimeStr
+  publishTimeStr,
+  getUID
 }

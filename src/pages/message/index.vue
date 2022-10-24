@@ -26,7 +26,7 @@ import { useStore } from 'vuex';
 import OfficialCard from './components/officialCard.vue';
 import CommentCard from './components/CommentCard.vue';
 import LikeCard from './components/LikeCard.vue';
-import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList} from '@/api/index.js';
+import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList } from '@/api/index.js';
 import Loading from './components/loading.vue';
 import FansCard from '../commonComponents/FansCard.vue';
  
@@ -56,13 +56,33 @@ const state = reactive({
 })
  
  // 1. 页面初次加载时请求 官方消息 的数据内容
-onMounted(() => {
+onMounted(async () => {
+  await fetchOfficialMsgs()
+})
+ // 2. 页面首次切换到 评论、粉丝和赞 的时候加载对应数据内容
+watch(
+  () => state.tabIndex,
+  async (newTabIndex) => {
+  // 首次切换到评论栏
+    if (newTabIndex === commentTabIndex && !state.commentList.length) {
+      await fetchCommentMsgs()
+    }
+    // 首次切换到粉丝栏
+    if (newTabIndex === fansTabIndex && !state.fansList.length) {
+      await fetchUserFanss()
+    }
+    // 首次切换到赞和收藏栏
+    if (newTabIndex === likeTabIndex && !state.likeList.length) {
+      await fetInteractionMsgs()
+    }
+  }
+)
+const fetchOfficialMsgs = async () => {
   Taro.request({
     url: getOfficialMsgList,
     data: {
       cursor: state.officialNextCursor, //起始游标
-      count: 5, // 请求数量
-      uid: 123 //TODO：用户 ID
+      count: 10, // 请求数量
     }
   }).then((res) => {
     state.officialList = res.data.data.list
@@ -75,77 +95,68 @@ onMounted(() => {
       icon: 'error'
     })
   })
- })
- // 2. 页面首次切换到 评论、粉丝和赞 的时候加载对应数据内容
- watch(
-   () => state.tabIndex,
-   (newTabIndex) => {
-    // 首次切换到评论栏
-     if (newTabIndex === commentTabIndex && !state.commentList.length) {
-      Taro.request({
-        url: getCommentMsgList,
-        data: {
-          cursor: state.commentNextCursor, //起始游标
-          count: 10, // 请求数量
-          uid: 123 //TODO：用户 ID
-        }
-      }).then((res) => {
-        state.commentList = res.data.data.list
-        state.commentIsLoading = false
-        state.commentHasMore = res.data.data.has_more
-        state.commentNextCursor = res.data.data.next_cursor
-      }).catch(() => {
-        Taro.showToast({
-          title: '载入远程数据出错',
-          icon: 'error'
-        })
-      })
-     }
-     // 首次切换到粉丝栏
-     if (newTabIndex === fansTabIndex && !state.fansList.length) {
-      Taro.request({
-        url: getUserFansList,
-        data: {
-          cursor: state.fansNextCursor, //起始游标
-          count: 10, // 请求数量
-          uid: 123 //TODO：用户 ID
-        }
-      }).then((res) => {
-        state.fansList = res.data.data.list
-        state.fansIsLoading = false
-        state.fansHasMore = res.data.data.has_more
-        state.fansNextCursor = res.data.data.next_cursor
-      }).catch(() => {
-        Taro.showToast({
-          title: '载入远程数据出错',
-          icon: 'error'
-        })
-      })
-     }
-     // 首次切换到赞和收藏栏
-     if (newTabIndex === likeTabIndex && !state.likeList.length) {
-      Taro.request({
-        url: getInteractionMsgList,
-        data: {
-          cursor: state.likeNextCursor, //起始游标
-          count: 10, // 请求数量
-          uid: 123 //TODO：用户 ID
-        }
-      }).then((res) => {
-        state.likeList = res.data.data.list
-        state.likeIsLoading = false
-        state.likeHasMore = res.data.data.has_more
-        state.likeNextCursor = res.data.data.next_cursor
-      }).catch(() => {
-        Taro.showToast({
-          title: '载入远程数据出错',
-          icon: 'error'
-        })
-      })
-     }
-   }
- )
- 
+}
+const fetchCommentMsgs = async () => {
+  Taro.request({
+    url: getCommentMsgList,
+    data: {
+      cursor: state.commentNextCursor, //起始游标
+      count: 10, // 请求数量
+    }
+  }).then((res) => {
+    state.commentList = res.data.data.list
+    state.commentIsLoading = false
+    state.commentHasMore = res.data.data.has_more
+    state.commentNextCursor = res.data.data.next_cursor
+  }).catch(() => {
+    Taro.showToast({
+      title: '载入远程数据出错',
+      icon: 'error'
+    })
+  })
+}
+const fetchUserFanss = async () => {
+  return Taro.request({
+    url: getUserFansList,
+    data: {
+      cursor: state.fansNextCursor, // 起始游标
+      count: 20, // 请求数量
+    },
+    header: { // TODO remove jwt
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+    }
+  }).then((res) => {
+    state.fansList = res.data.data.list
+    state.fansIsLoading = false
+    state.fansHasMore = res.data.data.has_more
+    state.fansNextCursor = res.data.data.next_cursor
+  }).catch(() => {
+    Taro.showToast({
+      title: '载入远程数据出错',
+      icon: 'error'
+    })
+  })
+}
+const fetInteractionMsgs = async () => {
+  return Taro.request({
+    url: getInteractionMsgList,
+    data: {
+      cursor: state.likeNextCursor, //起始游标
+      count: 10, // 请求数量
+    }
+  }).then((res) => {
+    state.likeList = res.data.data.list
+    state.likeIsLoading = false
+    state.likeHasMore = res.data.data.has_more
+    state.likeNextCursor = res.data.data.next_cursor
+  }).catch(() => {
+    Taro.showToast({
+      title: '载入远程数据出错',
+      icon: 'error'
+    })
+  })
+}
+
 </script>
 <style lang="scss">
 .message-tab-wrapper {
@@ -155,5 +166,5 @@ onMounted(() => {
    padding-bottom: 90px;
  }
 }
- </style>
+</style>
  

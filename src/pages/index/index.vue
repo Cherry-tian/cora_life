@@ -11,8 +11,10 @@
     <!-- <Login v-if="pageIndex == 4" /> -->
   </view>
   <!-- 底部 tab 栏切换区域 -->
-  <nut-tabbar :changePage="changePage" />
-
+  <nut-tabbar
+    :changePage="changePage"
+    :currPageIndex="pageIndex"
+  />
 </template>
 
 <script setup lang="ts">
@@ -26,14 +28,15 @@ import My from '../my/index.vue';
 import { ref } from 'vue';
 import Loading from './components/loading.vue';
 import { useStore } from 'vuex';
-import Login from '../login/index.vue';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载
 const pageIndex = ref(0)
 const changePage = (index: number) => {
-  pageIndex.value = index
-  store.commit('changeHomePageLoading', true)
+  if (pageIndex.value !== index) {
+    store.commit('changeHomePageLoading', true)
+    pageIndex.value = index
+  }
 }
 
 </script>

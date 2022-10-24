@@ -66,8 +66,8 @@ const hideFn = () => {
   text-align: left;
 
   .img-item {
-    width: 109px;
-    height: 109px;
+    width: 108px;
+    height: 108px;
     margin-top: -3px;
     border-radius: 4px 4px 4px 4px;
     margin-left: 2px;
