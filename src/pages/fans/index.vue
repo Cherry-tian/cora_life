@@ -21,7 +21,6 @@ onMounted(() => {
     data: {
       cursor: state.fansNextCursor, //起始游标
       count: 10, // 请求数量
-      uid: 123 //TODO：用户 ID
     }
   }).then((res) => {
     state.fansList = res.data.data.list

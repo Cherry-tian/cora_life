@@ -10,6 +10,7 @@
       <nut-tabbar-item tab-title="首页" icon="home"></nut-tabbar-item>
       <nut-tabbar-item tab-title="新闻" icon="find"></nut-tabbar-item>
       <nut-tabbar-item tab-title="发布" icon="uploader"></nut-tabbar-item>
+      <!-- TODO 消息红点提示 -->
       <!-- <nut-tabbar-item tab-title="消息" icon="message" :dot="true"></nut-tabbar-item> -->
       <nut-tabbar-item tab-title="消息" icon="message"></nut-tabbar-item>
       <nut-tabbar-item tab-title="我的" icon="my"></nut-tabbar-item>

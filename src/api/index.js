@@ -35,6 +35,7 @@ const getCommentMsgListPath = "/api/message/comment_list" // 获取消息页评�
 const getInteractionMsgListPath = "/api/message/interaction_list" // 获取消息页赞和收藏互动列表
 const getUserFansListPath = "/api/user/fans_list" // 获取用户粉丝列表，包含粉丝和互关
 const getFollowListPath = "/api/user/follow_list" // 获取用户关注列表，包含关注和互关
+const getSelfUIDPath = "/api/user/self_uid" // 获取用户自己的uid
 
 const getCategoryList = getPathPrefix() + getCategoryListPath // 获取分类列表
 const getCategoryNewList = getPathPrefix() + getCategoryNewListPath // 获取分类下新闻列表
@@ -56,6 +57,7 @@ const login = getPathPrefix() + loginPath // 用户登录
 const getUserInfo = getPathPrefix() + getUserInfoPath // 获取用户信息
 const getMegNews = getPathPrefix() + getMegNewsPath // 批量获取新闻
 const editUserInfo = getPathPrefix() + editUserInfoPath // 修改用户资料
+const getSelfUID = getPathPrefix() + getSelfUIDPath // 获取用户自己的uid
 
 const getOfficialMsgList = getPathPrefix() + getOfficialMsgListPath // 获取消息页官方信息列表
 const getCommentMsgList = getPathPrefix() + getCommentMsgListPath // 获取消息页评论信息列表
@@ -88,5 +90,6 @@ module.exports = {
     getCommentMsgList,
     getInteractionMsgList,
     getUserFansList,
-    getFollowList
+    getFollowList,
+    getSelfUID
 }
