@@ -30,9 +30,12 @@
     <!-- 图片上传区域 -->
     <nut-uploader 
       class="img-uploader"
-      :url="uploadUrl"
+      :url=uploadImg
       multiple
       maximum="9"
+      @success="uploadImgSuccess"
+      @failure="uploadImgFailure"
+      @delete="uploadImgDelete"
      />
     <!-- 分类列表区域 -->
     <nut-cell class="publish-list">
@@ -51,25 +54,31 @@
   </view>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, watch } from 'vue';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
-import { getPublishCategoryList, publish } from '@/api/index.js';
+import { getPublishCategoryList, publish, uploadImg } from '@/api/index.js';
 import { officialCategroyId } from '@/const';
 interface PubCategoryList {
   id: number,
   name: string
 }
+interface Data {
+  title: string | undefined;
+  content: string;
+  category_id: number;
+  uri_list?: string[];
+  uid?: number;
+}
 const store = useStore()
-const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number}>({
+const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[]}>({
   title: '',
   content: '',
   isLoading: false,
   pubCategoryList: [],
-  categoryId: 0
+  categoryId: 0,
+  uriList: []
 })
-// TODO: 获取图片的url
-const uploadUrl = ref('http://xxxxxx')
 // 定义判断用户选择分类是否为官方新闻
 const isOfficial = computed(() => {
   return state.categoryId === officialCategroyId
@@ -98,17 +107,26 @@ const handleBtnClick = () => {
   // 需提前检验用户输入内容是否合法
   const isPassValidation = validatePublishData()
   if (isPassValidation) {
+    // 发起请求携带参数
+    let data: Data = {
+      title: state.title ? state.title : undefined, //只有新闻类需要传入 title
+      content: state.content,
+      category_id: state.categoryId,
+      // uid: TODO
+    }
+    console.log('state.uriList',state.uriList)
+    if (state.uriList.length) {
+      // 先过滤 ‘’ 的项
+      const uriList = state.uriList.filter(uri => uri.length > 0)
+      if (uriList.length) {
+        data.uri_list = uriList
+      }
+    }
     state.isLoading = true
     Taro.request({
       method: 'POST',
       url: publish,
-      data: {
-        title: state.title,
-        content: state.content,
-        category_id: state.categoryId,
-        uri: '', // TODO: 输入登录用户 uid 和上传图片的 URL
-        uid: ''
-      }
+      data,
     }).then(() => {
       state.isLoading = false
       Taro.showToast({
@@ -160,6 +178,19 @@ watch(
     immediate: true
   }
 )
+
+// 4. 用户上传成功、上传失败、删除图片时更新 uriList
+const uploadImgSuccess = ({responseText}) => {
+  const resData = JSON.parse(responseText.data) 
+  state.uriList.push(resData.data.uri)
+}
+const uploadImgFailure = () => {
+  // 如果上传失败则 push 空字符串，保证 delete 时根据 index 的移除是正确的
+  state.uriList.push('')
+}
+const uploadImgDelete = ({ index }) => {
+  state.uriList.splice(index, 1) 
+}
 </script>
 <style lang="scss">
 .publish-wrapper {

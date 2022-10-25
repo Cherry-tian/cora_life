@@ -31,7 +31,7 @@ import { useStore } from 'vuex';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载
-const pageIndex = ref(0)
+const pageIndex = ref(2) // todo
 const changePage = (index: number) => {
   if (pageIndex.value !== index) {
     store.commit('changeHomePageLoading', true)
