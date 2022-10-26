@@ -83,7 +83,6 @@ const changeTabRequest = (userInfo, tabIndex: string) => {
     url: getMegNews,
     data: {
       new_id_list: new_id_list.join(','), //数组参数拼接为字符串
-      uid: 0 //TODO：发起请求的用户的uid（未登录则不传）
     }
   }).then((res) => {
     switch (tabIndex) {

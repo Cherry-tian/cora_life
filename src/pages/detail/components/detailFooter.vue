@@ -9,7 +9,12 @@
           <nut-icon name="comment" size="18"></nut-icon>
         </view>
         <view class="detail-footer-icon" @tap="handleShareClick">
-          <nut-icon name="share-n" size="18"></nut-icon>
+          <!-- openType='share' 的button才能触发微信分享 -->
+          <nut-button
+            openType='share'
+            class="detail-footer-share"
+            icon='share-n'
+          />
         </view>
         <view class="detail-footer-icon" @tap="handleFavoriteClick" :style="state.isFavorited ? activeIconStyle: ''">
           <nut-icon name="star-n" size="18" :class="state.favoriteIconClass"></nut-icon>
@@ -171,7 +176,6 @@ const handleLikeClick = () => {
 // TODO: 分享按钮跳转到发布页面
 const handleShareClick = () => {
   console.log('share')
-  
 }
 </script>
 <style lang="scss">
@@ -207,6 +211,14 @@ const handleShareClick = () => {
         display: flex;
         justify-content: center;
         align-items: center;
+
+        .detail-footer-share {
+          height: 32px;
+          background: transparent;	// 按钮背景透明
+          border-width: 0px;	// 边框透明
+          outline: none;	// 点击后没边框
+          color: black;
+        }
       }
     }
   }

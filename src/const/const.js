@@ -9,6 +9,9 @@ const config = {
     activeIconColor: "#fa2c19",
     wechatColor: 'rgb(0, 198, 70)', // 微信绿
   },
+  appConfig: {
+    name: 'yiLife' // 小程序名称
+  },
   // 将需要与后端协商明确的分类 id 维护在 const 中以便后期查询更改
   newestCategoryID: 1, // 「最新」这个tab的 category_id
   newsCategoryId: 1, // 新闻页面的 category_id

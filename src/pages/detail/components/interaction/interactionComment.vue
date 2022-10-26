@@ -21,7 +21,8 @@
     <view 
       class="comment-reply-wrapper" 
       v-for="reply in item.reply.reply_list" 
-      :key="reply.comment_id">
+      :key="reply.comment_id"
+    >
       <!-- 回复头部 -->
       <comment-user 
         :isCommentAuthor="reply.user.is_comment_author"
@@ -85,9 +86,8 @@ const getCommentListUrl = ({
   new_id,
   cursor = 0,
   count = 5, //默认一次获取 5 条
-  uid = 0 //TODO: 用户 uid 
 }): string => {
-  return `${commentList}?new_id=${new_id}&cursor=${cursor}&count=${count}&uid=${uid}`
+  return `${commentList}?new_id=${new_id}&cursor=${cursor}&count=${count}`
 }
 </script>
 <style lang="scss">
