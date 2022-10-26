@@ -62,8 +62,9 @@ const state = reactive<{ categoryList: CateGroy[], tabIndex: string, categoryNew
   nextCursor: 0, // 下次请求的游标
   loading: true,
 })
-
 const categoryNewListMap = new Map()
+const hasMoreMap = new Map()
+const nextCursorMap = new Map()
 const getCurrentCategroyIdByTabIndex = (tabIndex: string): number =>  {
   let index = Number(tabIndex)
   return state.categoryList[index].id 
@@ -100,10 +101,14 @@ watch(
     // 判断 map 对象中是否有该 ID 对应的值，如果没有则发起请求
     if (!categoryNewListMap.has(tabIndex)) {
       // 针对每个 categroy 发起请求前清空当前数据
-      state.categoryNewList =[]
+      state.categoryNewList = []
+      state.hasMore = false
+      state.nextCursor = 0
       await fetchNewList(getCurrentCategroyIdByTabIndex(tabIndex))
     } else {
       state.categoryNewList = categoryNewListMap.get(tabIndex)
+      state.hasMore = hasMoreMap.get(tabIndex)
+      state.nextCursor = nextCursorMap.get(tabIndex)
     }  
     state.loading = false
   }
@@ -122,6 +127,8 @@ const fetchNewList = async (category_id) => {
     state.hasMore = res.data.data.has_more
     state.nextCursor = res.data.data.next_cursor
     categoryNewListMap.set(state.tabIndex, state.categoryNewList)
+    hasMoreMap.set(state.tabIndex, state.hasMore)
+    nextCursorMap.set(state.tabIndex, state.nextCursor)
   }).catch((error) => {
     Taro.showToast({
       title: error.message,
