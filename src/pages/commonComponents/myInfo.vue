@@ -33,7 +33,7 @@
     <view class="my-intro">
       {{userInfo.description}}
     </view>
-    <view class="my-interaction-list">
+    <!-- <view class="my-interaction-list">
       <view class="my-like">
         <text class="my-interaction-num">{{userInfo.relation_info.statistics.liked_count}}</text>
         获赞
@@ -46,7 +46,7 @@
         <text class="my-interaction-num">{{userInfo.relation_info.statistics.follower_count}}</text>
         粉丝
       </view>
-    </view>
+    </view> -->
   </view>
 </template>
 <script setup lang="ts">
