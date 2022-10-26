@@ -1,27 +1,26 @@
 <template>
   <nut-tabs 
-  v-model="state.tabIndex" 
-  title-scroll 
-  title-gutter="8" 
-  :color=styleConfig.themeColor
-  background="#fff"
+    v-model="state.tabIndex" 
+    title-scroll 
+    title-gutter="8" 
+    :color=styleConfig.themeColor
+    background="#fff"
   >
     <nut-tabpane 
-    v-for="item in state.categoryList" 
-    :title="item.name" 
-    :key="item.id">
+      v-for="item in state.categoryList" 
+      :title="item.name" 
+      :key="item.id">
       <view 
-      class="feed" 
-      v-if="state.categoryNewList.length > 0"
+        class="feed" 
+        v-if="state.categoryNewList.length > 0"
       >
         <FeedCard 
-        v-for="item in state.categoryNewList" 
-        :key="item.user_new.id" 
-        :itemInfo="item.user_new" 
+          v-for="item in state.categoryNewList" 
+          :key="item.user_new.id" 
+          :itemInfo="item.user_new" 
         />
         <view class="feed-bottom-text">没有更多了</view>
       </view>
-      <!-- 引入 loading 组件 -->
       <FeedLoading v-else/>
     </nut-tabpane>
   </nut-tabs>
@@ -103,15 +102,6 @@ watch(
     }  
   }
 )
-// 2.1 定义获取内容列表的 URL （将需要传递的查询参数进行拼接处理）函数参数的解构赋值，可以设置默认值
-// const getCategoryNewListUrl = ({
-//   category_id = 1,
-//   cursor = 0,
-//   count = 5,
-//   uid = 23333
-// }): string => {
-//   return `${getCategoryNewList}?category_id=${category_id}&cursor=${cursor}&count=${count}&uid=${uid}`
-// }
 </script>
 <style lang="scss">
 .feed {

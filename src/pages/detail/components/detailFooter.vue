@@ -28,8 +28,6 @@
     :z-index="100"
     >
     <view class="footer-input-area">
-      <!-- <textarea class="textarea"></textarea> -->
-      <!-- ! nut-textarea 用了原生的 textarea，需要引入原生的 textarea 先编译一次 -->
       <nut-textarea 
         class="input-area"
         v-model="state.commentText" 

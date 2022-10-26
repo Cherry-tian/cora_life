@@ -4,12 +4,13 @@
       v-model="state.tabIndex"  
       :background = styleConfig.backgroundColor 
       :color = styleConfig.themeColor>
-        <nut-tabpane :title="'转发 ' + (newsInfo.interaction.forward_count > 0 ? newsInfo.interaction.forward_count: '')" >
+        <!-- 暂不显示转发列表 -->
+        <!-- <nut-tabpane :title="'转发 ' + (newsInfo.interaction.forward_count > 0 ? newsInfo.interaction.forward_count: '')" >
           <view class="interaction-tabpane">
             <InteractionLoading v-if="state.forlikeIsLoading"/>
             <InterationForward v-for="item in state.forwardList" :forwardInfo="item" :key="item.id" />
           </view>
-        </nut-tabpane>
+        </nut-tabpane> -->
         <nut-tabpane :title="'评论 ' + (newsInfo.interaction.commnet_count > 0 ? newsInfo.interaction.commnet_count: '')" >
           <view class="interaction-tabpane">
             <InteractionLoading v-if="state.commentisLoading"/>
@@ -34,8 +35,6 @@
     v-model:visible="state.showReplyCommentInput"
   >
     <view class="footer-input-area">
-      <!-- <textarea class="textarea"></textarea> -->
-      <!-- ! nut-textarea 用了原生的 textarea，需要引入原生的 textarea 先编译一次 -->
       <nut-textarea 
         class="input-area"
         text-align="left"
@@ -62,7 +61,7 @@
 <script setup lang="ts">
 import { provide, reactive, watch } from 'vue';
 import { styleConfig } from '@/const'
-import InterationForward from './interationForward.vue';
+// import InterationForward from './interationForward.vue';
 import InteractionComment from './interactionComment.vue';
 import InteractionLike from './interactionLike.vue';
 import Taro from '@tarojs/taro';
@@ -71,9 +70,9 @@ import { ForwardList, LikeList } from '../../types';
 import InteractionLoading from './interactionLoading.vue';
 
 const props = defineProps(['newsInfo'])
-const forwardTabIndex = '0'
-const commentTabIndex = '1'
-const likeTabIndex = '2'
+// const forwardTabIndex = '0'
+const commentTabIndex = '0'
+const likeTabIndex = '1'
 const state = reactive<{tabIndex: string, forwardList: ForwardList[], likeList: LikeList[], showReplyCommentInput: boolean, placeHolder: string, commentId: number, commentText: string, commentisLoading: boolean, forlikeIsLoading: boolean, isLoading: boolean}>({
   // 默认出现 评论区 tab栏内容，索引为 1
   tabIndex: commentTabIndex,
@@ -92,7 +91,8 @@ watch(
   () => state.tabIndex,
   // 在初次切换的时候发起数据请求
   (newTabIndex) => {
-    if ((newTabIndex === forwardTabIndex || newTabIndex === likeTabIndex) && (!state.forwardList.length && !state.likeList.length)) {
+    // if ((newTabIndex === forwardTabIndex || newTabIndex === likeTabIndex) && (!state.forwardList.length && !state.likeList.length)) {
+    if (newTabIndex === likeTabIndex && !state.likeList.length) {
       Taro.request({
         url: interactionDetail,
         data: {
@@ -116,7 +116,6 @@ const handleCommentClick = (showReolyInput: boolean, placeHolder: string, id: nu
   state.showReplyCommentInput = showReolyInput
   state.placeHolder = placeHolder
   state.commentId = id
-  // console.log('commentId',state.commentId);
 }
 provide('handleCommentClick', handleCommentClick)
 // 3. 定义点击按钮发送输入回复的 post 请求

@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { styleConfig } from '@/const'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 // 接收父级组件的 页面变更 事件
 const props = defineProps({
   changePage: {
@@ -32,7 +32,14 @@ const props = defineProps({
 const tabSwitch = (item: any, index: number) => {
   props.changePage(index)
 }
-const active = ref(props.currPageIndex); // active变量用来标识哪个tab是高亮的。见 nut-tabbar 文档 https://nutui.jd.com/#/zh-CN/component/tabbar
+// active变量用来标识哪个tab是高亮的。见 nut-tabbar 文档 https://nutui.jd.com/#/zh-CN/component/tabbar
+const active = ref(props.currPageIndex);
+watch(
+  () => props.currPageIndex,
+  (page) => {
+    active.value = page
+  }
+)
 </script>
 <style lang="scss">
 .footer-wrapper {

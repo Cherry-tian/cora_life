@@ -24,7 +24,6 @@ onMounted(() => {
     }
   }).then((res) => {
     state.userInfo = res.data.data
-    console.log('state.userInfo',state.userInfo)
   }).catch(error => {
     console.log("error", error)
     Taro.showToast({

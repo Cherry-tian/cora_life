@@ -28,25 +28,24 @@
         :changeIsLoading="changeIsLoading"
         :uid="props.userInfo.uid"
       />
-      <!-- <button>fix编译bug</button> -->
     </view>
     <view class="my-intro">
       {{userInfo.description}}
     </view>
-    <!-- <view class="my-interaction-list">
+    <view class="my-interaction-list">
       <view class="my-like">
-        <text class="my-interaction-num">{{userInfo.relation_info.statistics.liked_count}}</text>
+        <text class="my-interaction-num">{{userInfo.relation_info?.statistics.liked_count}}</text>
         获赞
       </view>
       <view class="my-subscribe" @tap="handleClickFollow">
-        <text class="my-interaction-num">{{userInfo.relation_info.statistics.following_count}}</text>
+        <text class="my-interaction-num">{{userInfo.relation_info?.statistics.following_count}}</text>
         关注
       </view>
       <view class="my-fans" @tap="handleClickFans">
-        <text class="my-interaction-num">{{userInfo.relation_info.statistics.follower_count}}</text>
+        <text class="my-interaction-num">{{userInfo.relation_info?.statistics.follower_count}}</text>
         粉丝
       </view>
-    </view> -->
+    </view>
   </view>
 </template>
 <script setup lang="ts">

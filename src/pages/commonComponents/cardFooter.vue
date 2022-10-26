@@ -1,9 +1,10 @@
 <template>
   <view class="card-footer">
-    <view class="footer-icon" @tap="handleShare">
+    <!-- 暂不显示转发功能 -->
+    <!-- <view class="footer-icon" @tap="handleShare">
       <nut-icon name="share" size="12"></nut-icon>
       <text>{{interaction.forward_count||'分享'}}</text>
-    </view>
+    </view> -->
     <view class="footer-icon" @tap="handleComment">
       <nut-icon name="comment" size="12"></nut-icon>
       <text>{{interaction.commnet_count || '评论'}}</text>
@@ -23,7 +24,7 @@ import { defineProps, reactive } from 'vue';
 import { styleConfig } from '@/const'
 import Taro from '@tarojs/taro';
 import api from '@/api/index.js'
-const props = defineProps(['interaction', 'newId'])
+const props = defineProps(['interaction', 'newId', 'jumpToDetailPage'])
 // 定义响应式数据 state，包含之后需要响应式渲染的各类数据
 const state = reactive({
   favoriteCount: props.interaction.favorite_count,
@@ -128,8 +129,7 @@ const handleShare = () => {
 }
 // 2.4 点击评论按钮
 const handleComment = () => {
-  console.log('comment')
-
+  props.jumpToDetailPage()
 }
 </script>
 <style lang="scss">
