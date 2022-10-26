@@ -13,15 +13,25 @@
     >
       <view v-if="!state.loading">
         <view 
-          class="feed" 
+          class="feed"
           v-if="state.categoryNewList.length > 0"
+          id="scroll"
         >
-          <FeedCard 
-            v-for="item in state.categoryNewList" 
-            :key="item.user_new.id" 
-            :itemInfo="item.user_new" 
-          />
-          <view class="feed-bottom-text">没有更多了</view>
+          <nut-infiniteloading
+            containerId='scroll'
+            :use-window='true'
+            :has-more="state.hasMore"
+            @load-more="loadMore"
+            load-txt="加载中~"
+            load-more-txt="没有啦～"
+            load-icon="loading"
+          >
+            <FeedCard 
+              v-for="item in state.categoryNewList" 
+              :key="item.user_new.id"
+              :itemInfo="item.user_new"
+            />
+          </nut-infiniteloading>
         </view>
         <nut-empty description="无数据" v-else/>
       </view> 
@@ -48,12 +58,12 @@ const state = reactive<{ categoryList: CateGroy[], tabIndex: string, categoryNew
   categoryList: [],
   tabIndex: '0', // nut-tabs组件绑定的为 tab 的 index 字符串, 即 '0', '1', '2'...
   categoryNewList: [],
-  hasMore: false, //当前页面是否有更多新闻
-  nextCursor: 0, //下次请求的游标
+  hasMore: false, // 当前页面是否有更多新闻
+  nextCursor: 0, // 下次请求的游标
   loading: true,
 })
 
-const categoryNew = reactive(new Map()) 
+const categoryNewListMap = new Map()
 const getCurrentCategroyIdByTabIndex = (tabIndex: string): number =>  {
   let index = Number(tabIndex)
   return state.categoryList[index].id 
@@ -88,12 +98,12 @@ watch(
   async (tabIndex) => {
     state.loading = true
     // 判断 map 对象中是否有该 ID 对应的值，如果没有则发起请求
-    if (!categoryNew.has(tabIndex)) {
+    if (!categoryNewListMap.has(tabIndex)) {
       // 针对每个 categroy 发起请求前清空当前数据
       state.categoryNewList =[]
       await fetchNewList(getCurrentCategroyIdByTabIndex(tabIndex))
     } else {
-      state.categoryNewList = categoryNew.get(tabIndex)
+      state.categoryNewList = categoryNewListMap.get(tabIndex)
     }  
     state.loading = false
   }
@@ -101,14 +111,17 @@ watch(
 
 const fetchNewList = async (category_id) => {
   return Taro.request({
-    url: utils.getCategoryNewListUrl({ category_id, })
+    url: utils.getCategoryNewListUrl({
+      category_id,
+      cursor: state.nextCursor
+    })
   }).then(res => {
     if (res.data.data.list?.length) {
       state.categoryNewList.push(...res.data.data.list)
     }
-    state.hasMore = res.data.data.has_More
+    state.hasMore = res.data.data.has_more
     state.nextCursor = res.data.data.next_cursor
-    categoryNew.set(state.tabIndex, state.categoryNewList)
+    categoryNewListMap.set(state.tabIndex, state.categoryNewList)
   }).catch((error) => {
     Taro.showToast({
       title: error.message,
@@ -116,19 +129,27 @@ const fetchNewList = async (category_id) => {
     })
   })
 }
+
+const loadMore = (done) => {
+  fetchNewList(getCurrentCategroyIdByTabIndex(state.tabIndex))
+  done()
+}
+
 </script>
 <style lang="scss">
-.feed {
-  margin-top: -20px;
-  margin-bottom: 60px;
-
-  .feed-bottom-text {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 25px;
-    color: $noteFontColor;
-    text-align: center;
-  }
+.nut-tabpane {
+  padding-top: 0px;
 }
+
+.feed {
+  // 下拉刷新组件 nut-infiniteloading 要求的样式
+  height: calc(100vh - 150px);
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 </style>
  
