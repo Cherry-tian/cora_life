@@ -52,7 +52,10 @@ const handleClick = () => {
           title: '登录成功!',
           icon: 'success'
         })
-        // TODO：页面跳转
+        // 登录成功后，等 500ms 页面跳转回去
+        setTimeout(() => {
+          Taro.navigateBack()
+        }, 500)
       })
     } else {
       console.log('登录失败！' + res.errMsg)

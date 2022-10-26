@@ -31,7 +31,6 @@ onMounted(() => {
     })
   })
 })
-// 2. TODO： 判断用户sessionID 是否过期，跳转到登录页面
 </script>
 <style>
 .my-page {

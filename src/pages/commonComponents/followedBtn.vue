@@ -37,8 +37,7 @@ const handleFllowbtnClick = () => {
       method: 'POST',
       url: followUser,
       data: {
-        uid: '', //TODO：用户本人的 uid
-        follow_uid: props.uid
+        uid: props.uid,
       }
     }).then(() => {
       props.changeIsLoading?.(false)
@@ -60,8 +59,7 @@ const handleFllowbtnClick = () => {
       method: 'POST',
       url: unFollowUser,
       data: {
-        uid: '', //TODO：用户本人的 uid
-        follow_uid: props.uid
+        uid: props.uid,
       }
     }).then(() => {
       props.changeIsLoading?.(false)
