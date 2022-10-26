@@ -6,8 +6,8 @@ const domainProd = "TODO"
 // 获取 api path 前缀
 const getPathPrefix = () => {
     // TODO 区分环境
-    // return "http://" + domainMock
-    return "http://" + domainDev
+    return "http://" + domainMock
+    // return "http://" + domainDev
 }
 
 // api路径
