@@ -34,8 +34,6 @@
     v-model:visible="state.showReplyCommentInput"
   >
     <view class="footer-input-area">
-      <!-- <textarea class="textarea"></textarea> -->
-      <!-- ! nut-textarea 用了原生的 textarea，需要引入原生的 textarea 先编译一次 -->
       <nut-textarea 
         class="input-area"
         text-align="left"
@@ -116,7 +114,6 @@ const handleCommentClick = (showReolyInput: boolean, placeHolder: string, id: nu
   state.showReplyCommentInput = showReolyInput
   state.placeHolder = placeHolder
   state.commentId = id
-  // console.log('commentId',state.commentId);
 }
 provide('handleCommentClick', handleCommentClick)
 // 3. 定义点击按钮发送输入回复的 post 请求

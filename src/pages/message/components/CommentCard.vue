@@ -51,13 +51,7 @@ onMounted(() => {
   })
 })
 const handleClickImg = () => {
-  //  改变 store 中 newsInfo 的状态
-  store.commit('changeNewsInfo', state.newsInfo)
-   // 用 Taro.navigateTo 实现路由跳转
-   Taro.navigateTo({
-    url: '/pages/detail/index'
-  })
-  
+  utils.jumpToDetailPage(store, state.newsInfo)
 }
 </script>
 <style lang="scss">

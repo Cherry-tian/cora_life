@@ -52,6 +52,16 @@ const jumpToUserPage = (uid) => {
   })
 }
 
+// 跳转到用详情页
+const jumpToDetailPage = (store, newsInfo) => {
+  // 1. 用 Taro.navigateTo 实现路由跳转
+  Taro.navigateTo({
+    url: '/pages/detail/index'
+  })
+  // 2. 改变 store 中 newsInfo 的状态
+  store.commit('changeNewsInfo', newsInfo)
+}
+
 // 获取用户自己的uid
 const getUID = async () => {
   const uid =  await Taro.request({
@@ -73,6 +83,7 @@ const getUID = async () => {
 export default {
   getCategoryNewListUrl,
   jumpToUserPage,
+  jumpToDetailPage,
   publishTimeStr,
   getUID
 }

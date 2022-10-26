@@ -1,6 +1,5 @@
 <template>
   <view class="login-wrapper">
-    <!-- <button></button> -->
     <view class="login-page">
       <nut-button  
         class="login-button"

@@ -23,7 +23,7 @@ import { defineProps, reactive } from 'vue';
 import { styleConfig } from '@/const'
 import Taro from '@tarojs/taro';
 import api from '@/api/index.js'
-const props = defineProps(['interaction', 'newId'])
+const props = defineProps(['interaction', 'newId', 'jumpToDetailPage'])
 // 定义响应式数据 state，包含之后需要响应式渲染的各类数据
 const state = reactive({
   favoriteCount: props.interaction.favorite_count,
@@ -128,8 +128,7 @@ const handleShare = () => {
 }
 // 2.4 点击评论按钮
 const handleComment = () => {
-  console.log('comment')
-
+  props.jumpToDetailPage()
 }
 </script>
 <style lang="scss">

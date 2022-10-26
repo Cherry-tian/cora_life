@@ -9,7 +9,7 @@
 import CardUser from '@/pages/commonComponents/cardUser.vue';
 import NewsCardContent from '@/pages/commonComponents/newsCardContent.vue';
 import CardContent from '@/pages/commonComponents/cardContent.vue';
-import Taro from '@tarojs/taro';
+import utils from '@/utils/utils';
 import { useStore } from "vuex";
 const props = defineProps({
   itemInfo: {
@@ -19,12 +19,8 @@ const props = defineProps({
 })
 const store = useStore()
 const handleClickContent = () => {
-  // 1. 用 Taro.navigateTo 实现路由跳转
-  Taro.navigateTo({
-    url: '/pages/detail/index'
-  })
-  // 2. 改变 store 中 newsInfo 的状态
-  store.commit('changeNewsInfo', props.itemInfo)
+  
+  utils.jumpToDetailPage(store, props.itemInfo)
 }
 </script>
 <style lang="scss">
