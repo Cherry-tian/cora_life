@@ -62,6 +62,14 @@ const jumpToDetailPage = (store, newsInfo) => {
   store.commit('changeNewsInfo', newsInfo)
 }
 
+// 展示微信小程序分享图标 https://taro-docs.jd.com/docs/apis/share/showShareMenu
+const showShareMenu = () => {
+  Taro.showShareMenu({
+    withShareTicket: true,
+    showShareItems: ['shareAppMessage', 'shareTimeline']
+  })
+}
+
 // 获取用户自己的uid
 const getUID = async () => {
   const uid =  await Taro.request({
@@ -84,6 +92,7 @@ export default {
   getCategoryNewListUrl,
   jumpToUserPage,
   jumpToDetailPage,
+  showShareMenu,
   publishTimeStr,
   getUID
 }
