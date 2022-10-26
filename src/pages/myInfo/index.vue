@@ -1,6 +1,7 @@
 <template>
   <view class="my-info-edit">
-    <nut-uploader url="https://xxxx" class="myinfo-upload-avatar">
+    <nut-uploader :url="uploadImg" class="myinfo-upload-avatar" maximum="1" accept="image/*"
+      @success="handleUploadeSuccess">
       <nut-avatar size="75" :icon="state.userInfo.avatar_url" ></nut-avatar>
       <view class="change-avatar">更换头像</view>
     </nut-uploader>
@@ -76,14 +77,15 @@
 import { reactive, computed } from 'vue';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
-import { editUserInfo } from '@/api/index.js';
+import { editUserInfo, uploadImg } from '@/api/index.js';
 
 const store = useStore()
 const state = reactive({
   userInfo: store.state.userInfo,
   showChangeName: false,
   showChangeDesc: false,
-  isLoading: false
+  isLoading: false,
+  avatar_uri: ''
 })
 //1. 昵称和简介部分如果无内容默认是“昵称”和 “简介” （简介字数不超过20）
 const name = computed(() => {
@@ -95,6 +97,16 @@ const userDesc = computed(() => {
   }
   return '简介'
 })
+// 更换头像成功则获取图片对应 uid, 并提示用户新头像审核中
+const handleUploadeSuccess = ({responseText}) => {
+  const resData = JSON.parse(responseText.data)
+  state.avatar_uri = resData.data.uri
+
+  Taro.showToast({
+      title: '新头像审核中',
+      icon: 'success'
+  })
+}
 // 2. 点击弹框保存发送更改用户资料的数据请求
 const handleClickSave = () => {
   state.isLoading = true
@@ -102,9 +114,10 @@ const handleClickSave = () => {
     method: 'POST',
     url: editUserInfo,
     data: {
-      name: state.userInfo.name,
-      description: state.userInfo.description,
-      avatar_uri: 'http://xxx' //TODO
+      name: state.userInfo.name || undefined,
+      description: state.userInfo.description || undefined,
+      avatar_uri: state.avatar_uri || undefined,
+      uid: 1 // TODO
     }
   }).then(() => {
     state.isLoading = false
