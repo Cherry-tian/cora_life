@@ -10,8 +10,8 @@
       <view class="msg-like-author-name">{{ itemInfo.user.name }}</view>
       <view class="msg-like-icon">
         <!-- 点赞关系和收藏关系的 icon 不同 -->
-        <nut-icon v-if="itemInfo.type === likeRelation" name="heart1" size="16" color="#999"></nut-icon>
-        <nut-icon v-if="itemInfo.type === favoriteRelation" name="star-n" size="16" color="#999"></nut-icon>
+        <nut-icon v-if="itemInfo.type === messageLike" name="heart1" size="16" color="#999"></nut-icon>
+        <nut-icon v-if="itemInfo.type === messageFavorite" name="star-n" size="16" color="#999"></nut-icon>
       </view>
       <view class="msglike-time">{{ utils.publishTimeStr(itemInfo.create_time) }}</view>
     </view>
@@ -26,7 +26,7 @@ import { onMounted, reactive } from 'vue';
 import Taro from '@tarojs/taro';
 import { getMegNews } from '@/api/index.js';
 import { useStore } from 'vuex';
-import { likeRelation, favoriteRelation } from '@/const';
+import { messageLike, messageFavorite } from '@/const';
 const props = defineProps({
   itemInfo: {
     type: Object,

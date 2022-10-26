@@ -17,8 +17,8 @@ const config = {
   officialCategroyId: 2, // 发布页分类中 官方新闻 的id
   // 消息页设置：
   fansRelation: 2, // 用户是当前登录用户的粉丝
-  likeRelation: '1', // 用户点赞了当前登录用户发布的内容
-  favoriteRelation: '2' //用户收藏了当前登录用户发布的内容
+  messageLike: 1, // 用户点赞了当前登录用户发布的内容
+  messageFavorite: 2 //用户收藏了当前登录用户发布的内容
 }
 
 module.exports = config
