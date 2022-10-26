@@ -143,13 +143,12 @@ const loadMore = (done) => {
 
 .feed {
   // 下拉刷新组件 nut-infiniteloading 要求的样式
-  height: calc(100vh - 150px);
+  height: calc(100vh - 128px);
   width: 100%;
   padding: 0;
   margin: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
-
 </style>
  
