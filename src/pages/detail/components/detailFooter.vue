@@ -8,7 +8,7 @@
         <view class="detail-footer-icon" @tap="state.showCommentInput = true">
           <nut-icon name="comment" size="18"></nut-icon>
         </view>
-        <view class="detail-footer-icon" @tap="handleShareClick">
+        <view class="detail-footer-icon">
           <!-- openType='share' 的button才能触发微信分享 -->
           <nut-button
             openType='share'
@@ -172,10 +172,6 @@ const handleLikeClick = () => {
       })
     })
   }
-}
-// TODO: 分享按钮跳转到发布页面
-const handleShareClick = () => {
-  console.log('share')
 }
 </script>
 <style lang="scss">

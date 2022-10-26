@@ -43,7 +43,7 @@ onMounted(() => {
 // Taro useShareAppMessage https://nervjs.github.io/taro-docs/docs/composition-api#useshareappmessage
 // Taro onShareAppMessage https://nervjs.github.io/taro-docs/docs/vue-page#onshareappmessage-object
 // 本质是微信的 onShareAppMessage https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/practice/appshare.html
-// 走「按钮触发分享」的，和右上角圆点分享的都会走这个方法
+// 走「按钮触发分享」的，和「右上角圆点分享」最后都会走这个方法
 Taro.useShareAppMessage(res => {
   if (res.from === 'button') {
     // 来自页面内转发按钮，暂时不用做什么区分
