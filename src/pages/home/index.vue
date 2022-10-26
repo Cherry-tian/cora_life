@@ -26,7 +26,6 @@
         <nut-empty description="无数据" v-else/>
       </view> 
       <FeedLoading v-else/>
-      
     </nut-tabpane>
   </nut-tabs>
 </template>
@@ -61,23 +60,16 @@ const getCurrentCategroyIdByTabIndex = (tabIndex: string): number =>  {
 }
 // 1. 用 Taro.request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
 // 3. 初次进入页面获取新闻内容数据 可将两次请求结果同时处理，promise.all()
-onMounted(() => {
+onMounted(async () => {
+  // 页面第一次打开时，默认先请求「最新」tab下的数据
   const requestTask = [Taro.request({
     url: getCategoryList,
-  }), Taro.request({
-    // 页面第一次打开时，默认先请求「最新」tab下的数据
-    url: utils.getCategoryNewListUrl({ category_id: newestCategoryID })
-  })]
+  }), fetchNewList(newestCategoryID)]
   // 等待所有 Promise 请求结果返回，再继续执行 同时改变 homePageLoding 状态
-  Promise.all(requestTask).then(([res1, res2]) => {
-    state.categoryList = res1.data.data.list
+  Promise.all(requestTask).then(([res]) => {
+    state.categoryList = res.data.data.list
     store.commit('changeHomePageLoading', false)
     state.loading = false
-
-    state.categoryNewList = res2.data.data.list
-    categoryNew.set(state.tabIndex, state.categoryNewList)
-    state.hasMore = res2.data.data.has_More
-    state.nextCursor = res2.data.data.next_cursor
   }).catch((error) => {
     state.loading = false
     // 任何一个请求失败，就会报错获取失败，则调用 Taro.showToast() 提示用户
@@ -99,19 +91,31 @@ watch(
     if (!categoryNew.has(tabIndex)) {
       // 针对每个 categroy 发起请求前清空当前数据
       state.categoryNewList =[]
-      const res = await Taro.request({
-        url: utils.getCategoryNewListUrl({ category_id: getCurrentCategroyIdByTabIndex(tabIndex) })
-      })
-      state.categoryNewList = res.data.data.list
-      categoryNew.set(state.tabIndex, state.categoryNewList)
-      state.hasMore = res.data.data.has_More
-      state.nextCursor = res.data.data.next_cursor
+      await fetchNewList(getCurrentCategroyIdByTabIndex(tabIndex))
     } else {
       state.categoryNewList = categoryNew.get(tabIndex)
     }  
     state.loading = false
   }
 )
+
+const fetchNewList = async (category_id) => {
+  return Taro.request({
+    url: utils.getCategoryNewListUrl({ category_id, })
+  }).then(res => {
+    if (res.data.data.list?.length) {
+      state.categoryNewList.push(...res.data.data.list)
+    }
+    state.hasMore = res.data.data.has_More
+    state.nextCursor = res.data.data.next_cursor
+    categoryNew.set(state.tabIndex, state.categoryNewList)
+  }).catch((error) => {
+    Taro.showToast({
+      title: error.message,
+      icon: 'error'
+    })
+  })
+}
 </script>
 <style lang="scss">
 .feed {
