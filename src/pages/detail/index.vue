@@ -27,10 +27,15 @@ import CardContent from './components/cardContent.vue';
 import { useStore } from 'vuex';
 import Interaction from './components/interaction/interaction.vue';
 import DetailFooter from './components/detailFooter.vue';
-import { reactive } from 'vue';
+import { reactive, onMounted } from 'vue';
+import utils from '@/utils/utils';
+
 const store = useStore()
 const state = reactive({
   newsInfo: store.state.newsInfo
+})
+onMounted(() => {
+  utils.showShareMenu()
 })
 </script>
 <style lang="scss">
