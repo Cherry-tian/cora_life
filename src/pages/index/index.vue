@@ -5,7 +5,10 @@
   <view class="content" v-show="!store.state.homePageLoading">
     <home v-if="pageIndex == 0" />
     <news v-if="pageIndex == 1" />
-    <publish v-if="pageIndex == 2" />
+    <publish
+      v-if="pageIndex == 2"
+      :jumpToHomePage="jumpToHomePage"
+    />
     <message v-if="pageIndex == 3" />
     <My v-if="pageIndex == 4" />
     <!-- <Login v-if="pageIndex == 4" /> -->
@@ -37,6 +40,9 @@ const changePage = (index: number) => {
     store.commit('changeHomePageLoading', false) // todo
     pageIndex.value = index
   }
+}
+const jumpToHomePage = () => {
+  changePage(0)
 }
 
 </script>

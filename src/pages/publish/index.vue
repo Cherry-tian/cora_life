@@ -71,6 +71,12 @@ interface Data {
   uid?: number;
 }
 const store = useStore()
+const props = defineProps({
+  jumpToHomePage: {
+    type: Function,
+    required: true
+  }
+})
 const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[]}>({
   title: '',
   content: '',
@@ -88,9 +94,6 @@ onMounted(() => {
   Taro.request({
     url: getPublishCategoryList,
     // 对于 GET 方法的数据，会将数据转换成 query string
-    data: {
-      uid: 0 // TODO: 获取当前发布内容用户的 uid 并传入
-    }
   }).then((res) => {
     store.commit('changeHomePageLoading', false)
     state.pubCategoryList = res.data.data.list
@@ -112,9 +115,7 @@ const handleBtnClick = () => {
       title: state.title ? state.title : undefined, //只有新闻类需要传入 title
       content: state.content,
       category_id: state.categoryId,
-      // uid: TODO
     }
-    console.log('state.uriList',state.uriList)
     if (state.uriList.length) {
       // 先过滤 ‘’ 的项
       const uriList = state.uriList.filter(uri => uri.length > 0)
@@ -133,7 +134,10 @@ const handleBtnClick = () => {
         title: '发布成功',
         icon: 'success'
       })
-      // TODO: 跳转到某个页面（最新？）
+      // 跳转到首页
+      setTimeout(() => {
+        props.jumpToHomePage()
+      }, 500)
     }).catch(() => {
       state.isLoading = false
       Taro.showToast({

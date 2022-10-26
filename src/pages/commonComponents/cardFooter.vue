@@ -1,9 +1,10 @@
 <template>
   <view class="card-footer">
-    <view class="footer-icon" @tap="handleShare">
+    <!-- 暂不显示转发功能 -->
+    <!-- <view class="footer-icon" @tap="handleShare">
       <nut-icon name="share" size="12"></nut-icon>
       <text>{{interaction.forward_count||'分享'}}</text>
-    </view>
+    </view> -->
     <view class="footer-icon" @tap="handleComment">
       <nut-icon name="comment" size="12"></nut-icon>
       <text>{{interaction.commnet_count || '评论'}}</text>
