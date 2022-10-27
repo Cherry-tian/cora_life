@@ -10,8 +10,8 @@
       :jumpToHomePage="jumpToHomePage"
     />
     <message v-if="pageIndex == 3" />
-    <My v-if="pageIndex == 4" />
-    <!-- <Login v-if="pageIndex == 4" /> -->
+    <!-- <My v-if="pageIndex == 4" /> -->
+    <Login v-if="pageIndex == 4" />
   </view>
   <!-- 底部 tab 栏切换区域 -->
   <nut-tabbar
@@ -27,6 +27,7 @@ import News from '@/pages/news/index.vue'
 import Publish from '@/pages/publish/index.vue'
 import NutTabbar from './components/nut-tabbar.vue'
 import Message from '../message/index.vue';
+import Login from '@/pages/login/index.vue';
 import My from '../my/index.vue';
 import { ref, onMounted } from 'vue';
 import Loading from './components/loading.vue';
