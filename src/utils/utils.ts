@@ -75,7 +75,7 @@ const getUID = async () => {
   const uid =  await Taro.request({
     url: getSelfUID,
     header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     return res.data.uid

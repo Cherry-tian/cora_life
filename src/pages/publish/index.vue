@@ -1,9 +1,5 @@
 <template>
   <view class="publish-wrapper">
-    <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
-    <!-- <input type="text" />
-    <textarea></textarea>
-    <button></button> -->
     <nut-input 
       v-if="isOfficial"
       class="publish-title"
@@ -51,6 +47,12 @@
         </nut-radio>
       </nut-radiogroup>
     </nut-cell>
+  </view>
+  <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
+  <view clase="compile-helper">
+    <input type="text" style="height: 0px;"/>
+    <textarea style="height: 0px;"></textarea>
+    <button style="height: 0px;"></button>
   </view>
 </template>
 <script setup lang="ts">
@@ -218,5 +220,8 @@ const uploadImgDelete = ({ index }) => {
     margin-top: 20px;
     padding: 20px 25px;
   }
+}
+.compile-helper {
+  height: 0px;
 }
 </style>

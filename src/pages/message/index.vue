@@ -1,22 +1,38 @@
 <template>
+  <!--  -->
   <view class="message-tab-wrapper">
-    <nut-tabs v-model="state.tabIndex" background="white" color="#4382e2">
-   <nut-tabpane title="官方" class="my-tab-tabpane">
-     <OfficialCard v-for="item in state.officialList" :key="item.id" :itemInfo="item" />
-   </nut-tabpane>
-   <nut-tabpane title="评论" class="my-tab-tabpane">
-    <Loading v-if="state.commentIsLoading"/>
-     <CommentCard  v-for="item in state.commentList" :key="item.comment_id" :itemInfo="item" />
-   </nut-tabpane>
-   <nut-tabpane title="粉丝" class="my-tab-tabpane">
-    <Loading v-if="state.fansIsLoading" />
-     <FansCard v-for="item in state.fansList" :key="item.follow_uid" :itemInfo="item" />
-   </nut-tabpane>
-   <nut-tabpane title="赞和收藏" class="my-tab-tabpane">
-    <Loading v-if="state.likeIsLoading" />
-     <LikeCard v-for="item in state.likeList" :key="item.user.uid" :itemInfo="item" />
-    </nut-tabpane>
-  </nut-tabs>
+    <nut-tabs v-model="state.tabIndex" background="white">
+      <template v-slot:titles>
+        <div
+          class="nut-tabs__titles-item"
+          v-for="item in state.tabList"
+          @click="state.tabIndex=item.key"
+          :class="{active:state.tabIndex==item.key}"
+          :key="item.key"
+        >
+          <nut-badge dot v-if="!item.hasRead">
+            <span class="nut-tabs__titles-item__text">{{item.title}}</span>
+          </nut-badge>
+          <span class="nut-tabs__titles-item__text" v-else>{{item.title}}</span>
+          <span class="nut-tabs__titles-item__line" :style="`background: ${styleConfig.themeColor};`"></span>
+        </div>
+      </template>
+      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.offcial">
+        <OfficialCard v-for="item in state.officialList" :key="item.id" :itemInfo="item" />
+      </nut-tabpane>
+      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.comment">
+        <Loading v-if="state.commentIsLoading"/>
+        <CommentCard  v-for="item in state.commentList" :key="item.comment_id" :itemInfo="item" />
+      </nut-tabpane>
+      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.fans">
+        <Loading v-if="state.fansIsLoading" />
+        <FansCard v-for="item in state.fansList" :key="item.follow_uid" :itemInfo="item" />
+      </nut-tabpane>
+      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.like">
+        <Loading v-if="state.likeIsLoading" />
+        <LikeCard v-for="item in state.likeList" :key="item.user.uid" :itemInfo="item" />
+      </nut-tabpane>
+    </nut-tabs>
   </view>
  </template>
  <script setup lang="ts">
@@ -29,15 +45,14 @@ import LikeCard from './components/LikeCard.vue';
 import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList } from '@/api/index.js';
 import Loading from './components/loading.vue';
 import FansCard from '../commonComponents/FansCard.vue';
+import { styleConfig } from '@/const'
+import { TabIndex, tabList } from './const'
  
 const store = useStore()
 
-const offcialTabIndex = '0'
-const commentTabIndex = '1'
-const fansTabIndex = '2'
-const likeTabIndex = '3'
 const state = reactive({
-  tabIndex: offcialTabIndex,
+  tabIndex: TabIndex.offcial,
+  tabList,
   officialList: [],
   officialHasMore: false, //当前页面是否有更多新闻
   officialNextCursor: 0, //下次请求的游标
@@ -63,16 +78,17 @@ onMounted(async () => {
 watch(
   () => state.tabIndex,
   async (newTabIndex) => {
-  // 首次切换到评论栏
-    if (newTabIndex === commentTabIndex && !state.commentList.length) {
+    console.log('newTabIndex',newTabIndex)
+    // 首次切换到评论栏
+    if (newTabIndex === TabIndex.comment && !state.commentList.length) {
       await fetchCommentMsgs()
     }
     // 首次切换到粉丝栏
-    if (newTabIndex === fansTabIndex && !state.fansList.length) {
+    if (newTabIndex === TabIndex.fans && !state.fansList.length) {
       await fetchUserFanss()
     }
     // 首次切换到赞和收藏栏
-    if (newTabIndex === likeTabIndex && !state.likeList.length) {
+    if (newTabIndex === TabIndex.like && !state.likeList.length) {
       await fetInteractionMsgs()
     }
   }
@@ -85,7 +101,7 @@ const fetchOfficialMsgs = async () => {
       count: 10, // 请求数量
     },
     header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.officialList = res.data.data.list
@@ -107,7 +123,7 @@ const fetchCommentMsgs = async () => {
       count: 10, // 请求数量
     },
     header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.commentList = res.data.data.list
@@ -129,7 +145,7 @@ const fetchUserFanss = async () => {
       count: 20, // 请求数量
     },
     header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.fansList = res.data.data.list
@@ -151,7 +167,7 @@ const fetInteractionMsgs = async () => {
       count: 10, // 请求数量
     },
     header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjY1OTgzMjEsImV4cCI6MTY2NzAzMDMyMX0.ApuqWJ1OCktB_FX_2rvMnEPZFq7FSpq1HAf0dhAGWtk'
+      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.likeList = res.data.data.list
