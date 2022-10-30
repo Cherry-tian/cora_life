@@ -29,7 +29,7 @@ import { useStore } from 'vuex';
 import Interaction from './components/interaction/interaction.vue';
 import DetailFooter from './components/detailFooter.vue';
 import { reactive, onMounted } from 'vue';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import Taro from '@tarojs/taro';
 import { appConfig } from '@/const';
 

@@ -27,12 +27,11 @@ import News from '@/pages/news/index.vue'
 import Publish from '@/pages/publish/index.vue'
 import NutTabbar from './components/nut-tabbar.vue'
 import Message from '../message/index.vue';
-import Login from '@/pages/login/index.vue';
 import My from '../my/index.vue';
 import { ref, onMounted } from 'vue';
 import Loading from './components/loading.vue';
 import { useStore } from 'vuex';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载

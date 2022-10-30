@@ -1,9 +1,14 @@
 <template>
+  <!-- todo remove -->
+  <button @tap="clearLocalMsg">清除本地缓存消息</button> 
+  <button @click="clearJWT">清除 jwt</button>
+  <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
+  <!-- <view clase="compile-helper">
+    <input type="text" style="height: 0px;"/>
+    <textarea style="height: 0px;"></textarea>
+    <button style="height: 0px;"></button>
+  </view> -->
   <view class="publish-wrapper">
-    <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
-    <!-- <input type="text" />
-    <textarea></textarea>
-    <button></button> -->
     <nut-input 
       v-if="isOfficial"
       class="publish-title"
@@ -58,7 +63,7 @@ import { computed, onMounted, reactive, watch } from 'vue';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { getPublishCategoryList, publish, uploadImg } from '@/api/index.js';
-import { officialCategroyId } from '@/const';
+import { officialCategroyId, localStorageKey } from '@/const';
 import { request } from '@/api/request';
 interface PubCategoryList {
   id: number,
@@ -78,6 +83,7 @@ const props = defineProps({
     required: true
   }
 })
+
 const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[]}>({
   title: '',
   content: '',
@@ -196,6 +202,28 @@ const uploadImgFailure = () => {
 const uploadImgDelete = ({ index }) => {
   state.uriList.splice(index, 1) 
 }
+
+// 清除 jwt
+const clearJWT = () => {
+  Taro.removeStorage({
+    key: localStorageKey.jwt
+  })
+}
+// 清除本地消息缓存
+const clearLocalMsg = () => {
+  Taro.removeStorage({
+    key: localStorageKey.commentMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.officialMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.fansMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.interactionMsg
+  })
+}
 </script>
 <style lang="scss">
 .publish-wrapper {
@@ -219,5 +247,8 @@ const uploadImgDelete = ({ index }) => {
     margin-top: 20px;
     padding: 20px 25px;
   }
+}
+.compile-helper {
+  height: 0px;
 }
 </style>

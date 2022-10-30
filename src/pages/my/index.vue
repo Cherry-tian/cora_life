@@ -3,7 +3,6 @@
     <MyInfo :userInfo="state.userInfo" :isSelf='true'/>
     <MyTabs :userInfo="state.userInfo" />
   </view>
-  <button @click="clearJWT">清除 jwt</button>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
@@ -12,7 +11,7 @@ import MyTabs from '@/pages/commonComponents/myTabs.vue';
 import { getUserInfo } from '@/api/index.js';
 import { request } from '@/api/request';
 import Taro from '@tarojs/taro';
-import { localStorageKey } from '@/const';
+import  { getUID }  from '@/utils/utils';
 
 const state = reactive({
   userInfo: {}
@@ -20,11 +19,11 @@ const state = reactive({
 
 // 获取用户信息的方法
 const fetchUserInfo = async() => {
+  const uid = await getUID()
   return request({
     url: getUserInfo,
     data: {
-      // TODO: 输入当前使用者的 id 
-      uid: 1,
+      uid
     }
   }).then((res) => {
     state.userInfo = res.data.data
@@ -43,12 +42,7 @@ onMounted(async() => {
 Taro.useDidShow(async() => {
   await fetchUserInfo();
 })
-// 清除 jwt
-const clearJWT = () => {
-  Taro.removeStorage({
-    key: localStorageKey.localStorageKeyJWT
-  })
-}
+
 </script>
 <style>
 .my-page {

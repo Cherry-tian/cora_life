@@ -28,3 +28,11 @@ export interface CategoryNewList {
   item_type: string;
   user_new: User_new
 }
+
+// 消息类型
+export enum MessageType {
+  Official = 1, // 官方消息
+  Comment = 2, // 评论
+  Fans = 3, // 粉丝
+  Interaction = 4, // 点赞 和 收藏
+}

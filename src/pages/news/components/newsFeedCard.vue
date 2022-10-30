@@ -15,7 +15,7 @@ import CardFooter from '@/pages/commonComponents/cardFooter.vue';
 import { defineProps } from 'vue';
 import NewsCardContent from '@/pages/commonComponents/newsCardContent.vue';
 import { useStore } from 'vuex';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 
 const props = defineProps(['itemInfo'])
 const store = useStore()

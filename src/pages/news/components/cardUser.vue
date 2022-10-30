@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 const props = defineProps(['authorInfo', 'createTime'])
 const timeStr = ref('')
 // 调用用特定形式显示时间的方法

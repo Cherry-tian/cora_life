@@ -21,7 +21,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import { onMounted, reactive } from 'vue';
 import Taro from '@tarojs/taro';
 import { getMegNews } from '@/api/index.js';

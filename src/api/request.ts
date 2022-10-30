@@ -5,7 +5,7 @@ import { localStorageKey, errCode } from '@/const';
 
 export const request = async (params: any) => {
     // 获取 jwt 的值
-    const jwt = await utils.getLocalStorage(localStorageKey.localStorageKeyJWT).catch(err => {
+    const jwt = await utils.getLocalStorage(localStorageKey.jwt).catch(err => {
         console.log(err);
     })
     // 将该值加入 header 中
