@@ -40,7 +40,7 @@ const state = reactive<{
 })
 onMounted(async () => {
   utils.showShareMenu()
-  const newsId = getNewsIdFromRouter()
+  const newsId = utils.getNewsIdFromRouter()
   state.newsInfo = await utils.getNewsInfoById(newsId)
 })
 // Taro useShareAppMessage https://nervjs.github.io/taro-docs/docs/composition-api#useshareappmessage
@@ -57,11 +57,6 @@ Taro.useShareAppMessage(res => {
     path: `/pages/detail/index?news_id=${state.newsInfo.id}`
   }
 })
-// 从路由参数中获取新闻id
-const getNewsIdFromRouter = () => {
-  const routerParams = Taro.getCurrentInstance().router.params
-  return routerParams.news_id
-}
 </script>
 <style lang="scss">
 // .detail-page-wrapper {

@@ -64,6 +64,8 @@ import { publishComment } from '@/api/index.js';
 import { styleConfig } from '@/const';
 import api from '@/api/index.js';
 import { request } from '@/api/request';
+import { reFreshDetailPage } from '@/utils/utils'
+
 const props = defineProps(['newsId', 'interaction'])
 const state = reactive({
   showCommentInput: false,
@@ -100,11 +102,15 @@ const handleCommentbtnClick = () => {
       title: '评论发布成功',
       icon: 'success'
     })
+    // 刷新页面
+    setTimeout(() => {
+      reFreshDetailPage()
+    }, 300)
   }).catch(() => {
     Taro.showToast({
       title: '评论发布失败，请稍后再试',
       icon: 'error'
-    })
+    }) 
   })
 }
 // 2. 底部点赞和收藏按钮功能
