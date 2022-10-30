@@ -58,7 +58,7 @@
    </nut-popup>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 import Taro from '@tarojs/taro';
 import { publishComment } from '@/api/index.js';
 import { styleConfig } from '@/const';
@@ -69,11 +69,18 @@ const state = reactive({
   showCommentInput: false,
   commentText: '',
   isLoading: false,
-  isFavorited: props.interaction.is_favorited,
-  isLiked: props.interaction.is_liked,
+  isFavorited: false,
+  isLiked: false,
   likeIconClass: '', //收藏和点赞的动态样式类别
   favoriteIconClass: ''
 })
+watch(
+  () => props.interaction,
+  (interaction) => {
+    state.isFavorited = interaction.is_favorited
+    state.isLiked = interaction.is_liked
+  }
+)
 //1. 弹出框的评论发送功能
 const handleCommentbtnClick = () => {
   state.isLoading = true

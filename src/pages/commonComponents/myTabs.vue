@@ -54,7 +54,7 @@ watch(
 watch(
   () => state.tabIndex,
   (newTabIndex) => {
-    if ((newTabIndex === favoriteTabIndex && props.userInfo.stats.favorite_amount && !state.userFavoriteList.length) || (newTabIndex === likeTabIndex && props.userInfo.stats.like_amount && !state.userLikeList.length)) {
+    if ((newTabIndex === favoriteTabIndex && props.userInfo.stats.favorite_amount && !state.userFavoriteList?.length) || (newTabIndex === likeTabIndex && props.userInfo.stats.like_amount && !state.userLikeList?.length)) {
       changeTabRequest(props.userInfo, newTabIndex)
     }
   }

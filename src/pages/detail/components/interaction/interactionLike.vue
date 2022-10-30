@@ -5,15 +5,15 @@
       <view class="like-avatar-wrapper">
         <nut-avatar size="normal" 
           class="avatar" 
-          :icon="likeInfo.user.avatar_url"
-          @tap="() => utils.jumpToUserPage(likeInfo.user.uid)"
+          :icon="likeInfo.user?.avatar_url"
+          @tap="() => utils.jumpToUserPage(likeInfo.user?.uid)"
         >
         </nut-avatar>
       </view>
       <view>
-        <text class="like-user-name">{{ likeInfo.user.name }}</text>
-        <text class="like-author" v-if="likeInfo.user.is_author">作者</text>
-        <text class="like-publish-time"> {{ publishTimeStr(likeInfo.create_time) }}</text>
+        <text class="like-user-name">{{ likeInfo.user?.name }}</text>
+        <text class="like-author" v-if="likeInfo.user?.is_author">作者</text>
+        <text class="like-publish-time"> {{ publishTimeStr(likeInfo?.create_time) }}</text>
       </view>  
     </view>
     <!-- 点赞图标 -->

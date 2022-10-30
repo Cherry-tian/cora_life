@@ -10,7 +10,7 @@
       <!-- 只取三张图片 -->
       <img 
         class="img-item" 
-        v-for="(url, index) in (imgList.length > 9? 
+        v-for="(url, index) in (imgList?.length > 9? 
         imgList.slice(0,9): imgList)" 
         :key="url"
         :src="url" 
@@ -27,7 +27,7 @@ const showPreview = ref(false)
 const initNo = ref(1)
 // 计算属性直接获取响应式数据
 const imgData = computed(() => {
-  return props.imgList.map((url: string) => {
+  return props.imgList?.map((url: string) => {
     return {
       src: url
     }

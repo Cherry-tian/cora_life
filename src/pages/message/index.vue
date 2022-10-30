@@ -30,7 +30,7 @@
       </nut-tabpane>
       <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Interaction">
         <Loading v-if="state.likeIsLoading" />
-        <LikeCard v-for="item in state.likeList" :key="item.user.uid" :itemInfo="item" />
+        <LikeCard v-for="item in state.likeList" :key="item.user?.uid" :itemInfo="item" />
       </nut-tabpane>
     </nut-tabs>
   </view>
@@ -81,15 +81,15 @@ watch(
   () => state.tabIndex,
   async (newTabIndex) => {
     // 首次切换到评论栏
-    if (newTabIndex === MessageType.Comment && !state.commentList.length) {
+    if (newTabIndex === MessageType.Comment && !state.commentList?.length) {
       await fetchCommentMsgs()
     }
     // 首次切换到粉丝栏
-    if (newTabIndex === MessageType.Fans && !state.fansList.length) {
+    if (newTabIndex === MessageType.Fans && !state.fansList?.length) {
       await fetchUserFanss()
     }
     // 首次切换到赞和收藏栏
-    if (newTabIndex === MessageType.Interaction && !state.likeList.length) {
+    if (newTabIndex === MessageType.Interaction && !state.likeList?.length) {
       await fetInteractionMsgs()
     }
   }

@@ -4,11 +4,11 @@
       <view class="my-avatar-wrapper">
         <nut-avatar size="75" 
           class="avatar" 
-          :icon="userInfo.avatar_url"
+          :icon="userInfo?.avatar_url"
         >
         </nut-avatar>
       </view>
-      <view class="my-user-name">{{userInfo.name}}</view>
+      <view class="my-user-name">{{userInfo?.name}}</view>
       <nut-button  
         class="my-edit-button"
         color="black"
@@ -26,7 +26,7 @@
         :isLoading="state.isLoading"
         :changeIsFollowed="changeIsFollowed"
         :changeIsLoading="changeIsLoading"
-        :uid="props.userInfo.uid"
+        :uid="props.userInfo?.uid"
       />
     </view>
     <view class="my-intro">
@@ -34,15 +34,15 @@
     </view>
     <view class="my-interaction-list">
       <view class="my-like">
-        <text class="my-interaction-num">{{userInfo.relation_info?.statistics.liked_count}}</text>
+        <text class="my-interaction-num">{{userInfo?.relation_info?.statistics.liked_count}}</text>
         获赞
       </view>
       <view class="my-subscribe" @tap="handleClickFollow">
-        <text class="my-interaction-num">{{userInfo.relation_info?.statistics.following_count}}</text>
+        <text class="my-interaction-num">{{userInfo?.relation_info?.statistics.following_count}}</text>
         关注
       </view>
       <view class="my-fans" @tap="handleClickFans">
-        <text class="my-interaction-num">{{userInfo.relation_info?.statistics.follower_count}}</text>
+        <text class="my-interaction-num">{{userInfo?.relation_info?.statistics.follower_count}}</text>
         粉丝
       </view>
     </view>
@@ -83,8 +83,8 @@ const handleClick = () => {
 watch(
   () => props.userInfo,
   (newUserInfo) => {
-    if (newUserInfo.relation_info.relation_type == followRelation || 
-      newUserInfo.relation_info.relation_type == coFollowRelation
+    if (newUserInfo.relation_info?.relation_type == followRelation || 
+      newUserInfo.relation_info?.relation_type == coFollowRelation
     ) {
       state.isFollowed = true
     }

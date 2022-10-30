@@ -1,7 +1,7 @@
 <template>
   <view class="comment-content">
       <view class="comment-word" @tap="handleCommentbtnClick">
-        {{ `回复${replyToUser.name}: ${content}` }}
+        {{ `回复${replyToUser?.name}: ${content}` }}
       </view>
       <view 
         class="comment-like" 
@@ -23,10 +23,10 @@ const props = defineProps(['content', 'stats', 'commentId', 'replyToUser', 'user
 // 通过 Inject 引入跨层级（祖孙级别的组件方法 handleCommentClick）
 const handleCommentClick: any = inject('handleCommentClick')
 const state = reactive({
-  likeCount: props.stats.like_count,
-  isLiked: props.stats.is_liked,
+  likeCount: props.stats?.like_count,
+  isLiked: props.stats?.is_liked,
   likeIconClass: '',
-  placeHolder: `回复 @${props.userInfo.name}:`
+  placeHolder: `回复 @${props.userInfo?.name}:`
 })
 //1. 对评论内容的点赞与取消点赞交互
 const activeLikeStyle = `color: ${styleConfig.activeIconColor}`

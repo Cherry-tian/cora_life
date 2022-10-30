@@ -3,11 +3,11 @@
     <view class="fans-avatar">
       <nut-avatar
       size="normal"
-      :icon="itemInfo.avatar_url"
+      :icon="itemInfo?.avatar_url"
      ></nut-avatar>
     </view>
     <view class="fans-content">
-      <view class="fans-author-name">{{ itemInfo.name }}</view>
+      <view class="fans-author-name">{{ itemInfo?.name }}</view>
       <view class="fans-desc">开始关注你了
         <text class="fans-time"> {{utils.publishTimeStr(itemInfo.create_time)}}</text>
       </view>

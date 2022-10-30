@@ -3,56 +3,29 @@
     <view class="msg-comment-avatar">
       <nut-avatar
         size="normal"
-        :icon="itemInfo.user.avatar_url"
+        :icon="itemInfo.user?.avatar_url"
       />
     </view>
     <view class="msg-comment-content">
-      <view class="msg-comment-author-name">{{ itemInfo.user.name }}</view>
+      <view class="msg-comment-author-name">{{ itemInfo.user?.name }}</view>
       <view class="msg-comment-desc">{{ `${itemInfo.isReply? ('回复了你：' + itemInfo.content) : itemInfo.content}` }}</view>
       <view class="msgcomment-time">{{utils.publishTimeStr(itemInfo.create_time)}}</view>
     </view>
     <view class="comment-img">
-      <img class="msg-comment-img" :src="itemInfo.newsInfo.img" @tap="handleClickImg" />
+      <img class="msg-comment-img" :src="itemInfo.newsInfo?.img" @tap="handleClickImg" />
     </view>
   </view>
 </template>
 <script setup lang="ts">
 import * as utils from '@/utils/utils';
-import { onMounted, reactive } from 'vue';
-import Taro from '@tarojs/taro';
-import { getMegNews } from '@/api/index.js';
-import { useStore } from 'vuex';
-import { request } from '@/api/request';
 const props = defineProps({
   itemInfo: {
     type: Object,
     required: true
   }
 })
-const store = useStore()
-// 在初次渲染完成后发送请求获取评论的新闻 id 对应的新闻内容，newsInfo 以提供给详情页
-const state = reactive({
-  newsInfo: {}
-})
-onMounted(() => {
-  request({
-    url: getMegNews,
-    data: {
-      new_id_list: props.itemInfo.newsInfo.id,
-      uid: 122 //当前登录用户 id
-    }
-  }).then((res) => {
-    state.newsInfo = res.data.data.list[0].user_new
-    // console.log(state.newsInfo);
-  }).catch(() => {
-    Taro.showToast({
-      title: '获取远程数据出错',
-      icon: 'error'
-    })
-  })
-})
 const handleClickImg = () => {
-  utils.jumpToDetailPage(store, state.newsInfo)
+  utils.jumpToDetailPage(props.itemInfo.newsInfo.id)
 }
 </script>
 <style lang="scss">

@@ -3,7 +3,7 @@
     <view class="official-avatar">
       <nut-avatar
         size="normal"
-        :icon="itemInfo.from_user.avatar_url"
+        :icon="itemInfo.from_user?.avatar_url"
       />
     </view>
     <view class="official-content">

@@ -11,19 +11,22 @@
             <InterationForward v-for="item in state.forwardList" :forwardInfo="item" :key="item.id" />
           </view>
         </nut-tabpane> -->
-        <nut-tabpane :title="'评论 ' + (newsInfo.interaction.commnet_count > 0 ? newsInfo.interaction.commnet_count: '')" >
+        <nut-tabpane :title="'评论 ' + (newsInfo.interaction?.commnet_count > 0 ? newsInfo.interaction?.commnet_count: '')" >
           <view class="interaction-tabpane">
             <InteractionLoading v-if="state.commentisLoading"/>
             <InteractionComment
-            :newsInfo="newsInfo" 
-            :handleCommentClick="handleCommentClick"
-            :changeCommentLoading="changeCommentLoading" />
+              :newsInfo="newsInfo" 
+              :handleCommentClick="handleCommentClick"
+              :changeCommentLoading="changeCommentLoading"
+            />
           </view>
         </nut-tabpane>
-        <nut-tabpane :title="'赞 ' + (newsInfo.interaction.like_count > 0 ? newsInfo.interaction.like_count: '')" >
+        <nut-tabpane
+          :title="'赞 ' + (newsInfo.interaction?.like_count > 0 ? newsInfo.interaction?.like_count: '')"
+        >
           <view class="interaction-tabpane">
             <InteractionLoading v-if="state.forlikeIsLoading"/>
-            <InteractionLike v-for="item in state.likeList" :likeInfo="item" :key="item.user.avatar_url"/>
+            <InteractionLike v-for="item in state.likeList" :likeInfo="item" :key="item.user?.avatar_url"/>
           </view>
         </nut-tabpane>
     </nut-tabs>
@@ -69,12 +72,13 @@ import { interactionDetail, publishComment } from '@/api/index.js';
 import { ForwardList, LikeList } from '../../types';
 import InteractionLoading from './interactionLoading.vue';
 import { request } from '@/api/request';
+import { User_new } from '@/types/common'
 
 const props = defineProps(['newsInfo'])
 // const forwardTabIndex = '0'
 const commentTabIndex = '0'
 const likeTabIndex = '1'
-const state = reactive<{tabIndex: string, forwardList: ForwardList[], likeList: LikeList[], showReplyCommentInput: boolean, placeHolder: string, commentId: number, commentText: string, commentisLoading: boolean, forlikeIsLoading: boolean, isLoading: boolean}>({
+const state = reactive<{tabIndex: string, forwardList: ForwardList[], likeList: LikeList[], showReplyCommentInput: boolean, placeHolder: string, commentId: number, commentText: string, commentisLoading: boolean, forlikeIsLoading: boolean, isLoading: boolean, newsInfo: User_new }>({
   // 默认出现 评论区 tab栏内容，索引为 1
   tabIndex: commentTabIndex,
   forwardList: [],
@@ -85,7 +89,8 @@ const state = reactive<{tabIndex: string, forwardList: ForwardList[], likeList: 
   commentText: '',
   commentisLoading: true, //loading 组件的控制变量
   forlikeIsLoading: true,
-  isLoading: false
+  isLoading: false,
+  newsInfo: {},
 })
 //1. 用户点击 tab 切换到转发和点赞栏的时候发送获取数据请求
 watch(
@@ -93,7 +98,7 @@ watch(
   // 在初次切换的时候发起数据请求
   (newTabIndex) => {
     // if ((newTabIndex === forwardTabIndex || newTabIndex === likeTabIndex) && (!state.forwardList.length && !state.likeList.length)) {
-    if (newTabIndex === likeTabIndex && !state.likeList.length) {
+    if (newTabIndex === likeTabIndex && !state.likeList?.length) {
       request({
         url: interactionDetail,
         data: {
