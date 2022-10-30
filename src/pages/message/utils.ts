@@ -64,7 +64,6 @@ export const storeMsgToLocal = async (store: any, res: any, type: MessageType) =
 const checkHasNewMsgsByRes = async (res: any, type: MessageType) => {
   const newMsgIds = getNewMsgIds(res, type)
   const oldMsgIds = await getLocalMsgIds(type)
-  console.log('type', type, 'res', res.data.data.list, 'newMsgId', newMsgIds, 'oldMsgIds', oldMsgIds)
   return checkHasNewMsgId(newMsgIds, oldMsgIds)
 }
 
