@@ -1,7 +1,7 @@
 // 域名
 const domainMock = "yapi.smart-xwork.cn/mock/168776"
 const domainDev = "127.0.0.1:7001"
-const domainProd = "TODO"
+const domainProd = ""
 
 // 获取 api path 前缀
 const getPathPrefix = () => {

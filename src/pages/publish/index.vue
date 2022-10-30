@@ -1,6 +1,7 @@
 <template>
   <!-- todo remove -->
-  <!-- <button @tap="clearLocalMsg">清除本地缓存消息</button>  -->
+  <button @tap="clearLocalMsg">清除本地缓存消息</button> 
+  <button @click="clearJWT">清除 jwt</button>
   <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
   <!-- <view clase="compile-helper">
     <input type="text" style="height: 0px;"/>
@@ -82,21 +83,7 @@ const props = defineProps({
     required: true
   }
 })
-// 测试用 todo remove
-const clearLocalMsg = () => {
-  Taro.removeStorage({
-    key: localStorageKey.commentMsg
-  })
-  Taro.removeStorage({
-    key: localStorageKey.officialMsg
-  })
-  Taro.removeStorage({
-    key: localStorageKey.fansMsg
-  })
-  Taro.removeStorage({
-    key: localStorageKey.interactionMsg
-  })
-}
+
 const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[]}>({
   title: '',
   content: '',
@@ -214,6 +201,28 @@ const uploadImgFailure = () => {
 }
 const uploadImgDelete = ({ index }) => {
   state.uriList.splice(index, 1) 
+}
+
+// 清除 jwt
+const clearJWT = () => {
+  Taro.removeStorage({
+    key: localStorageKey.jwt
+  })
+}
+// 清除本地消息缓存
+const clearLocalMsg = () => {
+  Taro.removeStorage({
+    key: localStorageKey.commentMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.officialMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.fansMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.interactionMsg
+  })
 }
 </script>
 <style lang="scss">

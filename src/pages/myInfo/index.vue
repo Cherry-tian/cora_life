@@ -112,7 +112,6 @@ const handleClickSave = () => {
       name: state.userInfo.name || undefined,
       description: state.userInfo.description || undefined,
       avatar_uri: state.avatar_uri || undefined,
-      uid: 1 // TODO
     }
   }).then(() => {
     state.isLoading = false

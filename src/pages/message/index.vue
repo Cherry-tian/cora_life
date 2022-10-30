@@ -113,9 +113,6 @@ const fetchOfficialMsgs = async () => {
     data: {
       cursor: state.officialNextCursor, //起始游标
       count, // 请求数量
-    },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.officialList = res.data.data.list
@@ -137,9 +134,6 @@ const fetchCommentMsgs = async () => {
     data: {
       cursor: state.commentNextCursor, //起始游标
       count, // 请求数量
-    },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.commentList = res.data.data.list
@@ -161,9 +155,6 @@ const fetchUserFanss = async () => {
     data: {
       cursor: state.fansNextCursor, // 起始游标
       count, // 请求数量
-    },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.fansList = res.data.data.list
@@ -185,9 +176,6 @@ const fetInteractionMsgs = async () => {
     data: {
       cursor: state.likeNextCursor, //起始游标
       count, // 请求数量
-    },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
     }
   }).then((res) => {
     state.likeList = res.data.data.list

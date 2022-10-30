@@ -1,5 +1,6 @@
 import { getCategoryNewList, getSelfUID } from '@/api/index.js';
 import Taro from '@tarojs/taro';
+import { request } from '@/api/request';
 
 //1. 定义获取内容列表的 URL （将需要传递的查询参数进行拼接处理）函数参数的解构赋值，可以设置默认值
 export const getCategoryNewListUrl = ({
@@ -72,11 +73,8 @@ export const showShareMenu = () => {
 
 // 获取用户自己的uid
 export const getUID = async () => {
-  const uid =  await Taro.request({
-    url: getSelfUID,
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
-    }
+  const uid =  await request({
+    url: getSelfUID
   }).then((res) => {
     return res.data.uid
   }).catch(() => {

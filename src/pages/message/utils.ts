@@ -3,6 +3,7 @@ import Taro from '@tarojs/taro';
 import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList } from '@/api/index.js';
 import { getLocalStorage } from '@/utils/utils'
 import { localStorageKey } from '@/const'
+import { request } from '@/api/request';
 
 const cursor = 0
 export const count = 20
@@ -107,41 +108,29 @@ const setLocalMsgIds = async (ids: number[], type: MessageType) => {
 }
 
 const fetchOfficialMsgs = async () => {
-  return Taro.request({
+  return request({
     url: getOfficialMsgList,
-    data: { cursor, count },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
-    }
+    data: { cursor, count }
   })
 }
 
 const fetchCommentMsgs = async () => {
-  return Taro.request({
+  return request({
     url: getCommentMsgList,
-    data: { cursor, count },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
-    }
+    data: { cursor, count }
   })
 }
 
 const fetchUserFanss = async () => {
-  return Taro.request({
+  return request({
     url: getUserFansList,
-    data: { cursor, count },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
-    }
+    data: { cursor, count }
   })
 }
 
 const fetchInteractionMsgs = async () => {
-  return Taro.request({
+  return request({
     url: getInteractionMsgList,
-    data: { cursor, count },
-    header: { // TODO remove jwt
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
-    }
+    data: { cursor, count }
   })
 }

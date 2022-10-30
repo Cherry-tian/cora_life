@@ -30,9 +30,9 @@
       />
     </view>
     <view class="my-intro">
-      {{userInfo.description}}
+      {{ userInfo.description ? userInfo.description : '该用户暂无简介' }}
     </view>
-    <!-- <view class="my-interaction-list">
+    <view class="my-interaction-list">
       <view class="my-like">
         <text class="my-interaction-num">{{userInfo.relation_info?.statistics.liked_count}}</text>
         获赞
@@ -45,7 +45,7 @@
         <text class="my-interaction-num">{{userInfo.relation_info?.statistics.follower_count}}</text>
         粉丝
       </view>
-    </view> -->
+    </view>
   </view>
 </template>
 <script setup lang="ts">

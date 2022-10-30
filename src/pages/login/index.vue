@@ -20,11 +20,13 @@
   </view>
 </template>
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue';
+import { reactive } from 'vue';
 import { styleConfig, localStorageKey } from '@/const';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { login } from '@/api/index.js';
+import { request } from '@/api/request';
+
 const store = useStore()
 store.commit('changeHomePageLoading', false)
 const state = reactive({
@@ -45,7 +47,7 @@ const handleClick = () => {
         if (res.code) {
           //发起网络请求
           // console.log('res.code',res.code)
-          Taro.request({
+          request({
             method: 'POST',
             url: login,
             data: {
