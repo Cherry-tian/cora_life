@@ -63,6 +63,7 @@ import Taro from '@tarojs/taro';
 import { publishComment } from '@/api/index.js';
 import { styleConfig } from '@/const';
 import api from '@/api/index.js';
+import { request } from '@/api/request';
 const props = defineProps(['newsId', 'interaction'])
 const state = reactive({
   showCommentInput: false,
@@ -76,7 +77,7 @@ const state = reactive({
 //1. 弹出框的评论发送功能
 const handleCommentbtnClick = () => {
   state.isLoading = true
-  Taro.request({
+  request({
     method: 'POST',
     url: publishComment,
     data: {
@@ -107,7 +108,7 @@ const handleFavoriteClick = () => {
     // 点击后变为收藏状态、增加动态样式、发起收藏的 post 请求
     state.isFavorited = true
     state.favoriteIconClass = activeIconClass
-    Taro.request({
+    request({
       method: 'POST',
       url: api.favorite,
       data: {
@@ -123,7 +124,7 @@ const handleFavoriteClick = () => {
     // 点击后变为未收藏状态、还原样式、发起取消收藏的 post 请求
     state.isFavorited = false
     state.favoriteIconClass = ''
-    Taro.request({
+    request({
       method: 'POST',
       url: api.cancelFavorite,
       data: {
@@ -143,7 +144,7 @@ const handleLikeClick = () => {
     // 点击后变为点赞状态、增加动态样式、发起点赞的 post 请求
     state.isLiked = true
     state.likeIconClass = activeIconClass
-    Taro.request({
+    request({
       method: 'POST',
       url: api.like,
       data: {
@@ -159,7 +160,7 @@ const handleLikeClick = () => {
     // 点击后变为未点赞状态、还原样式、发起取消点赞的 post 请求
     state.isLiked = false
     state.likeIconClass = ''
-    Taro.request({
+    request({
       method: 'POST',
       url: api.cancelLike,
       data: {

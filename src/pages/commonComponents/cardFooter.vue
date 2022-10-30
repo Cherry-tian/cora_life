@@ -23,7 +23,8 @@
 import { defineProps, reactive } from 'vue';
 import { styleConfig } from '@/const'
 import Taro from '@tarojs/taro';
-import api from '@/api/index.js'
+import api from '@/api/index.js';
+import { request } from '@/api/request';
 const props = defineProps(['interaction', 'newId', 'jumpToDetailPage'])
 // 定义响应式数据 state，包含之后需要响应式渲染的各类数据
 const state = reactive({
@@ -53,7 +54,7 @@ const handleFavorite = () => {
     state.isFavorited = true
     state.favoriteCount++
     state.favoriteIconClass = activeIconClass
-    Taro.request({
+    request({
       method: 'POST',
       url: api.favorite,
       data: {
@@ -70,7 +71,7 @@ const handleFavorite = () => {
     state.isFavorited = false
     state.favoriteCount--
     state.favoriteIconClass = ''
-    Taro.request({
+    request({
       method: 'POST',
       url: api.cancelFavorite,
       data: {
@@ -92,7 +93,7 @@ const handleLike = () => {
     state.isLiked = true
     state.likeCount++
     state.likeIconClass = activeIconClass
-    Taro.request({
+    request({
       method: 'POST',
       url: api.like,
       data: {
@@ -109,7 +110,7 @@ const handleLike = () => {
     state.isLiked = false
     state.likeCount--
     state.likeIconClass = ''
-    Taro.request({
+    request({
       method: 'POST',
       url: api.cancelLike,
       data: {

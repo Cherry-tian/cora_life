@@ -27,6 +27,7 @@ import utils from '@/utils/utils';
 import { computed } from 'vue';
 import Taro from '@tarojs/taro';
 import { deleteComment } from '@/api/index.js';
+import { request } from '@/api/request';
 const props = defineProps(['userInfo', 'createTime', 'commentId', 'isCommentAuthor'])
 // 引入用特定形式显示时间的公共方法
 const publishTimeStr = computed(() => {
@@ -34,7 +35,7 @@ const publishTimeStr = computed(() => {
 })
 // 1. 删除
 const handleDeleteComment = () => {
-  Taro.request({
+  request({
     method: 'POST',
     url: deleteComment,
     data: {

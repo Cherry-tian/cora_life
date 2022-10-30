@@ -49,6 +49,7 @@ import { CommentList } from '../../types';
 import CommentUser from './comment/commentUser.vue';
 import CommentContent from './comment/commentContent.vue';
 import CommentReplyContent from './comment/commentReplyContent.vue';
+import { request } from '@/api/request';
 const props = defineProps({
   newsInfo: {
     type: Object,
@@ -66,7 +67,7 @@ const state = reactive<{commentList: CommentList[], hasMore: boolean, nextCursor
 })
 //1. 获取并展示评论栏基础信息。页面初次展示在评论栏，故评论栏在页面初次渲染则获取所有评论信息 onmounted 生命周期函数
 onMounted(() => {
-  Taro.request({
+  request({
     url: getCommentListUrl({ new_id: props.newsInfo.id })
   }).then((res) => {
     // 调用改变 loading 值的方法

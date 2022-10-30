@@ -68,6 +68,7 @@ import Taro from '@tarojs/taro';
 import { interactionDetail, publishComment } from '@/api/index.js';
 import { ForwardList, LikeList } from '../../types';
 import InteractionLoading from './interactionLoading.vue';
+import { request } from '@/api/request';
 
 const props = defineProps(['newsInfo'])
 // const forwardTabIndex = '0'
@@ -93,7 +94,7 @@ watch(
   (newTabIndex) => {
     // if ((newTabIndex === forwardTabIndex || newTabIndex === likeTabIndex) && (!state.forwardList.length && !state.likeList.length)) {
     if (newTabIndex === likeTabIndex && !state.likeList.length) {
-      Taro.request({
+      request({
         url: interactionDetail,
         data: {
           new_id: props.newsInfo.id
@@ -121,7 +122,7 @@ provide('handleCommentClick', handleCommentClick)
 // 3. 定义点击按钮发送输入回复的 post 请求
 const handleCommentbtnClick = () => {
   state.isLoading = true
-  Taro.request({
+  request({
     method: 'POST',
     url: publishComment,
     data: {

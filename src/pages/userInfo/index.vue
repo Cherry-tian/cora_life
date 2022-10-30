@@ -10,6 +10,7 @@ import MyInfo from '@/pages/commonComponents/myInfo.vue';
 import MyTabs from '@/pages/commonComponents/myTabs.vue';
 import Taro from '@tarojs/taro';
 import { getUserInfo } from '@/api/index.js';
+import { request } from '@/api/request';
 
 const state = reactive({
   userInfo: {},
@@ -29,7 +30,7 @@ const getUidFromRouterParams = (): number => {
 }
 
 const fetchUserInfo = async (uid: number) => {
-  Taro.request({
+  request({
     url: getUserInfo,
     data: {
       uid,

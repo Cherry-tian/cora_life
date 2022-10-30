@@ -10,8 +10,8 @@
       :jumpToHomePage="jumpToHomePage"
     />
     <message v-if="pageIndex == 3" />
-    <!-- <My v-if="pageIndex == 4" /> -->
-    <Login v-if="pageIndex == 4" />
+    <My v-if="pageIndex == 4" />
+    <!-- <Login v-if="pageIndex == 4" /> -->
   </view>
   <!-- 底部 tab 栏切换区域 -->
   <nut-tabbar
@@ -36,7 +36,7 @@ import utils from '@/utils/utils';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载
-const pageIndex = ref(0)
+const pageIndex = ref(4)
 const changePage = (index: number) => {
   if (pageIndex.value !== index) {
     store.commit('changeHomePageLoading', false) // todo

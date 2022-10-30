@@ -21,7 +21,15 @@ const config = {
   // 消息页设置：
   fansRelation: 2, // 用户是当前登录用户的粉丝
   messageLike: 1, // 用户点赞了当前登录用户发布的内容
-  messageFavorite: 2 //用户收藏了当前登录用户发布的内容
+  messageFavorite: 2, //用户收藏了当前登录用户发布的内容
+  // jwt 
+  localStorageKey: {
+    localStorageKeyJWT: 'jwt'
+  },
+  // 登录态校验失败码
+  errCode: {
+    errLoginFail: 7
+  }
 }
 
 module.exports = config

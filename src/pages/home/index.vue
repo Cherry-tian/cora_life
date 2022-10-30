@@ -51,6 +51,7 @@ import { styleConfig, newestCategoryID } from '@/const'
 import FeedCard from './components/feedCard.vue';
 import FeedLoading from './components/feedLoading.vue';
 import { useStore } from 'vuex';
+import { request } from '@/api/request';
 const store = useStore()
 
 // 定义 tab 栏分类的数据
@@ -69,11 +70,11 @@ const getCurrentCategroyIdByTabIndex = (tabIndex: string): number =>  {
   let index = Number(tabIndex)
   return state.categoryList[index].id 
 }
-// 1. 用 Taro.request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
+// 1. 用 request() 方法获取分类栏目的数据，将该方法挂载在 onmounted 生命周期函数上。
 // 3. 初次进入页面获取新闻内容数据 可将两次请求结果同时处理，promise.all()
 onMounted(async () => {
   // 页面第一次打开时，默认先请求「最新」tab下的数据
-  const requestTask = [Taro.request({
+  const requestTask = [request({
     url: getCategoryList,
   }), fetchNewList(newestCategoryID)]
   // 等待所有 Promise 请求结果返回，再继续执行 同时改变 homePageLoding 状态
@@ -115,7 +116,7 @@ watch(
 )
 
 const fetchNewList = async (category_id) => {
-  return Taro.request({
+  return request({
     url: utils.getCategoryNewListUrl({
       category_id,
       cursor: state.nextCursor
