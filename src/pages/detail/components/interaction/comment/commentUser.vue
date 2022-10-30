@@ -5,14 +5,14 @@
         <nut-avatar
           size="normal" 
           class="avatar" 
-          :icon="userInfo.avatar_url"
-          @tap="() => utils.jumpToUserPage(userInfo.uid)"
+          :icon="userInfo?.avatar_url"
+          @tap="() => utils.jumpToUserPage(userInfo?.uid)"
         >
         </nut-avatar>
       </view>
       <view>
-        <text class="comment-user-name">{{userInfo.name}}</text>
-        <text class="comment-author" v-if="userInfo.is_author">作者</text>
+        <text class="comment-user-name">{{userInfo?.name}}</text>
+        <text class="comment-author" v-if="userInfo?.is_author">作者</text>
         <text class="comment-publish-time"> {{publishTimeStr(createTime)}}</text>
       </view>
       <!-- 登录用户为当前评论发布者则可以删除当前评论

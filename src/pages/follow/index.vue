@@ -4,12 +4,12 @@
     <view class="follow-avatar">
       <nut-avatar
       size="normal"
-      :icon="item.avatar_url"
+      :icon="item?.avatar_url"
       ></nut-avatar>
     </view>
     <view class="follow-content">
-      <view class="follow-author-name">{{ item.name }}</view>
-      <view class="follow-desc">{{ item.description }}
+      <view class="follow-author-name">{{ item?.name }}</view>
+      <view class="follow-desc">{{ item?.description }}
       </view>
     </view>
     <view class="follow-button">

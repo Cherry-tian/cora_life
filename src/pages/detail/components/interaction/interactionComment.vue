@@ -41,7 +41,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { watch, reactive } from 'vue';
 import Taro from '@tarojs/taro';
 import { commentList } from '@/api/index.js';
 import { CommentList } from '../../types';
@@ -65,9 +65,16 @@ const state = reactive<{commentList: CommentList[], hasMore: boolean, nextCursor
   hasMore: false, //当前页面是否还有内容
   nextCursor: 0, // 下次请求的游标
 })
-//1. 获取并展示评论栏基础信息。页面初次展示在评论栏，故评论栏在页面初次渲染则获取所有评论信息 onmounted 生命周期函数
-onMounted(() => {
-  request({
+
+// 1. 获取并展示评论栏基础信息, 页面初次展示在评论栏
+watch(
+  () => props.newsInfo,
+  async () => {
+    await fetchCommentList()
+  }
+)
+const fetchCommentList = async () => {
+  return request({
     url: getCommentListUrl({ new_id: props.newsInfo.id })
   }).then((res) => {
     // 调用改变 loading 值的方法
@@ -77,11 +84,11 @@ onMounted(() => {
     state.nextCursor = res.data.data.next_cursor   
   }).catch(() => {
     Taro.showToast({
-        title: '载入远程数据出错',
-        icon: 'error'
-      })
+      title: '载入远程数据出错',
+      icon: 'error'
+    })
   })
-})
+}
 // 1.1 定义获取评论内容的 url 函数
 const getCommentListUrl = ({
   new_id,

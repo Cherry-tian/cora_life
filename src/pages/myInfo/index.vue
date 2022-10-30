@@ -2,7 +2,7 @@
   <view class="my-info-edit">
     <nut-uploader :url="uploadImg" class="myinfo-upload-avatar" maximum="1" accept="image/*"
       @success="handleUploadeSuccess">
-      <nut-avatar size="75" :icon="state.userInfo.avatar_url" ></nut-avatar>
+      <nut-avatar size="75" :icon="state.userInfo?.avatar_url" ></nut-avatar>
       <view class="change-avatar">更换头像</view>
     </nut-uploader>
   </view>
@@ -84,11 +84,11 @@ const state = reactive({
 })
 //1. 昵称和简介部分如果无内容默认是“昵称”和 “简介” （简介字数不超过20）
 const name = computed(() => {
-  return state.userInfo.name? state.userInfo.name : '昵称'
+  return state.userInfo?.name? state.userInfo?.name : '昵称'
 })
 const userDesc = computed(() => {
   if (state.userInfo.description) {
-    return state.userInfo.description.length > 20 ? state.userInfo.description.substring(0, 20) + '...' :  state.userInfo.description
+    return state.userInfo.description?.length > 20 ? state.userInfo.description.substring(0, 20) + '...' :  state.userInfo.description
   }
   return '简介'
 })

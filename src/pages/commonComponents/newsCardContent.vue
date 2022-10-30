@@ -4,7 +4,7 @@
       {{ contentTitle }}
     </view>
     <view class="news-content-text">
-      {{ contentText.length > 46 ? `${contentText.substring(0, 46)}...` : contentText }}
+      {{ contentText?.length > 46 ? `${contentText.substring(0, 46)}...` : contentText }}
     </view>
   </view>
 </template>

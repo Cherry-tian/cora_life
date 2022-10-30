@@ -1,7 +1,7 @@
 <template>
   <view class="news-card-user">
     <!-- <view class="news-user-info"> -->
-      {{`${authorInfo.name + ' ' + timeStr}`}}
+      {{`${authorInfo?.name + ' ' + timeStr}`}}
     <!-- </view> -->
   </view>
 </template>

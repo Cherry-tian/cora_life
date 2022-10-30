@@ -7,7 +7,7 @@
     </view> -->
     <view class="footer-icon" @tap="handleComment">
       <nut-icon name="comment" size="12"></nut-icon>
-      <text>{{interaction.commnet_count || '评论'}}</text>
+      <text>{{interaction?.commnet_count || '评论'}}</text>
     </view>
     <view class="footer-icon" @tap="handleFavorite" :style="state.isFavorited ? activeIconStyle: ''">
       <nut-icon name="star" size="12" :class="state.favoriteIconClass"></nut-icon>
@@ -31,7 +31,7 @@ const state = reactive({
   favoriteCount: props.interaction.favorite_count,
   isFavorited: props.interaction.is_favorited,
   likeCount: props.interaction.like_count,
-  isLiked: props.interaction.is_liked,
+  isLiked: props.interaction?.is_liked,
   likeIconClass: '', //收藏和点赞的动态样式类别
   favoriteIconClass: ''
 })
@@ -126,7 +126,7 @@ const handleLike = () => {
 }
 // 2.3 点击分享按钮
 const handleShare = () => {
-  console.log('share')
+  console.log('share') // TODO
 }
 // 2.4 点击评论按钮
 const handleComment = () => {

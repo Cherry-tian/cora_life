@@ -12,7 +12,7 @@
     </view>
     <view class="content-img">
       <!-- 只取三张图片 -->
-      <img class="img-item" v-for="url in (imgList.length > 3? imgList.slice(0,3): imgList)" :key="url" :src="url" />
+      <img class="img-item" v-for="url in (imgList?.length > 3? imgList.slice(0,3): imgList)" :key="url" :src="url" />
     </view>
   </view>
 </template>

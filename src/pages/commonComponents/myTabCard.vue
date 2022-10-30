@@ -10,17 +10,14 @@ import CardUser from '@/pages/commonComponents/cardUser.vue';
 import NewsCardContent from '@/pages/commonComponents/newsCardContent.vue';
 import CardContent from '@/pages/commonComponents/cardContent.vue';
 import * as utils from '@/utils/utils';
-import { useStore } from "vuex";
 const props = defineProps({
   itemInfo: {
     type: Object,
     required: true
   }
 })
-const store = useStore()
 const handleClickContent = () => {
-  
-  utils.jumpToDetailPage(store, props.itemInfo)
+  utils.jumpToDetailPage(props.itemInfo.id)
 }
 </script>
 <style lang="scss">

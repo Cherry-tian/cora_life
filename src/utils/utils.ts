@@ -1,4 +1,4 @@
-import { getCategoryNewList, getSelfUID } from '@/api/index.js';
+import { getCategoryNewList, getSelfUID, getMegNews } from '@/api/index.js';
 import Taro from '@tarojs/taro';
 import { request } from '@/api/request';
 
@@ -54,13 +54,10 @@ export const jumpToUserPage = (uid) => {
 }
 
 // 跳转到用详情页
-export const jumpToDetailPage = (store, newsInfo) => {
-  // 1. 用 Taro.navigateTo 实现路由跳转
+export const jumpToDetailPage = (newsId) => {
   Taro.navigateTo({
-    url: '/pages/detail/index'
+    url: `/pages/detail/index?news_id=${newsId}`
   })
-  // 2. 改变 store 中 newsInfo 的状态
-  store.commit('changeNewsInfo', newsInfo)
 }
 
 // 展示微信小程序分享图标 https://taro-docs.jd.com/docs/apis/share/showShareMenu
@@ -99,6 +96,17 @@ export const getLocalStorage = (key: string): Promise<any> => {
       }
     });
   });
+}
+
+export const getNewsInfoById = async (id) => {
+  return request({
+    url: getMegNews,
+    data: {
+      new_id_list: id,
+    }
+  }).then((res) => {
+    return res.data.data.list[0].user_new
+  })
 }
 
 export default {

@@ -6,20 +6,20 @@
         <nut-avatar
           size="normal" 
           class="avatar" 
-          :icon="forwardInfo.user.avatar_url"
-          @tap="() => utils.jumpToUserPage(forwardInfo.user.uid)"
+          :icon="forwardInfo.user?.avatar_url"
+          @tap="() => utils.jumpToUserPage(forwardInfo.user?.uid)"
         >
         </nut-avatar>
       </view>
       <view>
-        <text class="forward-user-name">{{forwardInfo.user.name}}</text>
-        <text class="forward-author" v-if="forwardInfo.user.is_author">作者</text>
-        <text class="forward-publish-time"> {{publishTimeStr(forwardInfo.create_time)}}</text>
+        <text class="forward-user-name">{{forwardInfo.user?.name}}</text>
+        <text class="forward-author" v-if="forwardInfo.user?.is_author">作者</text>
+        <text class="forward-publish-time"> {{publishTimeStr(forwardInfo?.create_time)}}</text>
       </view>
     </view>
     <!-- 转发内容 -->
     <view class="forward-content">
-      {{ `${forwardInfo.content.length > 0 ?  forwardInfo.content : '转发动态'}`}}
+      {{ `${forwardInfo.content?.length > 0 ?  forwardInfo.content : '转发动态'}`}}
     </view>
   </view>
   

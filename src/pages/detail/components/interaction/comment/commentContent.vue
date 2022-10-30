@@ -27,7 +27,7 @@ const state = reactive({
   likeCount: props.stats.like_count,
   isLiked: props.stats.is_liked,
   likeIconClass: '',
-  placeHolder: `回复 @${props.userInfo.name}:`
+  placeHolder: `回复 @${props.userInfo?.name}:`
 })
 //1. 对评论内容的点赞与取消点赞交互
 const activeLikeStyle = `color: ${styleConfig.activeIconColor}`

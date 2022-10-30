@@ -14,7 +14,7 @@
       <view v-if="!state.loading">
         <view 
           class="feed"
-          v-if="state.categoryNewList.length > 0"
+          v-if="state.categoryNewList?.length > 0"
           id="scroll"
         >
           <nut-infiniteloading
