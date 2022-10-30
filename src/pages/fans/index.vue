@@ -9,6 +9,7 @@ import { onMounted, reactive } from 'vue';
 import FansCard from '../commonComponents/FansCard.vue';
 import Taro from '@tarojs/taro';
 import { getUserFansList } from '@/api/index.js';
+import { request } from '@/api/request';
 const state = reactive({
   fansList: [],
   fansNextCursor: 0,
@@ -16,7 +17,7 @@ const state = reactive({
   fansHasMore: false
 })
 onMounted(() => {
-  Taro.request({
+  request({
     url: getUserFansList,
     data: {
       cursor: state.fansNextCursor, //起始游标

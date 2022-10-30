@@ -18,6 +18,7 @@ import { getMegNews } from '@/api/index.js';
 import Taro from '@tarojs/taro';
 import { User_new } from '@/types/common';
 import { useStore } from 'vuex';
+import { request } from '@/api/request';
 
 const store = useStore()
 
@@ -79,7 +80,7 @@ const changeTabRequest = (userInfo, tabIndex: string) => {
       })
       return;
   }
-  Taro.request({
+  request({
     url: getMegNews,
     data: {
       new_id_list: new_id_list.join(','), //数组参数拼接为字符串

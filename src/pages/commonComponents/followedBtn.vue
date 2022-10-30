@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import Taro from '@tarojs/taro';
 import { unFollowUser, followUser } from '@/api/index.js';
+import { request } from '@/api/request';
 const props = defineProps({
   isFollowed: Boolean, // 是否已关注
   isLoading: Boolean,  // 按钮的loading状态
@@ -33,7 +34,7 @@ const handleFllowbtnClick = () => {
   if (!props.isFollowed) {
     // 当前为未关注，则点击后 （1）发送添加关注的后端请求 （2）loading = true (3) 成功返回结果改变关注状态和 loading 并提醒用户
     props.changeIsLoading?.(true)
-    Taro.request({
+    request({
       method: 'POST',
       url: followUser,
       data: {
@@ -55,7 +56,7 @@ const handleFllowbtnClick = () => {
   } else {
     // 当前为关注，则点击后 （1）发送添加取消关注的后端请求 （2）loading = true (3) 成功返回结果改变关注状态和 loading 并提醒用户
     props.changeIsLoading?.(true)
-    Taro.request({
+    request({
       method: 'POST',
       url: unFollowUser,
       data: {

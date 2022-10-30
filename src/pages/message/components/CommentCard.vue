@@ -22,6 +22,7 @@ import { onMounted, reactive } from 'vue';
 import Taro from '@tarojs/taro';
 import { getMegNews } from '@/api/index.js';
 import { useStore } from 'vuex';
+import { request } from '@/api/request';
 const props = defineProps({
   itemInfo: {
     type: Object,
@@ -34,7 +35,7 @@ const state = reactive({
   newsInfo: {}
 })
 onMounted(() => {
-  Taro.request({
+  request({
     url: getMegNews,
     data: {
       new_id_list: props.itemInfo.newsInfo.id,

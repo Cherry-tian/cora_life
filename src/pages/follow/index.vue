@@ -41,6 +41,7 @@ import { onMounted, reactive } from 'vue';
 import { followRelation, coFollowRelation } from '@/const';
 import Taro from '@tarojs/taro';
 import { getFollowList } from '@/api/index.js';
+import { request } from '@/api/request';
 interface Follower {
   uid: number,
   name: string,
@@ -56,7 +57,7 @@ const state = reactive<{ followList: Follower[], isLoading: boolean, nextCursor:
 })
 // 1. 获取 followList 信息
 onMounted(() => {
-  Taro.request({
+  request({
     url: getFollowList,
     data: {
       uid: 123,

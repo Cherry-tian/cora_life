@@ -59,6 +59,7 @@ import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { getPublishCategoryList, publish, uploadImg } from '@/api/index.js';
 import { officialCategroyId } from '@/const';
+import { request } from '@/api/request';
 interface PubCategoryList {
   id: number,
   name: string
@@ -91,7 +92,7 @@ const isOfficial = computed(() => {
 })
 // 1. 页面初加载则请求发布内容分类列表，将列表分类内容渲染至底部区域，nut-radio组件的label属性与各分类的id绑定。
 onMounted(() => {
-  Taro.request({
+  request({
     url: getPublishCategoryList,
     // 对于 GET 方法的数据，会将数据转换成 query string
   }).then((res) => {
@@ -124,7 +125,7 @@ const handleBtnClick = () => {
       }
     }
     state.isLoading = true
-    Taro.request({
+    request({
       method: 'POST',
       url: publish,
       data,
