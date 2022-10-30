@@ -24,7 +24,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 
 defineProps({
   likeInfo: {

@@ -44,7 +44,7 @@
 import { onMounted, reactive, watch } from 'vue';
 import Taro from '@tarojs/taro';
 import { getCategoryList } from '@/api/index.js'
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import { CateGroy } from './type'
 import {CategoryNewList} from '@/types/common'
 import { styleConfig, newestCategoryID } from '@/const'

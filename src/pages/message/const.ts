@@ -1,29 +1,24 @@
-export enum TabIndex {
-  offcial = 0,
-  comment = 1,
-  fans = 2,
-  like = 3
-}
+import { MessageType } from '@/types/common';
 
 export const tabList = [
   {
     title: '官方',
-    key: TabIndex.offcial,
-    hasRead: false,
+    key: MessageType.Official,
+    hasNewMsg: false,
   },
   {
     title: '评论',
-    key: TabIndex.comment,
-    hasRead: false,
+    key: MessageType.Comment,
+    hasNewMsg: false,
   },
   {
     title: '粉丝',
-    key: TabIndex.fans,
-    hasRead: true,
+    key: MessageType.Fans,
+    hasNewMsg: true,
   },
   {
     title: '赞和收藏',
-    key: TabIndex.like,
-    hasRead: true,
+    key: MessageType.Interaction,
+    hasNewMsg: true,
   }
 ]

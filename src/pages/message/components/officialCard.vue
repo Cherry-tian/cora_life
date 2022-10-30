@@ -14,7 +14,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 defineProps({
   itemInfo: {
     type: Object,

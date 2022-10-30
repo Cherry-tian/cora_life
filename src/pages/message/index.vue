@@ -10,33 +10,33 @@
           :class="{active:state.tabIndex==item.key}"
           :key="item.key"
         >
-          <nut-badge dot v-if="!item.hasRead">
+          <nut-badge dot v-if="getHasNewMsg(item.key)">
             <span class="nut-tabs__titles-item__text">{{item.title}}</span>
           </nut-badge>
           <span class="nut-tabs__titles-item__text" v-else>{{item.title}}</span>
           <span class="nut-tabs__titles-item__line" :style="`background: ${styleConfig.themeColor};`"></span>
         </div>
       </template>
-      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.offcial">
+      <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Official">
         <OfficialCard v-for="item in state.officialList" :key="item.id" :itemInfo="item" />
       </nut-tabpane>
-      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.comment">
+      <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Comment">
         <Loading v-if="state.commentIsLoading"/>
         <CommentCard  v-for="item in state.commentList" :key="item.comment_id" :itemInfo="item" />
       </nut-tabpane>
-      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.fans">
+      <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Fans">
         <Loading v-if="state.fansIsLoading" />
         <FansCard v-for="item in state.fansList" :key="item.follow_uid" :itemInfo="item" />
       </nut-tabpane>
-      <nut-tabpane class="my-tab-tabpane" :pane-key="TabIndex.like">
+      <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Interaction">
         <Loading v-if="state.likeIsLoading" />
         <LikeCard v-for="item in state.likeList" :key="item.user.uid" :itemInfo="item" />
       </nut-tabpane>
     </nut-tabs>
   </view>
- </template>
- <script setup lang="ts">
- import { onMounted, reactive, watch } from 'vue';
+</template>
+<script setup lang="ts">
+import { onMounted, reactive, watch } from 'vue';
 import Taro from '@tarojs/taro';
 import { useStore } from 'vuex';
 import OfficialCard from './components/officialCard.vue';
@@ -46,12 +46,13 @@ import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFa
 import Loading from './components/loading.vue';
 import FansCard from '../commonComponents/FansCard.vue';
 import { styleConfig } from '@/const'
-import { TabIndex, tabList } from './const'
+import { tabList } from './const'
+import { MessageType } from '@/types/common';
+import { count, storeMsgToLocal } from './utils'
  
 const store = useStore()
-
 const state = reactive({
-  tabIndex: TabIndex.offcial,
+  tabIndex: MessageType.Official,
   tabList,
   officialList: [],
   officialHasMore: false, //当前页面是否有更多新闻
@@ -74,31 +75,43 @@ const state = reactive({
 onMounted(async () => {
   await fetchOfficialMsgs()
 })
- // 2. 页面首次切换到 评论、粉丝和赞 的时候加载对应数据内容
+// 2. 页面首次切换到 评论、粉丝和赞 的时候加载对应数据内容
 watch(
   () => state.tabIndex,
   async (newTabIndex) => {
-    console.log('newTabIndex',newTabIndex)
     // 首次切换到评论栏
-    if (newTabIndex === TabIndex.comment && !state.commentList.length) {
+    if (newTabIndex === MessageType.Comment && !state.commentList.length) {
       await fetchCommentMsgs()
     }
     // 首次切换到粉丝栏
-    if (newTabIndex === TabIndex.fans && !state.fansList.length) {
+    if (newTabIndex === MessageType.Fans && !state.fansList.length) {
       await fetchUserFanss()
     }
     // 首次切换到赞和收藏栏
-    if (newTabIndex === TabIndex.like && !state.likeList.length) {
+    if (newTabIndex === MessageType.Interaction && !state.likeList.length) {
       await fetInteractionMsgs()
     }
   }
 )
+
+const getHasNewMsg = (type: MessageType) => {
+  switch (type) {
+    case MessageType.Official:
+      return store.state.hasNewOfficialMsg
+    case MessageType.Comment:
+      return store.state.hasNewCommentMsg
+    case MessageType.Fans:
+      return store.state.hasNewFansMsg
+    case MessageType.Interaction:
+      return store.state.hasNewInteractionMsg
+  }
+}
 const fetchOfficialMsgs = async () => {
   Taro.request({
     url: getOfficialMsgList,
     data: {
       cursor: state.officialNextCursor, //起始游标
-      count: 10, // 请求数量
+      count, // 请求数量
     },
     header: { // TODO remove jwt
       jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
@@ -108,6 +121,8 @@ const fetchOfficialMsgs = async () => {
     store.commit('changeHomePageLoading', false)
     state.officialHasMore = res.data.data.has_more
     state.officialNextCursor = res.data.data.next_cursor
+
+    storeMsgToLocal(store, res, MessageType.Official)
   }).catch(() => {
     Taro.showToast({
       title: '载入远程数据出错',
@@ -120,7 +135,7 @@ const fetchCommentMsgs = async () => {
     url: getCommentMsgList,
     data: {
       cursor: state.commentNextCursor, //起始游标
-      count: 10, // 请求数量
+      count, // 请求数量
     },
     header: { // TODO remove jwt
       jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
@@ -130,6 +145,8 @@ const fetchCommentMsgs = async () => {
     state.commentIsLoading = false
     state.commentHasMore = res.data.data.has_more
     state.commentNextCursor = res.data.data.next_cursor
+
+    storeMsgToLocal(store, res, MessageType.Comment)
   }).catch(() => {
     Taro.showToast({
       title: '载入远程数据出错',
@@ -142,7 +159,7 @@ const fetchUserFanss = async () => {
     url: getUserFansList,
     data: {
       cursor: state.fansNextCursor, // 起始游标
-      count: 20, // 请求数量
+      count, // 请求数量
     },
     header: { // TODO remove jwt
       jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
@@ -152,6 +169,8 @@ const fetchUserFanss = async () => {
     state.fansIsLoading = false
     state.fansHasMore = res.data.data.has_more
     state.fansNextCursor = res.data.data.next_cursor
+
+    storeMsgToLocal(store, res, MessageType.Fans)
   }).catch(() => {
     Taro.showToast({
       title: '载入远程数据出错',
@@ -164,7 +183,7 @@ const fetInteractionMsgs = async () => {
     url: getInteractionMsgList,
     data: {
       cursor: state.likeNextCursor, //起始游标
-      count: 10, // 请求数量
+      count, // 请求数量
     },
     header: { // TODO remove jwt
       jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsIm9wZW5JZCI6IjEiLCJpYXQiOjE2NjcxMTI4NzAsImV4cCI6MTY2NzU0NDg3MH0.XDjPRUCMUFxoeqCU6kLLmYnbaNLMlrJpJq0Pfo62QuM'
@@ -174,6 +193,8 @@ const fetInteractionMsgs = async () => {
     state.likeIsLoading = false
     state.likeHasMore = res.data.data.has_more
     state.likeNextCursor = res.data.data.next_cursor
+
+    storeMsgToLocal(store, res, MessageType.Interaction)
   }).catch(() => {
     Taro.showToast({
       title: '载入远程数据出错',

@@ -23,7 +23,7 @@
     </view>
 </template>
 <script setup lang="ts">
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import { computed } from 'vue';
 import Taro from '@tarojs/taro';
 import { deleteComment } from '@/api/index.js';

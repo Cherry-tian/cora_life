@@ -1,4 +1,12 @@
 <template>
+  <!-- todo remove -->
+  <!-- <button @tap="clearLocalMsg">清除本地缓存消息</button>  -->
+  <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
+  <!-- <view clase="compile-helper">
+    <input type="text" style="height: 0px;"/>
+    <textarea style="height: 0px;"></textarea>
+    <button style="height: 0px;"></button>
+  </view> -->
   <view class="publish-wrapper">
     <nut-input 
       v-if="isOfficial"
@@ -48,19 +56,13 @@
       </nut-radiogroup>
     </nut-cell>
   </view>
-  <!-- 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
-  <view clase="compile-helper">
-    <input type="text" style="height: 0px;"/>
-    <textarea style="height: 0px;"></textarea>
-    <button style="height: 0px;"></button>
-  </view>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, reactive, watch } from 'vue';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { getPublishCategoryList, publish, uploadImg } from '@/api/index.js';
-import { officialCategroyId } from '@/const';
+import { officialCategroyId, localStorageKey } from '@/const';
 interface PubCategoryList {
   id: number,
   name: string
@@ -79,6 +81,21 @@ const props = defineProps({
     required: true
   }
 })
+// 测试用 todo remove
+const clearLocalMsg = () => {
+  Taro.removeStorage({
+    key: localStorageKey.commentMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.officialMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.fansMsg
+  })
+  Taro.removeStorage({
+    key: localStorageKey.interactionMsg
+  })
+}
 const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[]}>({
   title: '',
   content: '',

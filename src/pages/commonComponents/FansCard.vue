@@ -48,7 +48,7 @@
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import Taro from '@tarojs/taro';
 import { followUser } from '@/api/index.js';
 // 引入粉丝和互相关注关系的标识

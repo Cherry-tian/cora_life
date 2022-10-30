@@ -2,7 +2,7 @@ import { getCategoryNewList, getSelfUID } from '@/api/index.js';
 import Taro from '@tarojs/taro';
 
 //1. 定义获取内容列表的 URL （将需要传递的查询参数进行拼接处理）函数参数的解构赋值，可以设置默认值
-const getCategoryNewListUrl = ({
+export const getCategoryNewListUrl = ({
   category_id,
   cursor = 0,
   count = 5,
@@ -12,7 +12,7 @@ const getCategoryNewListUrl = ({
 }
 
 //2. 定义日期显示模式：对今天的数据显示「xx小时前或xx分钟前」；对昨天的数据显示「昨天12:32」;再往前只显示日期「08-19」
-const publishTimeStr = (createTime: number) => {
+export const publishTimeStr = (createTime: number) => {
   if (isToday(createTime)) {
     const createTimeHour = new Date(createTime).getHours()
     const currHour = new Date().getHours()
@@ -45,7 +45,7 @@ const isYesterday = (createTime) => {
   return false
 }
 
-const jumpToUserPage = (uid) => {
+export const jumpToUserPage = (uid) => {
   // 跳转到用户信息页；路由参数带上这个用户的uid
   Taro.navigateTo({
     url: `/pages/userInfo/index?uid=${uid}`
@@ -53,7 +53,7 @@ const jumpToUserPage = (uid) => {
 }
 
 // 跳转到用详情页
-const jumpToDetailPage = (store, newsInfo) => {
+export const jumpToDetailPage = (store, newsInfo) => {
   // 1. 用 Taro.navigateTo 实现路由跳转
   Taro.navigateTo({
     url: '/pages/detail/index'
@@ -63,7 +63,7 @@ const jumpToDetailPage = (store, newsInfo) => {
 }
 
 // 展示微信小程序分享图标 https://taro-docs.jd.com/docs/apis/share/showShareMenu
-const showShareMenu = () => {
+export const showShareMenu = () => {
   Taro.showShareMenu({
     withShareTicket: true,
     showShareItems: ['shareAppMessage', 'shareTimeline']
@@ -71,7 +71,7 @@ const showShareMenu = () => {
 }
 
 // 获取用户自己的uid
-const getUID = async () => {
+export const getUID = async () => {
   const uid =  await Taro.request({
     url: getSelfUID,
     header: { // TODO remove jwt
@@ -88,11 +88,17 @@ const getUID = async () => {
   return uid
 }
 
-export default {
-  getCategoryNewListUrl,
-  jumpToUserPage,
-  jumpToDetailPage,
-  showShareMenu,
-  publishTimeStr,
-  getUID
+// Taro.getStorage 方法的 Prmoise 调用
+export const getLocalStorage = (key: string): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    Taro.getStorage({
+      key: key,
+      success: (res) => {
+        resolve(res.data)
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  });
 }

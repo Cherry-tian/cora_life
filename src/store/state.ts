@@ -5,5 +5,9 @@ export default {
   newsInfo: {},
   newsId: 0,
   // 向资料页跳转传递信息
-  userInfo: {}
+  userInfo: {},
+  hasNewOfficialMsg: false,
+  hasNewCommentMsg: false,
+  hasNewFansMsg: false,
+  hasNewInteractionMsg: false,
 }

@@ -32,7 +32,7 @@
 </template>
 <script setup lang="ts">
 import { defineProps, ref, reactive, onMounted } from 'vue';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import { followRelation, coFollowRelation } from '@/const';
 import FollowedBtn from '@/pages/commonComponents/followedBtn.vue';
 const props = defineProps(['authorInfo', 'createTime', 'showFollowBtn'])

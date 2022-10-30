@@ -15,7 +15,7 @@ import { onMounted, reactive } from 'vue';
 import NewsFeedCard from './components/newsFeedCard.vue';
 import { CategoryNewList } from '@/types/common';
 import Taro from '@tarojs/taro';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 import { newsCategoryId } from '@/const';
 import { useStore } from 'vuex';
 

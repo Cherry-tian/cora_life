@@ -32,7 +32,7 @@ import My from '../my/index.vue';
 import { ref, onMounted } from 'vue';
 import Loading from './components/loading.vue';
 import { useStore } from 'vuex';
-import utils from '@/utils/utils';
+import * as utils from '@/utils/utils';
 
 const store = useStore()
 // 定义根据 index 改变页面的方法 同时触发页面加载
