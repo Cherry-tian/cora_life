@@ -34,3 +34,8 @@ export const localStorageKey = {
   fansMsg: 'fans',
   interactionMsg: 'interaction',
 }
+
+// 登录态校验失败码
+export const errCode = {
+  errLoginFail: 7
+}

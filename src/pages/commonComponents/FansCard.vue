@@ -51,6 +51,7 @@ import { reactive } from 'vue';
 import * as utils from '@/utils/utils';
 import Taro from '@tarojs/taro';
 import { followUser } from '@/api/index.js';
+import { request } from '@/api/request';
 // 引入粉丝和互相关注关系的标识
 import { fansRelation, coFollowRelation } from '@/const';
 const props = defineProps({
@@ -68,7 +69,7 @@ const state = reactive({
 const handleClickFollow = () => {
   if (!state.isFollowed) {
     state.isLoading = true
-    Taro.request({
+    request({
       method: 'POST',
       url: followUser,
       data: {

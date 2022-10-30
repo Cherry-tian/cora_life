@@ -20,8 +20,8 @@
   </view>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { styleConfig } from '@/const';
+import { reactive, onMounted } from 'vue';
+import { styleConfig, localStorageKey } from '@/const';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { login } from '@/api/index.js';
@@ -44,7 +44,7 @@ const handleClick = () => {
         success: function (res) {
         if (res.code) {
           //发起网络请求
-          console.log('res.code',res.code)
+          // console.log('res.code',res.code)
           Taro.request({
             method: 'POST',
             url: login,
@@ -52,22 +52,22 @@ const handleClick = () => {
               code: res.code,
               avatarUrl: state.wxUserInfo.avatarUrl,
               nickName: state.wxUserInfo.nickName,
-            }
-          }).then(() => {
-            //TODO： 服务端返回结果 uid，并将该结果保存至 localStorage/sessionStorage 中
-            // Taro.setStorage({
-            //   key: uid,
-            //   data: res2.data.data.uid
-            // })
+            },
+          }).then((res2) => {
+            // 将服务端返回的登录态 token 保存至 localStorage 中, 微信小程序不支持 localStorage 改用 Taro.setStorage 方法
+            Taro.setStorage({
+              key: localStorageKey.jwt,
+              data: res2.data.data.jwt,
+            })
             state.isLoading = false
             Taro.showToast({
               title: '登录成功!',
               icon: 'success'
             })
             // 登录成功后，等 500ms 页面跳转回去
-            // setTimeout(() => {
-            //   Taro.navigateBack()
-            // }, 500)
+            setTimeout(() => {
+              Taro.navigateBack()
+            }, 500)
           })
         } else {
           console.log('登录失败！' + res.errMsg)
@@ -87,7 +87,15 @@ const handleClick = () => {
       })
     }
 })
-  
+  // TODO 本意是想页面跳转到登录页时，左上角不显示「返回」按钮，保证用户必须登录才能进行下一步。但是 hideHomeButton 调用成功了似乎没有生效
+  // Taro.hideHomeButton: https://taro-docs.jd.com/taro/docs/apis/ui/navigation-bar/hideHomeButton 
+  // onShow: https://taro-docs.jd.com/taro/docs/vue-page#onshow-
+  /* onMounted(()=>{
+    Taro.eventCenter.once(Taro.getCurrentInstance().router.onShow, () => {
+      console.log('onShow')
+      Taro.hideHomeButton();
+    })
+  }) */
 }
 </script>
 <style lang="scss">

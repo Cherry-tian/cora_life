@@ -72,6 +72,7 @@ import { reactive, computed } from 'vue';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { editUserInfo, uploadImg } from '@/api/index.js';
+import { request } from '@/api/request';
 
 const store = useStore()
 const state = reactive({
@@ -104,7 +105,7 @@ const handleUploadeSuccess = ({responseText}) => {
 // 2. 点击弹框保存发送更改用户资料的数据请求
 const handleClickSave = () => {
   state.isLoading = true
-  Taro.request({
+  request({
     method: 'POST',
     url: editUserInfo,
     data: {

@@ -49,6 +49,7 @@ import { styleConfig } from '@/const'
 import { tabList } from './const'
 import { MessageType } from '@/types/common';
 import { count, storeMsgToLocal } from './utils'
+import { request } from '@/api/request';
  
 const store = useStore()
 const state = reactive({
@@ -107,7 +108,7 @@ const getHasNewMsg = (type: MessageType) => {
   }
 }
 const fetchOfficialMsgs = async () => {
-  Taro.request({
+  request({
     url: getOfficialMsgList,
     data: {
       cursor: state.officialNextCursor, //起始游标
@@ -131,7 +132,7 @@ const fetchOfficialMsgs = async () => {
   })
 }
 const fetchCommentMsgs = async () => {
-  Taro.request({
+  request({
     url: getCommentMsgList,
     data: {
       cursor: state.commentNextCursor, //起始游标
@@ -155,7 +156,7 @@ const fetchCommentMsgs = async () => {
   })
 }
 const fetchUserFanss = async () => {
-  return Taro.request({
+  return request({
     url: getUserFansList,
     data: {
       cursor: state.fansNextCursor, // 起始游标
@@ -179,7 +180,7 @@ const fetchUserFanss = async () => {
   })
 }
 const fetInteractionMsgs = async () => {
-  return Taro.request({
+  return request({
     url: getInteractionMsgList,
     data: {
       cursor: state.likeNextCursor, //起始游标

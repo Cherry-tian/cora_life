@@ -18,6 +18,7 @@ import { inject, reactive } from 'vue';
 import { styleConfig } from '@/const';
 import Taro from '@tarojs/taro';
 import { commentLike, cancelCommentLike } from '@/api/index.js';
+import { request } from '@/api/request';
 const props = defineProps(['content', 'stats', 'commentId', 'replyToUser', 'userInfo'])
 // 通过 Inject 引入跨层级（祖孙级别的组件方法 handleCommentClick）
 const handleCommentClick: any = inject('handleCommentClick')
@@ -36,7 +37,7 @@ const handleLikeComment = () => {
     state.likeCount++
     state.isLiked = !state.isLiked
     state.likeIconClass = activeClass
-    Taro.request({
+    request({
       method: 'POST',
       url: commentLike,
       data: {
@@ -52,7 +53,7 @@ const handleLikeComment = () => {
     state.likeCount--
     state.isLiked = !state.isLiked
     state.likeIconClass = ''
-    Taro.request({
+    request({
       method: 'POST',
       url: cancelCommentLike,
       data: {

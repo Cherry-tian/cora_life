@@ -88,9 +88,9 @@ export const getUID = async () => {
   return uid
 }
 
-// Taro.getStorage 方法的 Prmoise 调用
+// 将 Taro.getStorage() 包装为 Promise 式
 export const getLocalStorage = (key: string): Promise<any> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject)=> {
     Taro.getStorage({
       key: key,
       success: (res) => {
@@ -99,6 +99,16 @@ export const getLocalStorage = (key: string): Promise<any> => {
       fail: (err) => {
         reject(err)
       }
-    })
+    });
   });
+}
+
+export default {
+  getCategoryNewListUrl,
+  jumpToUserPage,
+  jumpToDetailPage,
+  showShareMenu,
+  publishTimeStr,
+  getUID,
+  getLocalStorage
 }

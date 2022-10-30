@@ -49,9 +49,9 @@ watch(
 onMounted(async () => {
   // 定时获取是否有新消息，有的话就显示消息红点；报错不阻塞整体流程
   state.hasNewMsgs = await checkHasNewMsgs(store)
-  setInterval(async () => {
-    state.hasNewMsgs = await checkHasNewMsgs(store)
-  }, msgInterval)
+  // setInterval(async () => { TODO 恢复
+  //   state.hasNewMsgs = await checkHasNewMsgs(store)
+  // }, msgInterval)
 })
 </script>
 <style lang="scss">

@@ -18,6 +18,7 @@ import Taro from '@tarojs/taro';
 import * as utils from '@/utils/utils';
 import { newsCategoryId } from '@/const';
 import { useStore } from 'vuex';
+import { request } from '@/api/request';
 
 const store = useStore()
 const state = reactive<{categoryNewList:CategoryNewList[], hasMore:boolean, nextCursor:number}>({
@@ -28,7 +29,7 @@ const state = reactive<{categoryNewList:CategoryNewList[], hasMore:boolean, next
 
 // 在 onmounted 生命周期函数中发起数据请求
 onMounted(() => {
-  Taro.request({
+  request({
     // url 类同于 home 页面的 URL 内容，故可以封装为 utils 文件中的一个方法调用
     url: utils.getCategoryNewListUrl({category_id: newsCategoryId})
   }).then((res) => {
