@@ -39,3 +39,10 @@ export const localStorageKey = {
 export const errCode = {
   errLoginFail: 7
 }
+
+export const countConfig = {
+  relation: 50, // 用户关系数据简单，可一次性获取多个
+  news: 10, // 新闻详情数据较多，获取量较少
+  comment: 50,
+  message: 20
+}

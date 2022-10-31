@@ -2,8 +2,9 @@
    <view class="fans-wrapper">
     <view class="fans-avatar">
       <nut-avatar
-      size="normal"
-      :icon="itemInfo?.avatar_url"
+        size="normal"
+        :icon="itemInfo?.avatar_url"
+        @tap="() => utils.jumpToUserPage(itemInfo?.uid)"
      ></nut-avatar>
     </view>
     <view class="fans-content">

@@ -73,6 +73,7 @@ import { ForwardList, LikeList } from '../../types';
 import InteractionLoading from './interactionLoading.vue';
 import { request } from '@/api/request';
 import { User_new } from '@/types/common'
+import { reFreshDetailPage } from '@/pages/detail/utils'
 
 const props = defineProps(['newsInfo'])
 // const forwardTabIndex = '0'
@@ -133,12 +134,17 @@ const handleCommentbtnClick = () => {
     data: {
       new_id: props.newsInfo.id,
       content: state.commentText,
-      commet_id: state.commentId   
+      comment_id: state.commentId   
     }
   }).then(() => {
     state.isLoading = false
     state.showReplyCommentInput = false
     state.commentText = ''
+
+    // 刷新页面
+    setTimeout(() => {
+      reFreshDetailPage()
+    }, 300)
   }).catch(() => {
     Taro.showToast({
       title: '评论发布失败，请稍后再试',

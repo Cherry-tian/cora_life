@@ -45,10 +45,10 @@ import LikeCard from './components/LikeCard.vue';
 import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList } from '@/api/index.js';
 import Loading from './components/loading.vue';
 import FansCard from '../commonComponents/FansCard.vue';
-import { styleConfig } from '@/const'
+import { styleConfig, countConfig } from '@/const'
 import { tabList } from './const'
 import { MessageType } from '@/types/common';
-import { count, storeMsgToLocal } from './utils'
+import { storeMsgToLocal } from './utils'
 import { request } from '@/api/request';
  
 const store = useStore()
@@ -112,7 +112,7 @@ const fetchOfficialMsgs = async () => {
     url: getOfficialMsgList,
     data: {
       cursor: state.officialNextCursor, //起始游标
-      count, // 请求数量
+      count: countConfig.message, // 请求数量
     }
   }).then((res) => {
     state.officialList = res.data.data.list
@@ -133,7 +133,7 @@ const fetchCommentMsgs = async () => {
     url: getCommentMsgList,
     data: {
       cursor: state.commentNextCursor, //起始游标
-      count, // 请求数量
+      count: countConfig.message, // 请求数量
     }
   }).then((res) => {
     state.commentList = res.data.data.list
@@ -154,7 +154,7 @@ const fetchUserFanss = async () => {
     url: getUserFansList,
     data: {
       cursor: state.fansNextCursor, // 起始游标
-      count, // 请求数量
+      count: countConfig.message, // 请求数量
     }
   }).then((res) => {
     state.fansList = res.data.data.list
@@ -175,7 +175,7 @@ const fetInteractionMsgs = async () => {
     url: getInteractionMsgList,
     data: {
       cursor: state.likeNextCursor, //起始游标
-      count, // 请求数量
+      count: countConfig.message, // 请求数量
     }
   }).then((res) => {
     state.likeList = res.data.data.list

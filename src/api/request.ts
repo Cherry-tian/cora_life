@@ -1,5 +1,5 @@
 // 在请求中加入 header 字段
-import  utils  from '@/utils/utils';
+import  * as utils  from '@/utils/utils';
 import Taro from '@tarojs/taro';
 import { localStorageKey, errCode } from '@/const';
 

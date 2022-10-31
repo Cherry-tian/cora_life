@@ -10,6 +10,9 @@ import FansCard from '../commonComponents/FansCard.vue';
 import Taro from '@tarojs/taro';
 import { getUserFansList } from '@/api/index.js';
 import { request } from '@/api/request';
+import { getUidFromRouter } from '@/utils/utils'
+import { countConfig } from '@/const'
+
 const state = reactive({
   fansList: [],
   fansNextCursor: 0,
@@ -20,8 +23,9 @@ onMounted(() => {
   request({
     url: getUserFansList,
     data: {
+      uid: getUidFromRouter(),
       cursor: state.fansNextCursor, //起始游标
-      count: 10, // 请求数量
+      count: countConfig.relation, // 请求数量
     }
   }).then((res) => {
     state.fansList = res.data.data.list

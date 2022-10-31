@@ -45,7 +45,7 @@ import { watch, reactive } from 'vue';
 import Taro from '@tarojs/taro';
 import { commentList } from '@/api/index.js';
 import { CommentList } from '../../types';
-
+import { countConfig } from '@/const'
 import CommentUser from './comment/commentUser.vue';
 import CommentContent from './comment/commentContent.vue';
 import CommentReplyContent from './comment/commentReplyContent.vue';
@@ -93,7 +93,7 @@ const fetchCommentList = async () => {
 const getCommentListUrl = ({
   new_id,
   cursor = 0,
-  count = 20,
+  count = countConfig.comment,
 }): string => {
   return `${commentList}?new_id=${new_id}&cursor=${cursor}&count=${count}`
 }

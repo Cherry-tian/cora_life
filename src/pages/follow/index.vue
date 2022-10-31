@@ -3,9 +3,10 @@
     <view class="follow-wrapper" v-for="item in state.followList" :key="item.uid">
     <view class="follow-avatar">
       <nut-avatar
-      size="normal"
-      :icon="item?.avatar_url"
-      ></nut-avatar>
+        size="normal"
+        :icon="item?.avatar_url"
+        @tap="() => jumpToUserPage(item?.uid)"
+      />
     </view>
     <view class="follow-content">
       <view class="follow-author-name">{{ item?.name }}</view>
@@ -42,6 +43,9 @@ import { followRelation, coFollowRelation } from '@/const';
 import Taro from '@tarojs/taro';
 import { getFollowList } from '@/api/index.js';
 import { request } from '@/api/request';
+import { getUidFromRouter, jumpToUserPage } from '@/utils/utils'
+import { countConfig } from '@/const'
+
 interface Follower {
   uid: number,
   name: string,
@@ -60,9 +64,9 @@ onMounted(() => {
   request({
     url: getFollowList,
     data: {
-      uid: 123,
+      uid: getUidFromRouter(),
       cursor: state.nextCursor, //起始游标
-      count: 10, // 请求数量
+      count: countConfig.relation, // 请求数量
     }
   }).then((res) => {
     state.followList = res.data.data.list
