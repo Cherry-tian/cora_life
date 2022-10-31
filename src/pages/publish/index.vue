@@ -32,6 +32,7 @@
       @success="uploadImgSuccess"
       @failure="uploadImgFailure"
       @delete="uploadImgDelete"
+      :headers="state.headers"
      />
     <!-- 分类列表区域 -->
     <nut-cell class="publish-list">
@@ -64,6 +65,8 @@ import Taro from '@tarojs/taro';
 import { getPublishCategoryList, publish, uploadImg } from '@/api/index.js';
 import { officialCategroyId, localStorageKey } from '@/const';
 import { request } from '@/api/request';
+import { getLocalStorage } from '@/utils/utils'
+
 interface PubCategoryList {
   id: number,
   name: string
@@ -83,20 +86,27 @@ const props = defineProps({
   }
 })
 
-const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[]}>({
+const state = reactive<{title: string, content: string, isLoading: boolean, pubCategoryList: PubCategoryList[], categoryId: number, uriList: string[], headers: any}>({
   title: '',
   content: '',
   isLoading: false,
   pubCategoryList: [],
   categoryId: 0,
-  uriList: []
+  uriList: [],
+  headers: {},
 })
 // 定义判断用户选择分类是否为官方新闻
 const isOfficial = computed(() => {
   return state.categoryId === officialCategroyId
 })
+const packHeaders = async () => {
+  const jwt = await getLocalStorage(localStorageKey.jwt).catch(e => {
+    console.log('get jwt from local fail, err: ', e)
+  })
+  state.headers = { jwt }
+} 
 // 1. 页面初加载则请求发布内容分类列表，将列表分类内容渲染至底部区域，nut-radio组件的label属性与各分类的id绑定。
-onMounted(() => {
+onMounted(async () => {
   request({
     url: getPublishCategoryList,
     // 对于 GET 方法的数据，会将数据转换成 query string
@@ -109,6 +119,8 @@ onMounted(() => {
       icon: 'error'
     })
   })
+
+  await packHeaders()
 })
 
 //2. 点击发送按钮 向后端接口发送 POST 请求及相关数据
