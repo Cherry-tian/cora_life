@@ -60,6 +60,20 @@ export const jumpToDetailPage = (newsId) => {
   })
 }
 
+// 刷新详情页（只能在详情页调该方法）
+export const reFreshDetailPage = () => {
+  const newsId = getNewsIdFromRouter()
+  Taro.redirectTo({
+    url: `/pages/detail/index?news_id=${newsId}`
+  })
+}
+
+// 从路由参数中获取新闻id
+export const getNewsIdFromRouter = () => {
+  const routerParams = Taro.getCurrentInstance().router.params
+  return routerParams.news_id
+}
+
 // 展示微信小程序分享图标 https://taro-docs.jd.com/docs/apis/share/showShareMenu
 export const showShareMenu = () => {
   Taro.showShareMenu({

@@ -124,10 +124,6 @@ const handleLike = () => {
     })
   }
 }
-// 2.3 点击分享按钮
-const handleShare = () => {
-  console.log('share') // TODO
-}
 // 2.4 点击评论按钮
 const handleComment = () => {
   props.jumpToDetailPage()

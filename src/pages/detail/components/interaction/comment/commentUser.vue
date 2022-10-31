@@ -46,6 +46,10 @@ const handleDeleteComment = () => {
       title: '删除成功',
       icon: 'success'
     })
+    // 刷新页面
+    setTimeout(() => {
+      utils.reFreshDetailPage()
+    }, 300)
   })
 }
 </script>

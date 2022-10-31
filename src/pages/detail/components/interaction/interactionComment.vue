@@ -93,7 +93,7 @@ const fetchCommentList = async () => {
 const getCommentListUrl = ({
   new_id,
   cursor = 0,
-  count = 5, //默认一次获取 5 条
+  count = 20,
 }): string => {
   return `${commentList}?new_id=${new_id}&cursor=${cursor}&count=${count}`
 }

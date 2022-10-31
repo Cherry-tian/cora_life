@@ -23,10 +23,10 @@
   </view>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import * as utils from '@/utils/utils';
 
-defineProps({
+const props = defineProps({
   likeInfo: {
     type: Object,
     required: true
@@ -35,6 +35,9 @@ defineProps({
 // 引入用特定形式显示时间的公共方法
 const publishTimeStr = computed(() => {
   return utils.publishTimeStr
+})
+onMounted(() => {
+  console.log('likeInfo', props.likeInfo)
 })
 </script>
 <style lang="scss">
