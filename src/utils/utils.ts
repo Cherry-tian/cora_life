@@ -68,7 +68,7 @@ export const reFreshDetailPage = () => {
   })
 }
 
-// // 从路由参数中获取新闻id
+// 从路由参数中获取新闻id
 export const getNewsIdFromRouter = () => {
   const routerParams = Taro.getCurrentInstance().router.params
   return routerParams.news_id
