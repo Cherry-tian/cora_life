@@ -1,7 +1,13 @@
 <template>
   <view class="my-info-edit">
-    <nut-uploader :url="uploadImg" class="myinfo-upload-avatar" maximum="1" accept="image/*"
-      @success="handleUploadeSuccess">
+    <nut-uploader
+      :url="uploadImg"
+      class="myinfo-upload-avatar"
+      maximum="1"
+      accept="image/*"
+      @success="handleUploadeSuccess"
+      :headers="state.headers"
+    >
       <nut-avatar size="75" :icon="state.userInfo?.avatar_url" ></nut-avatar>
       <view class="change-avatar">更换头像</view>
     </nut-uploader>
@@ -68,11 +74,13 @@
    </nut-popup>
 </template>
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
+import { reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import Taro from '@tarojs/taro';
 import { editUserInfo, uploadImg } from '@/api/index.js';
 import { request } from '@/api/request';
+import { getLocalStorage } from '@/utils/utils'
+import { localStorageKey } from '@/const'
 
 const store = useStore()
 const state = reactive({
@@ -80,7 +88,8 @@ const state = reactive({
   showChangeName: false,
   showChangeDesc: false,
   isLoading: false,
-  avatar_uri: ''
+  avatar_uri: '',
+  headers: {},
 })
 //1. 昵称和简介部分如果无内容默认是“昵称”和 “简介” （简介字数不超过20）
 const name = computed(() => {
@@ -92,6 +101,12 @@ const userDesc = computed(() => {
   }
   return '简介'
 })
+const packHeaders = async () => {
+  const jwt = await getLocalStorage(localStorageKey.jwt).catch(e => {
+    console.log('get jwt from local fail, err: ', e)
+  })
+  state.headers = { jwt }
+} 
 // 更换头像成功则获取图片对应 uid, 并提示用户新头像审核中
 const handleUploadeSuccess = ({responseText}) => {
   const resData = JSON.parse(responseText.data)
@@ -128,6 +143,9 @@ const handleClickSave = () => {
     })
   })
 }
+onMounted(async () => {
+  await packHeaders()
+})
 </script>
 <style lang="scss">
   .my-info-edit {
