@@ -81,7 +81,7 @@ export const showShareMenu = () => {
 }
 
 // 获取用户自己的uid
-export const getUID = async () => {
+export const getUID = async (): Promise<number> => {
   const uid =  await request({
     url: getSelfUID
   }).then((res) => {

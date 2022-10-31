@@ -8,6 +8,7 @@
     <comment-user
       :isCommentAuthor= "item.user.is_comment_author"
       :userInfo="item.user" 
+      :isNewsAuthor="state.isNewsAuthor"
       :createTime="item.create_time"
       :commentId = "item.comment_id" />
     <!-- 评论内容 -->
@@ -26,6 +27,7 @@
       <!-- 回复头部 -->
       <comment-user 
         :isCommentAuthor="reply.user.is_comment_author"
+        :isNewsAuthor="state.isNewsAuthor"
         :userInfo="reply.user" 
         :createTime="reply.create_time"
         :commentId = "reply.comment_id" />
@@ -50,6 +52,7 @@ import CommentUser from './comment/commentUser.vue';
 import CommentContent from './comment/commentContent.vue';
 import CommentReplyContent from './comment/commentReplyContent.vue';
 import { request } from '@/api/request';
+import { getUID } from '@/utils/utils'
 const props = defineProps({
   newsInfo: {
     type: Object,
@@ -58,19 +61,25 @@ const props = defineProps({
   changeCommentLoading: {
     type: Function,
     required: true
-  }
+  },
 })
-const state = reactive<{commentList: CommentList[], hasMore: boolean, nextCursor: number}>({
+const state = reactive<{commentList: CommentList[], hasMore: boolean, nextCursor: number, isNewsAuthor: boolean}>({
   commentList: [],
   hasMore: false, //当前页面是否还有内容
   nextCursor: 0, // 下次请求的游标
+  isNewsAuthor: false,
 })
 
 // 1. 获取并展示评论栏基础信息, 页面初次展示在评论栏
 watch(
   () => props.newsInfo,
-  async () => {
+  async (newsInfo) => {
     await fetchCommentList()
+    const selfUID = await getUID()
+    console.log('selfUID',selfUID)
+    console.log('newsInfo.author.uid',newsInfo.author.uid)
+    state.isNewsAuthor = selfUID == newsInfo.author.uid
+    console.log('state.isNewsAuthor',state.isNewsAuthor)
   }
 )
 const fetchCommentList = async () => {

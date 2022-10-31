@@ -11,6 +11,7 @@ import MyTabs from '@/pages/commonComponents/myTabs.vue';
 import Taro from '@tarojs/taro';
 import { getUserInfo } from '@/api/index.js';
 import { request } from '@/api/request';
+import { getUID } from "@/utils/utils"
 
 const state = reactive({
   userInfo: {},
@@ -21,7 +22,8 @@ onMounted(async () => {
   // 从路由获取参数uid, 再调接口获取用户信息
   const uid = getUidFromRouterParams()
   await fetchUserInfo(uid)
-  state.isSelf = false // TODO 判断
+  const selfUid = await getUID()
+  state.isSelf = uid == selfUid
 })
 
 const getUidFromRouterParams = (): number => {

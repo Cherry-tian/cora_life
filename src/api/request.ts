@@ -14,9 +14,12 @@ export const request = async (params: any) => {
     params.header = header;
     return Taro.request(params).then(res => {
         if (res.data.code === errCode.errLoginFail) {
-            Taro.navigateTo({
-                url: '/pages/login/index'
-            })
+            const currPath = Taro.getCurrentInstance().router.path
+            if (currPath !== '/pages/login/index') {
+                Taro.navigateTo({
+                    url: '/pages/login/index'
+                })
+            }
             throw new Error('未登录');
         } else {
             return res;

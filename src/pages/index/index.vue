@@ -38,7 +38,7 @@ const store = useStore()
 const pageIndex = ref(0)
 const changePage = (index: number) => {
   if (pageIndex.value !== index) {
-    store.commit('changeHomePageLoading', false) // todo
+    store.commit('changeHomePageLoading', true)
     pageIndex.value = index
   }
 }
