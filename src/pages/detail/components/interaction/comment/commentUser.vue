@@ -15,9 +15,13 @@
         <text class="comment-author" v-if="userInfo?.is_author">作者</text>
         <text class="comment-publish-time"> {{publishTimeStr(createTime)}}</text>
       </view>
-      <!-- 登录用户为当前评论发布者则可以删除当前评论
-      todo: 登录用户为新闻/动态发布者时可以删除所有评论 -->
-      <view class="delete-comment" @tap="handleDeleteComment" v-if="isCommentAuthor">
+      <!-- 登录用户为当前评论发布者则可以删除当前评论; 登录用户为新闻/动态发布者时可以删除所有评论 -->
+      <!-- v-if="isCommentAuthor || isNewsAuthor" -->
+      <view
+        class="delete-comment"
+        @tap="handleDeleteComment"
+        v-if="isCommentAuthor"
+      >
         <nut-icon name="del2" size="10" color="#999"></nut-icon>
       </view>
     </view>
@@ -30,7 +34,7 @@ import { deleteComment } from '@/api/index.js';
 import { request } from '@/api/request';
 import { reFreshDetailPage } from '@/pages/detail/utils'
 
-const props = defineProps(['userInfo', 'createTime', 'commentId', 'isCommentAuthor'])
+const props = defineProps(['userInfo', 'createTime', 'commentId', 'isCommentAuthor', 'isNewsAuthor'])
 // 引入用特定形式显示时间的公共方法
 const publishTimeStr = computed(() => {
   return utils.publishTimeStr
