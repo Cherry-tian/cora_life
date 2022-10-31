@@ -4,6 +4,7 @@
       <nut-avatar
         size="normal"
         :icon="itemInfo.from_user?.avatar_url"
+        @tap="() => utils.jumpToUserPage(itemInfo.from_user?.uid)"
       />
     </view>
     <view class="official-content">

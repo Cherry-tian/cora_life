@@ -64,7 +64,7 @@ import { publishComment } from '@/api/index.js';
 import { styleConfig } from '@/const';
 import api from '@/api/index.js';
 import { request } from '@/api/request';
-import { reFreshDetailPage } from '@/utils/utils'
+import { reFreshDetailPage } from '@/pages/detail/utils'
 
 const props = defineProps(['newsId', 'interaction'])
 const state = reactive({

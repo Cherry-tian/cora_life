@@ -2,11 +2,11 @@ import { MessageType } from '@/types/common';
 import Taro from '@tarojs/taro';
 import { getOfficialMsgList, getCommentMsgList, getInteractionMsgList, getUserFansList } from '@/api/index.js';
 import { getLocalStorage } from '@/utils/utils'
-import { localStorageKey } from '@/const'
+import { localStorageKey, countConfig } from '@/const'
 import { request } from '@/api/request';
 
 const cursor = 0
-export const count = 20
+const count = countConfig.message
 export const msgInterval = 5000 // 消息轮询间隔
 const mapMsgTypeToKey: Map<MessageType, string>  = new Map(
   [

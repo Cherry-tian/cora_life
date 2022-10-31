@@ -92,14 +92,15 @@ watch(
 )
 // 点击 关注 跳转到关注页
 const handleClickFollow = () => {
+  console.log('userInfo',props.userInfo)
   Taro.navigateTo({
-    url: '/pages/follow/index'
+    url: `/pages/follow/index?uid=${props.userInfo.uid}`
   })
 }
 // 点击 粉丝 跳转到粉丝页
 const handleClickFans = () => {
   Taro.navigateTo({
-    url: '/pages/fans/index'
+    url: `/pages/fans/index?uid=${props.userInfo.uid}`
   })
 }
 </script>

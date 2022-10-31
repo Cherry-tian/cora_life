@@ -60,18 +60,16 @@ export const jumpToDetailPage = (newsId) => {
   })
 }
 
-// 刷新详情页（只能在详情页调该方法）
-export const reFreshDetailPage = () => {
-  const newsId = getNewsIdFromRouter()
-  Taro.redirectTo({
-    url: `/pages/detail/index?news_id=${newsId}`
-  })
-}
-
 // 从路由参数中获取新闻id
 export const getNewsIdFromRouter = () => {
   const routerParams = Taro.getCurrentInstance().router.params
   return routerParams.news_id
+}
+
+// 从路由参数中获取用户id
+export const getUidFromRouter = () => {
+  const routerParams = Taro.getCurrentInstance().router.params
+  return routerParams.uid
 }
 
 // 展示微信小程序分享图标 https://taro-docs.jd.com/docs/apis/share/showShareMenu
@@ -121,14 +119,4 @@ export const getNewsInfoById = async (id) => {
   }).then((res) => {
     return res.data.data.list[0].user_new
   })
-}
-
-export default {
-  getCategoryNewListUrl,
-  jumpToUserPage,
-  jumpToDetailPage,
-  showShareMenu,
-  publishTimeStr,
-  getUID,
-  getLocalStorage
 }

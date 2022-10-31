@@ -28,6 +28,8 @@ import { computed } from 'vue';
 import Taro from '@tarojs/taro';
 import { deleteComment } from '@/api/index.js';
 import { request } from '@/api/request';
+import { reFreshDetailPage } from '@/pages/detail/utils'
+
 const props = defineProps(['userInfo', 'createTime', 'commentId', 'isCommentAuthor'])
 // 引入用特定形式显示时间的公共方法
 const publishTimeStr = computed(() => {
@@ -48,7 +50,7 @@ const handleDeleteComment = () => {
     })
     // 刷新页面
     setTimeout(() => {
-      utils.reFreshDetailPage()
+      reFreshDetailPage()
     }, 300)
   })
 }
