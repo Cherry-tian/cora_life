@@ -76,10 +76,7 @@ watch(
   async (newsInfo) => {
     await fetchCommentList()
     const selfUID = await getUID()
-    console.log('selfUID',selfUID)
-    console.log('newsInfo.author.uid',newsInfo.author.uid)
     state.isNewsAuthor = selfUID == newsInfo.author.uid
-    console.log('state.isNewsAuthor',state.isNewsAuthor)
   }
 )
 const fetchCommentList = async () => {
