@@ -42,7 +42,7 @@ export const errCode = {
 export const countConfig = {
   relation: 50, // 用户关系数据简单，可一次性获取多个
   // news: 10, // 新闻详情数据较多，获取量较少
-  news: 20, // 新闻详情数据较多，获取量较少 第一次上线先用20
+  news: 5, // 新闻详情数据较多，获取量较少 第一次上线先用20
   comment: 50,
   message: 20
 }
