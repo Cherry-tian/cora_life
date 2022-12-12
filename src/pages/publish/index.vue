@@ -54,9 +54,9 @@
     <input type="text" style="height: 0px;"/>
     <textarea style="height: 0px;"></textarea>
     <button style="height: 0px;"></button>
-  </view> -->
-  <!-- <button @tap="clearLocalMsg">清除本地缓存消息</button>  -->
-  <!-- <button @click="clearJWT">清除 jwt</button>  -->
+  </view>
+  <button @tap="clearLocalMsg">清除本地缓存消息</button> 
+  <button @click="clearJWT">清除 jwt</button>  -->
 </template>
 <script setup lang="ts">
 import { computed, onMounted, reactive, watch } from 'vue';
