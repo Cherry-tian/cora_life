@@ -66,7 +66,7 @@ const loadMore = (done: any) => {
 </script>
 <style lang="scss">
 .news-content {
-  height: calc(100vh - 128px);
+  height: calc(100vh - 76px);
   width: 100%;
   padding: 0;
   margin: 0;

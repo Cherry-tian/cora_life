@@ -1,13 +1,14 @@
 // 域名
 const domainMock = "yapi.smart-xwork.cn/mock/168776"
 const domainDev = "127.0.0.1:7001"
-const domainProd = "101.33.209.203:7001"
+// const domainProd = "101.33.209.203:7001"
+const domainProd = "www.yeball.top"
 
 // 获取 api path 前缀
 const getPathPrefix = () => {
     // return "http://" + domainMock
     // return "http://" + domainDev
-    return "http://" + domainProd
+    return "https://" + domainProd // prod调线上接口是 https, 测试是 http
 }
 
 // api路径

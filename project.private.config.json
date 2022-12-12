@@ -3,6 +3,6 @@
   "projectname": "yiLife",
   "setting": {
     "compileHotReLoad": false,
-    "urlCheck": false
+    "urlCheck": true
   }
 }
