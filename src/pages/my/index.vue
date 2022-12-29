@@ -11,11 +11,13 @@ import MyTabs from '@/pages/commonComponents/myTabs.vue';
 import { getUserInfo } from '@/api/index.js';
 import { request } from '@/api/request';
 import Taro from '@tarojs/taro';
+import { useStore } from 'vuex';
 import  { getUID }  from '@/utils/utils';
 
 const state = reactive({
   userInfo: {}
 })
+const store = useStore()
 
 // 获取用户信息的方法
 const fetchUserInfo = async() => {
@@ -27,11 +29,13 @@ const fetchUserInfo = async() => {
     }
   }).then((res) => {
     state.userInfo = res.data.data
+    store.commit('changeHomePageLoading', false)
   }).catch(error => {
     console.log("error", error)
-    // Taro.showToast({
-    //   title: '载入远程数据错误'
-    // })
+    Taro.showToast({
+      title: '载入远程数据错误'
+    })
+    store.commit('changeHomePageLoading', false)
   })
 }
 // 1. 发起获取 my 页面信息的请求
