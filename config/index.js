@@ -58,7 +58,12 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
+    // 开启webpack-bundle-analyzer
+    // webpackChain (chain, webpack) {
+    //   chain.plugin('analyzer')
+    //     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
+    // }
   },
   h5: {
     publicPath: '/',
