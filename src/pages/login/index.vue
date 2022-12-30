@@ -69,6 +69,10 @@ const handleClick = () => {
             // 登录成功后，等 500ms 页面跳转回去
             setTimeout(() => {
               Taro.navigateBack()
+              Taro.startPullDownRefresh({
+                success: res => console.log('success: ', res),
+                fail: res => console.log('fail: ', res)
+              })
             }, 500)
           })
         } else {

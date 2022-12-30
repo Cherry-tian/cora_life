@@ -50,13 +50,13 @@
     </nut-cell>
   </view>
   <!-- jacle 需要使用原生 input 标签进行一次编译才会出现正确效果 -->
-  <!-- <view clase="compile-helper">
+  <view clase="compile-helper">
     <input type="text" style="height: 0px;"/>
     <textarea style="height: 0px;"></textarea>
     <button style="height: 0px;"></button>
   </view>
   <button @tap="clearLocalMsg">清除本地缓存消息</button> 
-  <button @click="clearJWT">清除 jwt</button>  -->
+  <button @click="clearJWT">清除 jwt</button> 
 </template>
 <script setup lang="ts">
 import { computed, onMounted, reactive, watch } from 'vue';
