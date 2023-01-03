@@ -17,7 +17,7 @@
 * 发布的`分享`可以在主页被看到
 * feed流首页，支持无限下拉，用虚拟列表优化前端性能
 * 支持在首页对`分享`进行点赞、收藏
-![index](./assets/image/readme/%E9%A6%96%E9%A1%B5.PNG)
+<img decoding="async" src="./assets/image/readme/%E9%A6%96%E9%A1%B5.PNG" width="50%">
 
 ### 详情页
 * 支持图片预览
