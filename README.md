@@ -8,6 +8,7 @@
 ## 项目介绍
 ### 发布页
 * 用户可以发布`分享`，并选上不同的`分享主题`，方便其他用户在首页相关tab看到自己的`分享`~
+<img decoding="async" src="./assets/image/readme/%E5%8F%91%E5%B8%83%E9%A1%B5.PNG" width="50%">
 ![index](./assets/image/readme/%E5%8F%91%E5%B8%83%E9%A1%B5.PNG)
 
 ### 首页
