@@ -1,13 +1,31 @@
 <template>
  <nut-tabs v-model="state.tabIndex" background="white" color="#4382e2">
   <nut-tabpane title="发布" class="my-tab-tabpane">
-    <MyTabCard v-for="item in state.userPublishList" :key="item.user_new.id" :itemInfo="item.user_new" />
+    <MyTabCard
+      v-if="state.userPublishList?.length > 0"
+      v-for="item in state.userPublishList"
+      :key="item.user_new.id"
+      :itemInfo="item.user_new"
+    />
+    <nut-empty description="暂无发布" v-else/>
   </nut-tabpane>
   <nut-tabpane title="收藏" class="my-tab-tabpane">
-    <MyTabCard v-for="item in state.userFavoriteList" :key="item.user_new.id" :itemInfo="item.user_new" />
+    <MyTabCard
+      v-if="state.userFavoriteList?.length > 0"
+      v-for="item in state.userFavoriteList"
+      :key="item.user_new.id"
+      :itemInfo="item.user_new"
+    />
+    <nut-empty description="暂无收藏" v-else/>
   </nut-tabpane>
   <nut-tabpane title="喜欢" class="my-tab-tabpane">
-    <MyTabCard v-for="item in state.userLikeList" :key="item.user_new.id" :itemInfo="item.user_new" />
+    <MyTabCard
+      v-if="state.userLikeList?.length > 0"
+      v-for="item in state.userLikeList"
+      :key="item.user_new.id"
+      :itemInfo="item.user_new"
+    />
+    <nut-empty description="暂无喜欢" v-else/>
   </nut-tabpane>
 </nut-tabs>
 </template>
