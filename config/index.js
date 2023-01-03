@@ -89,6 +89,25 @@ const config = {
         enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
       }
     }
+  },
+  terser: {
+    enable: true,
+    config: { // 配置项同 https://github.com/terser/terser#minify-options，这里直接用默认配置，from https://webpack.docschina.org/plugins/terser-webpack-plugin/#terseroptions
+      ecma: undefined,
+      parse: {},
+      compress: {},
+      mangle: true, // Note `mangle.properties` is `false` by default.
+      module: false,
+      // Deprecated
+      output: null,
+      format: null,
+      toplevel: false,
+      nameCache: null,
+      ie8: false,
+      keep_classnames: undefined,
+      keep_fnames: false,
+      safari10: false,
+    },
   }
 }
 
