@@ -132,7 +132,7 @@ const handleCommentbtnClick = () => {
     method: 'POST',
     url: publishComment,
     data: {
-      new_id: props.newsInfo.id,
+      new_id: props.newsInfo?.id,
       content: state.commentText,
       comment_id: state.commentId   
     }
