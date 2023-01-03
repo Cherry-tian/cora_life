@@ -18,19 +18,28 @@
         </div>
       </template>
       <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Official">
-        <OfficialCard v-for="item in state.officialList" :key="item.id" :itemInfo="item" />
+        <OfficialCard
+          v-if="state.officialList?.length > 0"
+          v-for="item in state.officialList"
+          :key="item.id"
+          :itemInfo="item"
+        />
+        <nut-empty description="暂无消息" v-else/>
       </nut-tabpane>
       <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Comment">
         <Loading v-if="state.commentIsLoading"/>
-        <CommentCard  v-for="item in state.commentList" :key="item.comment_id" :itemInfo="item" />
+        <CommentCard  v-for="item in state.commentList" :key="item.comment_id" :itemInfo="item" v-if="state.commentList?.length > 0"/>
+        <nut-empty description="暂无消息" v-else/>
       </nut-tabpane>
       <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Fans">
         <Loading v-if="state.fansIsLoading" />
-        <FansCard v-for="item in state.fansList" :key="item.follow_uid" :itemInfo="item" />
+        <FansCard v-for="item in state.fansList" :key="item.follow_uid" :itemInfo="item" v-if="state.fansList?.length > 0"/>
+        <nut-empty description="暂无消息" v-else/>
       </nut-tabpane>
       <nut-tabpane class="my-tab-tabpane" :pane-key="MessageType.Interaction">
         <Loading v-if="state.likeIsLoading" />
-        <LikeCard v-for="item in state.likeList" :key="item.user?.uid" :itemInfo="item" />
+        <LikeCard v-for="item in state.likeList" :key="item.user?.uid" :itemInfo="item" v-if="state.likeList?.length > 0"/>
+        <nut-empty description="暂无消息" v-else/>
       </nut-tabpane>
     </nut-tabs>
   </view>

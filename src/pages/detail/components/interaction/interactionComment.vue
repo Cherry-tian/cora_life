@@ -1,6 +1,7 @@
 <template>
   <!-- 评论 -->
   <view class="comment-detail-wrapper" 
+    v-if="state.commentList?.length > 0" 
     v-for="item in state.commentList" 
     :key="item.comment_id"
   >
@@ -40,6 +41,9 @@
         :userInfo="reply.user"
       />
     </view>
+  </view>
+  <view v-else class="comment-detail-empty">
+    快来发表你的评论吧
   </view>
 </template>
 <script setup lang="ts">
@@ -111,6 +115,12 @@ const getCommentListUrl = ({
   .comment-reply-wrapper {
     padding-left: 35px;
   }
+}
+.comment-detail-empty {
+  padding-top: 20px;
+  color: $descGrayColor;
+  font-size: 13px;
+  text-align: center;
 }
 </style>
 

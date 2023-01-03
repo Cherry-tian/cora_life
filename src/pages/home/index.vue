@@ -78,7 +78,7 @@ onMounted(async () => {
     url: getCategoryList,
   }), fetchNewList(newestCategoryID)]
   // 等待所有 Promise 请求结果返回，再继续执行 同时改变 homePageLoding 状态
-  Promise.all(requestTask).then(([res]) => {
+  await Promise.all(requestTask).then(([res]) => {
     state.categoryList = res.data.data.list
     store.commit('changeHomePageLoading', false)
     state.loading = false
@@ -89,6 +89,14 @@ onMounted(async () => {
       title: error.message,
       icon: 'error'
     })
+  })
+
+  // 在 onShow 生命周期获取首页数据，主要用来登录后返回首页时刷新首页数据
+  // https://docs.taro.zone/docs/vue-page#onshow-
+  Taro.eventCenter.once(Taro.getCurrentInstance().router.onShow, () => {
+    if (!categoryNewListMap.size) {
+      fetchNewList(newestCategoryID)
+    }
   })
 })
 

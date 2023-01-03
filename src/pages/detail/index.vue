@@ -7,7 +7,9 @@
         :createTime="state.newsInfo?.create_time"
         :showFollowBtn='true'
       />
+      <!-- CardContent 里的 nut-imagepreview 要求 imgList 一定不能变化，得是静态数据，不然会有bug，所以这里加了个 v-if -->
       <CardContent 
+        v-if="state.newsInfo?.desrciprtion"
         :contentText="state.newsInfo?.desrciprtion" 
         :imgList="state.newsInfo?.image_url_list"
         :isOfficial="state.newsInfo?.is_official"
