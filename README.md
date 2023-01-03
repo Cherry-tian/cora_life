@@ -3,13 +3,14 @@
 
 ## 🚀 体验方式
 由于是个人开发，涉及用户分享的小程序无法在微信上线，该小程序目前只是体验版。可微信联系`d1241610919`添加体验权限，备注：小程序体验。之后扫下面二维码体验即可~
-<img decoding="async" src="./assets/image/readme/%E5%8F%91%E5%B8%83%E9%A1%B5.PNG" width="30%">
+<!-- markdown原生的图片语法，不支持配置图片宽度，所以下面用了img标签的方式 -->
 <!-- ![index](./assets/image/readme/%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg) -->
+<img decoding="async" src="./assets/image/readme/%E4%BA%8C%E7%BB%B4%E7%A0%81.PNG" width="40%">
 
 ## 项目介绍
 ### 发布页
 * 用户可以发布`分享`，并选上不同的`分享主题`，方便其他用户在首页相关tab看到自己的`分享`~
-<img decoding="async" src="./assets/image/readme/%E5%8F%91%E5%B8%83%E9%A1%B5.PNG" width="30%">
+<img decoding="async" src="./assets/image/readme/%E5%8F%91%E5%B8%83%E9%A1%B5.PNG" width="40%">
 ![index](./assets/image/readme/%E5%8F%91%E5%B8%83%E9%A1%B5.PNG)
 
 ### 首页
