@@ -20,7 +20,7 @@
 
 ### 详情页
 * 支持图片预览
-* 支持对`分享`进行评论、点赞、收藏、转发
+* 支持对`分享`进行评论、点赞、收藏、转发到微信
 <img decoding="async" src="./assets/image/readme/%E8%AF%A6%E6%83%85%E9%A1%B5.PNG" width="40%">
 <img decoding="async" src="./assets/image/readme/%E8%AF%A6%E6%83%85%E9%A1%B52.PNG" width="40%">
 
