@@ -12,6 +12,10 @@ export const request = async (params: any) => {
     const { header = {} } = params;
     header.jwt = jwt;
     params.header = header;
+
+    // 开启支持 http2，https://docs.taro.zone/docs/apis/network/request/request
+    params.enableHttp2 = true
+    
     return Taro.request(params).then(res => {
         if (res.data.code === errCode.errLoginFail) {
             const currPath = Taro.getCurrentInstance().router.path
