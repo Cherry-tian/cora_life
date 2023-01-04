@@ -1,55 +1,67 @@
 <template>
-  <view class="my-page">
-    <MyInfo :userInfo="state.userInfo" :isSelf='true'/>
-    <MyTabs :userInfo="state.userInfo" />
-  </view>
+  <div class="demo">
+    <h2>基础用法</h2>
+    <nut-cell>
+      <nut-list
+        :container-height="300"
+        :height="20"
+        :listData="data.defultList"
+        @scroll-bottom="handleScroll"
+      >
+        <template v-slot="{ item }">
+          <li class="list-item">
+            {{ item }}
+          </li>
+        </template>
+        <!-- <li class="list-item" v-for="(item, index) in data.defultList" :key="index">{{`item:${item}, index: ${index}`}}</li> -->
+        <!-- nut-list中自带v-for能力？取到的直接是item了 -->
+      </nut-list>
+    </nut-cell>
+  </div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
-import MyInfo from '@/pages/commonComponents/myInfo.vue';
-import MyTabs from '@/pages/commonComponents/myTabs.vue';
-import { getUserInfo } from '@/api/index.js';
-import { request } from '@/api/request';
-import Taro from '@tarojs/taro';
 import { useStore } from 'vuex';
-import  { getUID }  from '@/utils/utils';
-
-const state = reactive({
-  userInfo: {}
-})
 const store = useStore()
+const data = reactive({
+  defultList: [],
+});
 
-// 获取用户信息的方法
-const fetchUserInfo = async() => {
-  const uid = await getUID()
-  return request({
-    url: getUserInfo,
-    data: {
-      uid
-    }
-  }).then((res) => {
-    state.userInfo = res.data.data
-    store.commit('changeHomePageLoading', false)
-  }).catch(error => {
-    console.log("error", error)
-    Taro.showToast({
-      title: '载入远程数据错误'
-    })
-    store.commit('changeHomePageLoading', false)
-  })
-}
-// 1. 发起获取 my 页面信息的请求
-onMounted(async() => {
-  await fetchUserInfo()
-})
-// 2. 我的页面需要进行登录态验证，若验证失败则跳转至登录页。登录成功后会返回我的页面，但是原先的 onmounted（）方法并未返回数据，需要执行 Taro.useDidShow（）重新执行一次并完成数据渲染。
-Taro.useDidShow(async() => {
-  await fetchUserInfo();
-})
+const handleScroll = () => {
+  console.log('test')
+  let arr = new Array(20).fill(0);
+  const curLen = data.defultList.length;
+  let nxtArr = arr.map((item: number, index: number) => curLen + index + 1)
+  data.defultList = data.defultList.concat(nxtArr)
 
+  console.log('data.defultList',data.defultList)
+};
+
+onMounted(() => {
+  let arr = new Array(20).fill(0)
+  data.defultList = arr.map((item: number, index: number) => index + 1);
+  store.commit('changeHomePageLoading', false)
+
+  // setInterval(() => {
+  //   handleScroll()
+  // }, 1000)
+})
 </script>
-<style>
-.my-page {
-  padding-bottom: 90px;
+<style lang="scss">
+.demo {
+  height: 100%;
+  .nut-cell {
+    height: 100%;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20px;
+    margin-bottom: 10px;
+    background-color: #f4a8b6;
+    border-radius: 10px;
+  }
 }
 </style>
