@@ -33,7 +33,7 @@ import {
   Swiper,
   SwiperItem,
   InfiniteLoading,
-  Empty
+  Empty,
 } from "@nutui/nutui-taro";
 
 const App = createApp({
