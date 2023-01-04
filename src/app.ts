@@ -33,8 +33,7 @@ import {
   Swiper,
   SwiperItem,
   InfiniteLoading,
-  Empty,
-  List
+  Empty
 } from "@nutui/nutui-taro";
 
 const App = createApp({
@@ -63,6 +62,5 @@ const App = createApp({
   .use(SwiperItem)
   .use(InfiniteLoading)
   .use(Empty)
-  .use(List)
 
 export default App
